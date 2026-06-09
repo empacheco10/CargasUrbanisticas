@@ -1,0 +1,702 @@
+{
+  "_metadata": {
+    "version": "4.0.0",
+    "descripcion": "JSON consolidado único: reglas de obligación VIS/VIP por tratamiento urbanístico (tablas transitorio/definitivo, porcentajes, fórmulas, excepciones) + metadatos de la capa geográfica oficial SDP TratamientoUrbanistico.shp",
+    "fuentes_normativas": [
+      "Decreto Distrital 555 de 2021 - POT Bogotá (Arts. 266, 293-297, 317, 322, 323, 338)",
+      "Resolución 940 de 2022 - ERU/SDHT - RENOBO (Arts. 4 y 5) - tablas transitorio/definitivo",
+      "Resolución 182 de 2025 - modifica Art. 6 Res. 940/2022",
+      "FAQ oficial SDP - Compilatorio D.555/2021 (radicado 2-2022-38367)",
+      "TratamientoUrbanistico.shp/prj/cpg - SDP Bogotá (actualizado 31/03/2026)"
+    ],
+    "paginas_decreto_fuente": {
+      "Art_266": "pag 164 (ICe y área construida para obligaciones)",
+      "Art_293_295": "pag 178 (Desarrollo - obligación VIS/VIP)",
+      "Art_317": "pag 185-186 (cesión espacio público - tablas Consolidación y RU)",
+      "Art_322": "pag 190 (VIS/VIP Consolidación y Renovación Urbana - tablas completas)",
+      "Art_338": "pag 197 (Mejoramiento Integral - tabla altura/área y obligación VIP)",
+      "Res940_Art4": "pag 6 Res.940/2022 (tabla definitiva RU y Consolidación)",
+      "Res940_Art5": "pag 7 Res.940/2022 (tablas transitorio hasta 31/12/2027)"
+    },
+    "fecha_construccion": "2026-06-05",
+    "nota_regimen_temporal": "DOS regímenes: TRANSITORIO (radicación hasta 31/12/2027) y DEFINITIVO (desde 01/01/2028). Criterio: fecha de radicación en legal y debida forma de la licencia urbanística.",
+    "nota_importante": "Cargar UNA SOLA VEZ al iniciar la aplicación. Mantener en memoria. No releer PDFs en cada cálculo.",
+    "titulo": "Reglas VIS/VIP + Metadatos Shapefile Tratamiento Urbanístico - POT Bogotá D.C.",
+    "url_decreto_555": "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=119582",
+    "nota_url": "Portal SDP carga dinámicamente por JavaScript. Información verificada de los PDFs oficiales y FAQ SDP."
+  },
+  "_logica_de_uso": {
+    "paso_1": "Leer ProjectData.tratamientoUrbanistico",
+    "paso_2": "Determinar régimen: fechaRadicacion <= '2027-12-31' → 'transitorio'; si no → 'definitivo'",
+    "paso_3": "Calcular ICe = areaConstruidaNormativa / areaLote",
+    "paso_4": "Recorrer tabla_porcentajes[regimen].rangos hasta encontrar rango donde ice_min < ICe <= ice_max",
+    "paso_5": "Retornar porcentaje_VIP y porcentaje_VIS del rango encontrado",
+    "paso_6": "A1 = (areaLote * ICe) * porcentaje/100  para RU y Consolidación",
+    "paso_7": "Para Desarrollo: 20% del suelo útil (ANU). Para Mejoramiento Integral: 20% del área vendible",
+    "paso_8": "Aplicar excepciones si correspond"
+  },
+  "tratamientos": {
+    "Renovacion_Urbana": {
+      "nombre_completo": "Renovación Urbana",
+      "codigo_tratamiento": "RU",
+      "aplica_obligacion": true,
+      "articulos_base": [
+        "Art. 322 D.555/2021 pag.190",
+        "Art. 323 D.555/2021",
+        "Art. 4 Res.940/2022",
+        "Art. 5 Res.940/2022"
+      ],
+      "formula_base": "A1 = AC × porcentaje  donde AC = areaLote × ICe",
+      "tabla_porcentajes": {
+        "transitorio": {
+          "descripcion": "Radicación HASTA 31/12/2027. Fuente: Art.5 Res.940/2022 tabla 'PROGRESIVIDAD RENOVACIÓN URBANA'",
+          "vigencia_hasta": "2027-12-31",
+          "rangos": [
+            {
+              "rango": "ICe ≤ 2",
+              "ice_min": 0,
+              "ice_max": 2.0,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 0,
+              "porcentaje_VIS": 0,
+              "porcentaje_VIS_AIM": 0,
+              "aplica": false,
+              "nota": "N/A - Sin obligación VIS/VIP"
+            },
+            {
+              "rango": "2 < ICe ≤ 3",
+              "ice_min": 2.0,
+              "ice_max": 3.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 4,
+              "porcentaje_VIS": 8,
+              "porcentaje_VIS_AIM": 2.5,
+              "aplica": true,
+              "nota": "4%VIP ó 8%VIS | AIM:2.5%VIS. Res.940/2022 Art.5"
+            },
+            {
+              "rango": "3 < ICe ≤ 4",
+              "ice_min": 3.0,
+              "ice_max": 4.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 6,
+              "porcentaje_VIS": 12,
+              "porcentaje_VIS_AIM": 7,
+              "aplica": true,
+              "nota": "6%VIP ó 12%VIS | AIM:7%VIS. Res.940/2022 Art.5"
+            },
+            {
+              "rango": "4 < ICe ≤ 5",
+              "ice_min": 4.0,
+              "ice_max": 5.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 3,
+              "porcentaje_VIS": 6,
+              "porcentaje_VIS_AIM": 7,
+              "aplica": true,
+              "nota": "3%VIP ó 6%VIS | AIM:7%VIS. Res.940/2022 Art.5"
+            },
+            {
+              "rango": "4 < ICe ≤ 7",
+              "ice_min": 4.0,
+              "ice_max": 7.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 6,
+              "porcentaje_VIS": 6,
+              "porcentaje_VIS_AIM": 7,
+              "aplica": true,
+              "nota": "6%VIP ó 6%VIS | AIM:7%VIS. Res.940/2022 Art.5"
+            },
+            {
+              "rango": "IC > 7 ó planes parciales",
+              "ice_min": 7.0,
+              "ice_max": 9999,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 6,
+              "porcentaje_VIS": 8,
+              "porcentaje_VIS_AIM": 15,
+              "aplica": true,
+              "nota": "6%VIP ó 8%VIS | AIM:15%VIS. Res.940/2022 Art.5"
+            }
+          ]
+        },
+        "definitivo": {
+          "descripcion": "Radicación DESDE 01/01/2028. Obligación plena. Fuente: Art.322 D.555/2021 pag.190 + Art.4 Res.940/2022",
+          "vigencia_desde": "2028-01-01",
+          "rangos": [
+            {
+              "rango": "ICe ≤ 2",
+              "ice_min": 0,
+              "ice_max": 2.0,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 0,
+              "porcentaje_VIS": 0,
+              "porcentaje_VIS_AIM": 0,
+              "aplica": false,
+              "nota": "N/A - Sin obligación VIS/VIP. Art.322 D.555 pag.190"
+            },
+            {
+              "rango": "2 < ICe ≤ 3",
+              "ice_min": 2.0,
+              "ice_max": 3.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 5,
+              "porcentaje_VIS": 10,
+              "porcentaje_VIS_AIM": 5,
+              "aplica": true,
+              "nota": "5%VIP ó 10%VIS | AIM:5%VIS. Art.322 D.555 pag.190"
+            },
+            {
+              "rango": "3 < ICe ≤ 4",
+              "ice_min": 3.0,
+              "ice_max": 4.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 7.5,
+              "porcentaje_VIS": 15,
+              "porcentaje_VIS_AIM": 10,
+              "aplica": true,
+              "nota": "7.5%VIP ó 15%VIS | AIM:10%VIS. Art.322 D.555 pag.190"
+            },
+            {
+              "rango": "4 < ICe ≤ 5",
+              "ice_min": 4.0,
+              "ice_max": 5.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 5,
+              "porcentaje_VIS": 10,
+              "porcentaje_VIS_AIM": 10,
+              "aplica": true,
+              "nota": "5%VIP ó 10%VIS | AIM:10%VIS. Art.322 D.555 pag.190"
+            },
+            {
+              "rango": "5 < ICe ≤ 7",
+              "ice_min": 5.0,
+              "ice_max": 7.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 10,
+              "porcentaje_VIS": 10,
+              "porcentaje_VIS_AIM": 10,
+              "aplica": true,
+              "nota": "10%VIP ó 10%VIS | AIM:10%VIS. Art.322 D.555 pag.190"
+            },
+            {
+              "rango": "ICe > 7 ó planes parciales",
+              "ice_min": 7.0,
+              "ice_max": 9999,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 10,
+              "porcentaje_VIS": 15,
+              "porcentaje_VIS_AIM": 15,
+              "aplica": true,
+              "nota": "10%VIP ó 15%VIS | AIM:15%VIS. Art.322 D.555 pag.190"
+            }
+          ]
+        }
+      },
+      "formas_cumplimiento": {
+        "1_en_sitio": "Destinar en el proyecto A1 = AC × % (demarcado en planos de LC)",
+        "2_traslado": "A2 = A1 × (V1/V2). A zona receptora VIS Mapa CU-5.2 o misma UPL",
+        "3_compensacion_dinero": "VrComp = 0.18 × AC(VIP/VIS) × Vref. Vinculación PAS FCO (Res.940/2022)"
+      },
+      "excepciones": {
+        "AIM": {
+          "descripcion": "Áreas de Integración Multimodal: NO tienen obligación VIP. Solo VIS con porcentaje_VIS_AIM del rango.",
+          "articulo": "Art.322 Párr.3 D.555/2021 pag.190",
+          "condicion": "ProjectData.esAIM === true",
+          "efecto": "porcentaje_VIP=0; usar porcentaje_VIS_AIM en lugar de porcentaje_VIS"
+        },
+        "lote_menor_400m2_hasta_ICe2": {
+          "descripcion": "Predios con área de terreno < 400 m² que alcancen ICe hasta 2: usan Fs=10% para cesión espacio público y NO asumen obligaciones VIS/VIP.",
+          "articulo": "Art.317 Nota 2 D.555/2021 pag.186",
+          "condicion": "areaLote < 400 && ICe <= 2",
+          "efecto": "aplica_obligacion_VIS_VIP = false"
+        },
+        "manzana_completa_estructurante": {
+          "descripcion": "Proyectos Consolidación en manzana completa + área estructurante o grandes servicios → aplicar normas RU.",
+          "articulo": "Art.302 Núm.2 / Art.309 Párr.2 D.555/2021",
+          "condicion": "esManzanaCompleta && (esAreaEstructurante || esGrandesServicios)",
+          "efecto": "Usar tabla Renovacion_Urbana"
+        }
+      },
+      "nota_descuento_ICe": "El área VIS/VIP destinada al cumplimiento se descuenta del ICe para el cálculo de demás obligaciones. Art.266 Núm.2 D.555/2021.",
+      "nombre_shapefile": "Renovación"
+    },
+    "Consolidacion": {
+      "nombre_completo": "Consolidación",
+      "codigo_tratamiento": "CO",
+      "aplica_obligacion": true,
+      "articulos_base": [
+        "Art. 322 D.555/2021 pag.190",
+        "Art. 323 D.555/2021",
+        "Art. 4 Res.940/2022",
+        "Art. 5 Res.940/2022"
+      ],
+      "formula_base": "A1 = AC × porcentaje  donde AC = areaLote × ICe",
+      "tabla_porcentajes": {
+        "transitorio": {
+          "descripcion": "Radicación HASTA 31/12/2027. Fuente: Art.322 D.555 pag.190 numeral 2 + Art.5 Res.940/2022 tabla 'PROGRESIVIDAD CONSOLIDACIÓN'",
+          "vigencia_hasta": "2027-12-31",
+          "rangos": [
+            {
+              "rango": "ICe ≤ 1.3",
+              "ice_min": 0,
+              "ice_max": 1.3,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 0,
+              "porcentaje_VIS": 0,
+              "aplica": false,
+              "nota": "N/A"
+            },
+            {
+              "rango": "1.3 < ICe ≤ 2",
+              "ice_min": 1.3,
+              "ice_max": 2.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 0,
+              "porcentaje_VIS": 0,
+              "aplica": false,
+              "nota": "N/A transitorio. Art.5 Res.940/2022"
+            },
+            {
+              "rango": "2 < ICe ≤ 3",
+              "ice_min": 2.0,
+              "ice_max": 3.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 0,
+              "porcentaje_VIS": 0,
+              "aplica": false,
+              "nota": "N/A transitorio Consolidación. Art.5 Res.940/2022"
+            },
+            {
+              "rango": "3 < ICe ≤ 4",
+              "ice_min": 3.0,
+              "ice_max": 4.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 2.5,
+              "porcentaje_VIS": 6,
+              "aplica": true,
+              "nota": "2.5%VIP ó 6%VIS. Art.5 Res.940/2022"
+            },
+            {
+              "rango": "ICe > 4",
+              "ice_min": 4.0,
+              "ice_max": 9999,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 3,
+              "porcentaje_VIS": 8,
+              "aplica": true,
+              "nota": "3%VIP ó 8%VIS. Art.5 Res.940/2022"
+            }
+          ]
+        },
+        "definitivo": {
+          "descripcion": "Radicación DESDE 01/01/2028. Obligación plena. Fuente: Art.322 D.555/2021 pag.190 + Art.4 Res.940/2022",
+          "vigencia_desde": "2028-01-01",
+          "rangos": [
+            {
+              "rango": "ICe ≤ 3",
+              "ice_min": 0,
+              "ice_max": 3.0,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 0,
+              "porcentaje_VIS": 0,
+              "aplica": false,
+              "nota": "N/A. Art.322 D.555 pag.190 tabla Consolidación"
+            },
+            {
+              "rango": "3 < ICe ≤ 4",
+              "ice_min": 3.0,
+              "ice_max": 4.0,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 5,
+              "porcentaje_VIS": 10,
+              "aplica": true,
+              "nota": "5%VIP ó 10%VIS. Art.322 D.555 pag.190"
+            },
+            {
+              "rango": "ICe > 4",
+              "ice_min": 4.0,
+              "ice_max": 9999,
+              "ice_min_inclusivo": false,
+              "ice_max_inclusivo": true,
+              "porcentaje_VIP": 6,
+              "porcentaje_VIS": 12,
+              "aplica": true,
+              "nota": "6%VIP ó 12%VIS. Art.322 D.555 pag.190"
+            }
+          ]
+        }
+      },
+      "formas_cumplimiento": {
+        "1_en_sitio": "Destinar en el proyecto A1 = AC × % en planos de LC",
+        "2_traslado": "A2 = A1 × (V1/V2)",
+        "3_compensacion_dinero": "VrComp = 0.18 × AC(VIP/VIS) × Vref"
+      },
+      "excepciones": {
+        "manzana_completa_estructurante": {
+          "descripcion": "Manzana completa + área estructurante o grandes servicios → aplicar tabla Renovación Urbana",
+          "articulo": "Art.302 Núm.2 / Art.309 Párr.2 D.555/2021",
+          "condicion": "esManzanaCompleta && (esAreaEstructurante || esGrandesServicios)",
+          "efecto": "Usar tabla Renovacion_Urbana"
+        }
+      },
+      "nota_descuento_ICe": "El área VIS/VIP se descuenta del ICe. Art.266 Núm.2 D.555/2021.",
+      "nombre_shapefile": "Consolidación"
+    },
+    "Desarrollo": {
+      "nombre_completo": "Desarrollo",
+      "codigo_tratamiento": "DE",
+      "aplica_obligacion": true,
+      "articulos_base": [
+        "Art. 293 D.555/2021 pag.178",
+        "Art. 294 D.555/2021",
+        "Art. 295 D.555/2021 pag.178"
+      ],
+      "descripcion": "Obligación sobre SUELO ÚTIL (no metros construidos). Aplica SOLO en actuaciones con usos residencial (vivienda), comercio y/o servicios que se urbanicen por plan parcial o licencias urbanísticas.",
+      "formula_base": "suelo_VIP = 20% × area_neta_urbanizable  (suelo útil del proyecto/plan parcial)",
+      "tabla_porcentajes": {
+        "con_plan_parcial": {
+          "porcentaje_VIP": 20,
+          "porcentaje_VIS": 20,
+          "base_calculo": "suelo_util_plan_parcial",
+          "nota": "20% suelo útil del Plan Parcial. Art.293 D.555 pag.178 + Art.4.a Res.940/2022"
+        },
+        "sin_plan_parcial": {
+          "porcentaje_VIP": 20,
+          "porcentaje_VIS": 20,
+          "base_calculo": "suelo_util_proyecto_urbanistico",
+          "nota": "20% suelo útil del proyecto urbanístico. Art.293 D.555 pag.178"
+        }
+      },
+      "indice_construccion_en_sitio": {
+        "VIP": 0.8,
+        "VIS": 1.75,
+        "nota": "IC sobre el ANU proporcional destinado a la obligación. IC incluido en el total del proyecto. Art.295 D.555 pag.178"
+      },
+      "formas_cumplimiento": {
+        "1_en_sitio": "Destinar 20% suelo útil para VIP/VIS con IC mínimo de 0.8 (VIP) y 1.75 (VIS)",
+        "2_traslado": "A2 = A1 × (V1/V2). Metodología Decreto 221/2020 mientras se reglamenta Art.296",
+        "3_compensacion_dinero": "Valor = A2 × VC. Vinculación PAS FCO (Res.940/2022 Art.2)"
+      },
+      "excepciones": {
+        "NO_aplica_si": [
+          "Proyectos 100% industriales o 100% dotacionales (Art.293 Párr.1 D.555/2021 pag.178)",
+          "Planes de Ordenamiento Zonal Norte y Usme (Art.293 Párr.2 D.555/2021): obligación mínima según reglamentación particular"
+        ],
+        "NO_aplica_descuento_ICe": {
+          "descripcion": "En Desarrollo NO se descuenta el área VIS/VIP del ICe para el cálculo de obligaciones.",
+          "articulo": "Art.266 D.555/2021 / FAQ SDP pag.24"
+        }
+      },
+      "nombre_shapefile": "Desarrollo"
+    },
+    "Mejoramiento_Integral": {
+      "nombre_completo": "Mejoramiento Integral",
+      "codigo_tratamiento": "MI",
+      "aplica_obligacion": true,
+      "articulos_base": [
+        "Art. 338 D.555/2021 pag.197"
+      ],
+      "descripcion": "Obligación VIP (NO VIS) exclusivamente en predios con área ≥ 2000 m². Porcentaje: 20% del área vendible del proyecto. Sin este umbral de área: sin obligación.",
+      "formula_base": "A_VIP = 20% × area_vendible_proyecto",
+      "condiciones_activacion": {
+        "area_minima_m2": 2000,
+        "descripcion": "Solo predios con área de terreno ≥ 2000 m². La tabla define alturas máximas según ancho de vía y área; la obligación VIP aplica en el rango > 2000 m².",
+        "fuente": "Art.338 D.555/2021 pag.197 - fila 'Obligación de Vivienda de Interés Prioritario'"
+      },
+      "tabla_porcentajes": {
+        "predios_menores_2000m2": {
+          "condicion": "areaLote < 2000",
+          "porcentaje_VIP": 0,
+          "porcentaje_VIS": 0,
+          "aplica": false,
+          "nota": "Sin obligación VIS/VIP. Art.338 D.555/2021 pag.197"
+        },
+        "predios_iguales_o_mayores_2000m2": {
+          "condicion": "areaLote >= 2000",
+          "porcentaje_VIP": 20,
+          "porcentaje_VIS": 0,
+          "base_calculo": "area_vendible",
+          "aplica": true,
+          "nota": "20% del área vendible para VIP. Art.338 D.555/2021 pag.197: 'Para predios igual o mayor a 2000 m2 se exige el 20% del área vendible del proyecto para Vivienda de Interés Prioritario – VIP'"
+        }
+      },
+      "definicion_area_vendible": "Superficies de la edificación que pueden ser de propiedad privada o pública y NO corresponden a bienes comunes de copropiedades. Incluye: unidades vivienda, habitaciones hotel, oficinas, espacios administrativos. Excluye: zonas comunes, circulaciones, estacionamientos, etc. (Art.338 D.555/2021 + FAQ SDP)",
+      "tabla_alturas_referencia": {
+        "descripcion": "La obligación VIP aplica solo a actuaciones con área ≥ 2000 m². Las alturas máximas (en pisos) según ancho de vía y área son:",
+        "filas": [
+          {
+            "ancho_via": "< 12m",
+            "area_menor_240": 3,
+            "area_240_800": 3,
+            "area_800_2000": 3,
+            "area_mayor_2000": 3
+          },
+          {
+            "ancho_via": "≥ 12m",
+            "area_menor_240": 3,
+            "area_240_800": 5,
+            "area_800_2000": 5,
+            "area_mayor_2000": 5
+          },
+          {
+            "ancho_via": "≥ 16m",
+            "area_menor_240": 5,
+            "area_240_800": 8,
+            "area_800_2000": 8,
+            "area_mayor_2000": 12
+          },
+          {
+            "ancho_via": "≥ 22m",
+            "area_menor_240": 5,
+            "area_240_800": 8,
+            "area_800_2000": 8,
+            "area_mayor_2000": 12
+          }
+        ],
+        "nota": "Fuente: Art.338 D.555/2021 pag.197 tabla 'ALTURA MÁXIMA PERMITIDA / OBLIGACIONES URBANÍSTICAS SEGÚN ÁREA DE TERRENO'"
+      },
+      "formas_cumplimiento": {
+        "1_en_sitio": "Destinar 20% del área vendible para VIP dentro del proyecto",
+        "nota": "Formas adicionales según Art.338 y normativa concordante"
+      },
+      "excepciones": {
+        "vinculacion_moradores_70pct": {
+          "descripcion": "Cuando se vincule mínimo el 70% de los moradores al proyecto → NO se destina área para VIP.",
+          "articulo": "Art.338 Nota 6 D.555/2021 pag.198 + Art.377 D.555/2021",
+          "condicion": "ProjectData.moradoresVinculadosPorcentaje >= 70",
+          "efecto": "porcentaje_VIP = 0; aplica_obligacion_VIP = false"
+        },
+        "pendiente_mayor_45_grados": {
+          "descripcion": "No se permiten construcciones en terrenos con pendiente superior a 45 grados (100%).",
+          "articulo": "Art.338 Nota 4 D.555/2021 pag.198"
+        },
+        "borde_urbano_o_pendiente_12pct": {
+          "descripcion": "Predios en terreno inclinado con pendiente > 12% o en bordes urbanos: altura máxima 3 pisos.",
+          "articulo": "Art.338 Nota 5 D.555/2021 pag.198"
+        },
+        "cables_aereos": {
+          "descripcion": "Área de influencia de Cables Aéreos: altura máxima 3 pisos hasta que acto administrativo defina otra.",
+          "articulo": "Art.338 Nota 3 D.555/2021 pag.198"
+        }
+      },
+      "nombre_shapefile": "Mejoramiento integral"
+    },
+    "Conservacion": {
+      "nombre_completo": "Conservación",
+      "codigo_tratamiento": "CA",
+      "aplica_obligacion": false,
+      "articulos_base": [
+        "Capítulo Patrimonio D.555/2021",
+        "Anexo 6 D.555/2021"
+      ],
+      "porcentaje_VIP": 0,
+      "porcentaje_VIS": 0,
+      "descripcion": "Sin obligación VIS/VIP en ningún caso. Predios BIC (N1, N2, N3) con régimen patrimonial propio. No existe ICe base equiparable a otros tratamientos.",
+      "tabla_porcentajes": {
+        "todos": {
+          "porcentaje_VIP": 0,
+          "porcentaje_VIS": 0,
+          "aplica": false,
+          "nota": "Sin obligación. FAQ SDP pag.23."
+        }
+      },
+      "niveles_BIC": {
+        "N1": "Máxima restricción. Sin nuevos sótanos/semisótanos ni en ampliaciones.",
+        "N2": "Permite sótanos/semisótanos con condiciones (no bajo antejardines/aislamientos posteriores).",
+        "N3": "Condiciones intermedias."
+      },
+      "nombre_shapefile": "Conservación"
+    }
+  },
+  "regimen_temporal": {
+    "transitorio": {
+      "vigencia": "Hasta 31/12/2027 (radicación licencia)",
+      "fuente": "Art.5 + párr. final Res.940/2022"
+    },
+    "definitivo": {
+      "vigencia": "Desde 01/01/2028",
+      "fuente": "Art.4 Res.940/2022 + Art.322 D.555/2021",
+      "efecto": "Obligación plena. 'Se debe cumplir la totalidad de la obligación definida en el artículo precedente'"
+    }
+  },
+  "definicion_ICe": {
+    "articulo": "Art.266 Núm.2 y 4 D.555/2021 pag.164",
+    "formula": "ICe = areaConstruidaObligaciones / areaTerreno",
+    "exclusiones_area_construida": [
+      "Azoteas y hall de cubierta",
+      "Áreas duras sin cubrir o techar",
+      "Áreas de instalaciones mecánicas",
+      "Depósitos en pisos sin usos habitables no colindantes con unidades privadas habitables",
+      "Puntos fijos",
+      "Estacionamientos y circulación vehicular (todos los niveles)",
+      "Equipamiento comunal privado (máximo UN piso)",
+      "Estacionamientos y circulación en semisótanos y sótanos"
+    ]
+  },
+  "resultado_esperado": {
+    "aplica_obligacion": "boolean",
+    "regimen": "'transitorio' | 'definitivo'",
+    "porcentaje_VIP": "number (0-100)",
+    "porcentaje_VIS": "number (0-100)",
+    "area_VIP_m2": "number",
+    "area_VIS_m2": "number",
+    "norma_aplicable": "string",
+    "articulo_aplicable": "string",
+    "formula_usada": "string",
+    "excepcion_aplicada": "string | null",
+    "alerta": "string | null"
+  },
+  "shapefile_metadata": {
+    "nombre_capa": "TratamientoUrbanistico",
+    "entidad": "Secretaría Distrital de Planeación (SDP) - Bogotá D.C.",
+    "base_datos_origen": "ADMBDG.Tratamiento_urbanistico en GEODATAC",
+    "fecha_ultima_actualizacion": "2026-03-31",
+    "fecha_referencia_normativa": "2025-02-26",
+    "normativa_observacion": "Artículo Segundo de la Resolución 1255 de 2025 y artículo 2 de la Resolución 1142 de junio 20 de 2019",
+    "sistema_coordenadas": {
+      "nombre": "PCS_CarMAGBOG",
+      "tipo": "Proyectado - Transverse Mercator",
+      "datum": "CGS_CarMAGBOG",
+      "esferoide": "GRS80 Mod",
+      "semieje_mayor": 6380687.0,
+      "aplanamiento_inverso": 298.257222101,
+      "meridiano_central_dd": -74.14659167,
+      "latitud_origen_dd": 4.680486111,
+      "false_easting_m": 92334.879,
+      "false_northing_m": 109320.965,
+      "unidad": "Meter",
+      "codificacion_caracteres": "UTF-8"
+    },
+    "campos": {
+      "FID": {
+        "alias": "FID",
+        "tipo": "OID",
+        "ancho": 4,
+        "desc": "Número de característica interno (auto)"
+      },
+      "Shape": {
+        "alias": "Shape",
+        "tipo": "Geometry",
+        "ancho": 0,
+        "desc": "Geometría poligonal"
+      },
+      "CODIGO_ID": {
+        "alias": "Identificador único",
+        "tipo": "String",
+        "ancho": 20
+      },
+      "CODIGO_TRA": {
+        "alias": "Código Tratamiento",
+        "tipo": "String",
+        "ancho": 10
+      },
+      "NOMBRE_TRA": {
+        "alias": "Nombre Tratamiento",
+        "tipo": "String",
+        "ancho": 100,
+        "desc": "Campo principal para identificar el tratamiento"
+      },
+      "TIPOLOGIA": {
+        "alias": "Tipología",
+        "tipo": "String",
+        "ancho": 50
+      },
+      "ALTURA_MAX": {
+        "alias": "Altura Máxima",
+        "tipo": "String",
+        "ancho": 50
+      },
+      "ACTO_ADMIN": {
+        "alias": "Acto Administrativo",
+        "tipo": "String",
+        "ancho": 4
+      },
+      "NUMERO_ACT": {
+        "alias": "Número Acto Administrativo",
+        "tipo": "String",
+        "ancho": 20
+      },
+      "FECHA_ACTO": {
+        "alias": "Fecha Acto Administrativo",
+        "tipo": "Date",
+        "ancho": 8
+      },
+      "NORMATIVA": {
+        "alias": "Normativa",
+        "tipo": "String",
+        "ancho": 254
+      },
+      "CÓDIGO_SU": {
+        "alias": "Código Subtratamiento",
+        "tipo": "String",
+        "ancho": 10
+      },
+      "OBSERVACIO": {
+        "alias": "Observación",
+        "tipo": "String",
+        "ancho": 254
+      },
+      "ESCALA_CAP": {
+        "alias": "Escala Captura",
+        "tipo": "String",
+        "ancho": 10
+      },
+      "FECHA_CAPT": {
+        "alias": "Fecha Actualización",
+        "tipo": "Date",
+        "ancho": 8
+      },
+      "RESPONSABL": {
+        "alias": "Responsable",
+        "tipo": "String",
+        "ancho": 4
+      },
+      "REGLAID": {
+        "alias": "ReglaID",
+        "tipo": "Integer",
+        "ancho": 10
+      },
+      "Shape_Leng": {
+        "alias": "Shape_Length",
+        "tipo": "Double",
+        "ancho": 19
+      },
+      "Shape_Area": {
+        "alias": "Shape_Area",
+        "tipo": "Double",
+        "ancho": 19,
+        "desc": "Área en m² en sistema PCS_CarMAGBOG"
+      }
+    },
+    "valores_NOMBRE_TRA": [
+      "Conservación",
+      "Consolidación",
+      "Desarrollo",
+      "Mejoramiento integral",
+      "Renovación"
+    ]
+  },
+  "mapeo_shapefile_a_clave": {
+    "Renovación": "Renovacion_Urbana",
+    "Consolidación": "Consolidacion",
+    "Desarrollo": "Desarrollo",
+    "Mejoramiento integral": "Mejoramiento_Integral",
+    "Conservación": "Conservacion"
+  }
+}
