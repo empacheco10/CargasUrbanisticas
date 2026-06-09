@@ -1,0 +1,3929 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Urbanística · Eric Pacheco Llanos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   TEMA ERIC PACHECO LLANOS — Real Estate & Investment
+   Paleta: carbón oscuro · ivory cálido · oro real
+   Tipografía: Cormorant Garamond (display) · Inter (cuerpo)
+   Igual al OnePager y CV
+   ============================================================ */
+:root{
+  /* Tipografías */
+  --ff:'Inter',system-ui,sans-serif;
+  --mono:'Inter',system-ui,sans-serif;
+  --display:'Cormorant Garamond',Georgia,serif;
+
+  /* Fondos — ivory cálido para contenido, carbón para sidebar */
+  --bg:#F0EDE5;
+  --bg2:#2C2416;
+  --bg3:#FFFFFF;
+  --bg4:#E6E1D6;
+
+  /* Bordes */
+  --bdr:#D4CAB5;
+  --bdr2:#B8AD96;
+
+  /* Texto — el contenido principal sobre ivory */
+  --text:#1C1810;
+  --muted:#7A6E5A;
+  --dim:#A89880;
+
+  /* Acento principal — oro real del OnePager */
+  --green:#B8962E;
+  --green2:#C9A84C;
+  --green3:#FAF3E0;
+
+  /* Secundario */
+  --amber:#8A6914;
+  --amber2:#C9A84C;
+  --amber3:#FAF3E0;
+
+  /* Error */
+  --red:#C0392B;
+  --red3:#FDEDED;
+
+  --r:2px;
+}
+
+/* ================================================================
+   TEMA: ACCANTO — Institucional, blanco, serif, dorado cálido
+   Fuente display: Playfair Display · Body: Inter · Mono: Barlow
+   Paleta: blanco crema / negro editorial / dorado bronce
+   ================================================================ */
+[data-theme="accanto"]{
+  --ff:'Inter',system-ui,sans-serif;
+  --mono:'Barlow',system-ui,sans-serif;
+  --display:'Playfair Display',Georgia,serif;
+
+  /* Fondos */
+  --bg:#FAFAF8;         /* blanco crema ligeramente cálido */
+  --bg2:#F4F2EE;        /* crema suave */
+  --bg3:#FFFFFF;        /* blanco puro para cards */
+  --bg4:#EDE9E2;        /* crema más marcado */
+
+  /* Bordes */
+  --bdr:#DDD8CF;
+  --bdr2:#C8C0B4;
+
+  /* Texto */
+  --text:#1A1714;       /* negro editorial cálido */
+  --muted:#7A7268;      /* gris cálido */
+  --dim:#B0A898;        /* gris muy suave */
+
+  /* Acento principal: dorado bronce de Accanto */
+  --green:#8B6914;      /* dorado oscuro texto */
+  --green2:#C4A35A;     /* dorado medio — bordes activos */
+  --green3:#F5EDD8;     /* dorado muy claro — fondos activos */
+
+  /* Acento secundario: tierra */
+  --amber:#7A5C2E;
+  --amber2:#C49A4A;
+  --amber3:#FBF5E6;
+
+  /* Error */
+  --red:#C0392B;
+  --red3:#FDECEA;
+
+  /* Radio mayor para feel moderno */
+  --r:6px;
+}
+
+/* ================================================================
+   TEMA: ERIC PACHECO — Premium bicolor, serif+oro, financiero
+   Fuente display: Cormorant Garamond · Body: Inter · Mono: Barlow
+   Paleta: carbón oscuro / crema ivory / oro real
+   ================================================================ */
+[data-theme="eric"]{
+  --ff:'Inter',system-ui,sans-serif;
+  --mono:'Barlow',system-ui,sans-serif;
+  --display:'Cormorant Garamond',Georgia,serif;
+
+  /* Fondos — sidebar oscuro carbón, contenido crema ivory */
+  --bg:#F2EFE8;         /* ivory cálido para el body */
+  --bg2:#2C2416;        /* carbón dorado oscuro — sidebar */
+  --bg3:#FFFFFF;        /* blanco puro para cards */
+  --bg4:#EAE5DA;        /* ivory oscuro */
+
+  /* Bordes */
+  --bdr:#D4C9B0;
+  --bdr2:#B8A888;
+
+  /* Texto */
+  --text:#1C1810;       /* casi negro cálido */
+  --muted:#7A6E5C;      /* marrón grisáceo */
+  --dim:#A89A80;        /* dorado apagado */
+
+  /* Acento principal: oro real EP */
+  --green:#B8962E;      /* oro para texto activo */
+  --green2:#C4A53A;     /* oro medio — bordes */
+  --green3:#F9F3E0;     /* oro claro — fondos hover */
+
+  /* Acento secundario */
+  --amber:#8B6914;
+  --amber2:#C4A53A;
+  --amber3:#FBF5E6;
+
+  /* Error */
+  --red:#C0392B;
+  --red3:#FDECEA;
+
+  --r:3px;              /* esquinas más rectas — feel financiero */
+}
+
+/* ---- Overrides tipográficos para tema Accanto ---- */
+[data-theme="accanto"] header h1,
+[data-theme="accanto"] .total-amount,
+[data-theme="accanto"] .oblig-total{
+  font-family:var(--display);
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+[data-theme="accanto"] header h1 em{ color:var(--green2); }
+[data-theme="accanto"] .tab-btn.active{ color:var(--green2); border-bottom-color:var(--green2); }
+[data-theme="accanto"] .btn-geo{ background:var(--green3); border-color:var(--green2); color:var(--green); }
+[data-theme="accanto"] .btn-geo:hover{ background:var(--green2); color:#fff; }
+[data-theme="accanto"] .btn-calc{ background:var(--green3); border-color:var(--green2); color:var(--green); }
+[data-theme="accanto"] .btn-calc:hover{ background:var(--green2); color:#fff; }
+[data-theme="accanto"] .pp-title{ color:var(--green2); }
+[data-theme="accanto"] #pd_tratNombre{ color:var(--green)!important; }
+[data-theme="accanto"] .brand-eye{ color:var(--muted); }
+[data-theme="accanto"] .total-box{ border-color:var(--green2); background:var(--green3); }
+[data-theme="accanto"] .total-amount{ color:var(--green); }
+[data-theme="accanto"] .sec-title{ color:var(--muted); }
+[data-theme="accanto"] .sec-title::after{ background:var(--bdr); }
+[data-theme="accanto"] .tab-btn{ font-family:'Inter',sans-serif; font-size:11px; font-weight:500; letter-spacing:.06em; }
+[data-theme="accanto"] .sidebar{ border-right:1px solid var(--bdr); background:var(--bg2); }
+[data-theme="accanto"] .formula-bar{ border-left-color:var(--green2); color:var(--amber); }
+[data-theme="accanto"] .btn-example{ background:var(--amber3); border-color:var(--amber2); color:var(--amber); }
+[data-theme="accanto"] .oblig-card.ep{ border-top-color:var(--green2); }
+[data-theme="accanto"] .oblig-total{ color:var(--green); }
+[data-theme="accanto"] header{ background:#fff; border-bottom:2px solid var(--bdr); }
+[data-theme="accanto"] .tabs-bar{ background:var(--bg2); border-bottom:1px solid var(--bdr); }
+[data-theme="accanto"] .meta{ background:var(--bg4); border-color:var(--bdr); color:var(--muted); }
+[data-theme="accanto"] .meta b{ color:var(--green); }
+
+/* ---- Overrides tipográficos para tema Eric Pacheco ---- */
+[data-theme="eric"] header h1,
+[data-theme="eric"] .total-amount,
+[data-theme="eric"] .oblig-total{
+  font-family:var(--display);
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+[data-theme="eric"] header h1 em{ color:var(--green2); font-style:italic; }
+[data-theme="eric"] .tab-btn.active{ color:var(--green); border-bottom-color:var(--green); }
+[data-theme="eric"] .btn-geo{ background:var(--green3); border-color:var(--green2); color:var(--green); }
+[data-theme="eric"] .btn-geo:hover{ background:var(--green2); color:#fff; }
+[data-theme="eric"] .btn-calc{ background:var(--bg2); border-color:var(--green2); color:var(--green); }
+[data-theme="eric"] .btn-calc:hover{ background:var(--green2); color:#fff; }
+[data-theme="eric"] .pp-title{ color:var(--green2); }
+[data-theme="eric"] #pd_tratNombre{ color:var(--green)!important; }
+[data-theme="eric"] .total-box{ border-color:var(--green2); background:#FBF7EB; }
+[data-theme="eric"] .total-amount{ color:var(--green); }
+[data-theme="eric"] .sidebar{ border-right:1px solid #3D3424; background:var(--bg2); }
+[data-theme="eric"] .field label{ color:#C4A53A; }
+[data-theme="eric"] .field .hint{ color:#8B7A5C; }
+[data-theme="eric"] .field input,.field select{ background:#231D12; border-color:#3D3424; color:#F2EFE8; }
+[data-theme="eric"] .sec-side{ color:#8B7A5C; }
+[data-theme="eric"] .formula-bar{ border-left-color:var(--green2); color:var(--amber); }
+[data-theme="eric"] .btn-example{ background:var(--amber3); border-color:var(--amber2); color:var(--amber); }
+[data-theme="eric"] .oblig-card.ep{ border-top-color:var(--green2); }
+[data-theme="eric"] .oblig-total{ color:var(--green); }
+[data-theme="eric"] header{ background:var(--bg2); border-bottom:2px solid #3D3424; }
+[data-theme="eric"] header h1{ color:#F2EFE8; }
+[data-theme="eric"] header .brand-eye{ color:#C4A53A; letter-spacing:.2em; }
+[data-theme="eric"] .tabs-bar{ background:#231D12; border-bottom:1px solid #3D3424; }
+[data-theme="eric"] .tab-btn{ color:#8B7A5C; }
+[data-theme="eric"] .tab-btn:hover{ color:#F2EFE8; }
+[data-theme="eric"] .meta{ background:#231D12; border-color:#3D3424; color:#8B7A5C; }
+[data-theme="eric"] .meta b{ color:var(--green); }
+/* Sidebar oscuro — inputs dentro del sidebar en tema eric */
+[data-theme="eric"] .sidebar .field input,
+[data-theme="eric"] .sidebar .field select,
+[data-theme="eric"] .sidebar #rb_dir,
+[data-theme="eric"] .sidebar #rb_indice_display,
+[data-theme="eric"] .sidebar #rb_acnorm_display{
+  background:#231D12!important;
+  border-color:#3D3424!important;
+  color:#F2EFE8!important;
+}
+[data-theme="eric"] .sidebar .field input:focus,
+[data-theme="eric"] .sidebar .field select:focus{
+  border-color:var(--green2)!important;
+  box-shadow:0 0 0 3px rgba(196,165,58,.15)!important;
+}
+/* Autofill en temas claros/oscuros */
+[data-theme="accanto"] input:-webkit-autofill,
+[data-theme="accanto"] input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 30px #fff inset!important;
+  -webkit-text-fill-color:#1A1714!important;
+}
+[data-theme="eric"] .sidebar input:-webkit-autofill,
+[data-theme="eric"] .sidebar input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 30px #231D12 inset!important;
+  -webkit-text-fill-color:#F2EFE8!important;
+}
+
+/* ======================================================
+   OVERRIDES COMPLETOS TEMAS CLAROS — panel, tabla, cards
+   ====================================================== */
+
+/* -- Panel central pp-field -- */
+[data-theme="accanto"] .pp-field input,[data-theme="accanto"] .pp-field select{background:#FFF;border-color:#DDD8CF;color:#1A1714}
+[data-theme="accanto"] .pp-field input:focus,[data-theme="accanto"] .pp-field select:focus{border-color:#C4A35A;box-shadow:0 0 0 3px rgba(196,163,90,.15)}
+[data-theme="accanto"] .pp-field label{color:#7A7268}
+[data-theme="accanto"] .pp-hint{color:#B0A898}
+[data-theme="accanto"] .project-panel{background:#F4F2EE;border-color:#DDD8CF}
+[data-theme="accanto"] .summary-panel{background:#FFF;border-color:#DDD8CF}
+[data-theme="accanto"] .sp-item{background:#FAFAF8}
+[data-theme="accanto"] .sp-k{color:#B0A898}
+[data-theme="accanto"] .sp-v{color:#1A1714}
+[data-theme="accanto"] .sp-grid{background:#DDD8CF;border-color:#DDD8CF}
+[data-theme="accanto"] .sp-v.green{color:#8B6914}
+/* Tabla usos */
+[data-theme="accanto"] table.usos tbody tr{border-bottom-color:#EDE9E2}
+[data-theme="accanto"] table.usos tbody tr:hover{background:#F4F2EE}
+[data-theme="accanto"] table.usos td input,[data-theme="accanto"] table.usos td select{color:#1A1714}
+[data-theme="accanto"] table.usos td input:focus,[data-theme="accanto"] table.usos td select:focus{background:#F4F2EE;border-color:#C4A35A}
+[data-theme="accanto"] .calc-cell{color:#B0A898}
+[data-theme="accanto"] .calc-cell.act{color:#1A1714}
+[data-theme="accanto"] .calc-cell.iva,[data-theme="accanto"] .calc-cell.tot{color:#8B6914}
+/* Cards y resultados */
+[data-theme="accanto"] .param-card{background:#FFF;border-color:#DDD8CF}
+[data-theme="accanto"] .param-lbl{color:#B0A898}
+[data-theme="accanto"] .param-val{color:#1A1714}
+[data-theme="accanto"] .param-val.g{color:#8B6914}
+[data-theme="accanto"] .memoria{background:#F4F2EE;border-color:#DDD8CF}
+[data-theme="accanto"] .memoria-line{color:#7A7268}
+[data-theme="accanto"] .memoria-line::before{color:#C4A35A}
+[data-theme="accanto"] .memoria-line.sec{color:#8B6914}
+[data-theme="accanto"] .oblig-card{background:#FFF;border-color:#DDD8CF}
+[data-theme="accanto"] .oblig-detail{color:#7A7268;border-top-color:#EDE9E2}
+[data-theme="accanto"] .oblig-head{color:#7A7268}
+[data-theme="accanto"] .oblig-card.sp .oblig-total{color:#3a7da8}
+[data-theme="accanto"] .btn-action{border-color:#DDD8CF;color:#7A7268}
+[data-theme="accanto"] .btn-action:hover{background:#F4F2EE;color:#1A1714;border-color:#C4A35A}
+[data-theme="accanto"] .btn-add{border-color:#DDD8CF;color:#7A7268}
+[data-theme="accanto"] .btn-add:hover{border-color:#C4A35A;color:#8B6914;background:#F5EDD8}
+[data-theme="accanto"] .liq-table td{border-bottom-color:#EDE9E2}
+[data-theme="accanto"] .liq-k{color:#7A7268}
+[data-theme="accanto"] .liq-v{color:#1A1714}
+[data-theme="accanto"] .liq-sub td{background:#F4F2EE}
+[data-theme="accanto"] .liq-sub .liq-k{color:#1A1714}
+[data-theme="accanto"] .aviso{background:#FBF5E6;border-color:#C4A35A;color:#8B6914}
+[data-theme="accanto"] footer{border-top-color:#DDD8CF}
+[data-theme="accanto"] footer p{color:#B0A898}
+[data-theme="accanto"] .vis-badge{background:#FBF5E6;border-color:#C4A35A;color:#8B6914}
+[data-theme="accanto"] .formula-bar{background:#F4F2EE;border-color:#DDD8CF}
+[data-theme="accanto"] .validator{background:#F4F2EE;border-color:#DDD8CF}
+[data-theme="accanto"] .val-field input{background:#FFF;border-color:#DDD8CF;color:#1A1714}
+[data-theme="accanto"] .geo-status{color:#7A7268}
+[data-theme="accanto"] .theme-switcher{background:#FFF;border-color:#DDD8CF;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+[data-theme="accanto"] .theme-switcher span{color:#7A7268}
+[data-theme="accanto"] #rb_indice_display,[data-theme="accanto"] #rb_acnorm_display{background:#F5EDD8!important;border-color:#C4A35A!important;color:#8B6914!important}
+
+/* -- Eric: panel central -- */
+[data-theme="eric"] .pp-field input,[data-theme="eric"] .pp-field select{background:#FFF;border-color:#D4C9B0;color:#1C1810}
+[data-theme="eric"] .pp-field input:focus,[data-theme="eric"] .pp-field select:focus{border-color:#C4A53A;box-shadow:0 0 0 3px rgba(196,165,58,.15)}
+[data-theme="eric"] .pp-field label{color:#7A6E5C}
+[data-theme="eric"] .pp-hint{color:#A89A80}
+[data-theme="eric"] .project-panel{background:#EAE5DA;border-color:#D4C9B0}
+[data-theme="eric"] .summary-panel{background:#FFF;border-color:#D4C9B0}
+[data-theme="eric"] .sp-item{background:#F5F1E8}
+[data-theme="eric"] .sp-k{color:#A89A80}
+[data-theme="eric"] .sp-v{color:#1C1810}
+[data-theme="eric"] .sp-grid{background:#D4C9B0;border-color:#D4C9B0}
+[data-theme="eric"] .sp-v.green{color:#B8962E}
+/* Tabla usos */
+[data-theme="eric"] table.usos tbody tr{border-bottom-color:#EAE5DA}
+[data-theme="eric"] table.usos tbody tr:hover{background:#F5F1E8}
+[data-theme="eric"] table.usos td input,[data-theme="eric"] table.usos td select{color:#1C1810}
+[data-theme="eric"] table.usos td input:focus,[data-theme="eric"] table.usos td select:focus{background:#F5F1E8;border-color:#C4A53A}
+[data-theme="eric"] .calc-cell{color:#A89A80}
+[data-theme="eric"] .calc-cell.act{color:#1C1810}
+[data-theme="eric"] .calc-cell.iva,[data-theme="eric"] .calc-cell.tot{color:#B8962E}
+/* Cards y resultados */
+[data-theme="eric"] .param-card{background:#FFF;border-color:#D4C9B0}
+[data-theme="eric"] .param-lbl{color:#A89A80}
+[data-theme="eric"] .param-val{color:#1C1810}
+[data-theme="eric"] .param-val.g{color:#B8962E}
+[data-theme="eric"] .memoria{background:#F5F1E8;border-color:#D4C9B0}
+[data-theme="eric"] .memoria-line{color:#7A6E5C}
+[data-theme="eric"] .memoria-line::before{color:#C4A53A}
+[data-theme="eric"] .memoria-line.sec{color:#B8962E}
+[data-theme="eric"] .oblig-card{background:#FFF;border-color:#D4C9B0}
+[data-theme="eric"] .oblig-detail{color:#7A6E5C;border-top-color:#EAE5DA}
+[data-theme="eric"] .oblig-head{color:#7A6E5C}
+[data-theme="eric"] .oblig-card.sp .oblig-total{color:#3a7da8}
+[data-theme="eric"] .btn-action{border-color:#D4C9B0;color:#7A6E5C}
+[data-theme="eric"] .btn-action:hover{background:#F5F1E8;color:#1C1810;border-color:#C4A53A}
+[data-theme="eric"] .btn-add{border-color:#D4C9B0;color:#7A6E5C}
+[data-theme="eric"] .btn-add:hover{border-color:#C4A53A;color:#B8962E;background:#FBF7EB}
+[data-theme="eric"] .liq-table td{border-bottom-color:#EAE5DA}
+[data-theme="eric"] .liq-k{color:#7A6E5C}
+[data-theme="eric"] .liq-v{color:#1C1810}
+[data-theme="eric"] .liq-sub td{background:#F5F1E8}
+[data-theme="eric"] .liq-sub .liq-k{color:#1C1810}
+[data-theme="eric"] .aviso{background:#FBF7EB;border-color:#C4A53A;color:#B8962E}
+[data-theme="eric"] footer{border-top-color:#3D3424;background:#2C2416}
+[data-theme="eric"] footer p{color:#8B7A5C}
+[data-theme="eric"] .vis-badge{background:#FBF7EB;border-color:#C4A53A;color:#B8962E}
+[data-theme="eric"] .formula-bar{background:#F5F1E8;border-color:#D4C9B0}
+[data-theme="eric"] .validator{background:#F5F1E8;border-color:#D4C9B0}
+[data-theme="eric"] .val-field input{background:#FFF;border-color:#D4C9B0;color:#1C1810}
+[data-theme="eric"] .geo-status{color:#7A6E5C}
+[data-theme="eric"] .theme-switcher{background:#2C2416;border-color:#3D3424;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+[data-theme="eric"] .theme-switcher span{color:#8B7A5C}
+[data-theme="eric"] #rb_indice_display,[data-theme="eric"] #rb_acnorm_display{background:#F5F1E8!important;border-color:#D4C9B0!important;color:#7A6E5C!important}
+
+/* ---- Header logo Accanto (SVG inline desde CDN) ---- */
+[data-theme="accanto"] .brand-logo-accanto{ display:inline-block; }
+[data-theme="accanto"] .brand-logo-default{ display:none; }
+[data-theme="eric"]    .brand-logo-ep{ display:inline-flex; }
+[data-theme="eric"]    .brand-logo-default{ display:none; }
+.brand-logo-accanto{ display:none; }
+.brand-logo-ep{ display:none; }
+.brand-logo-default{ display:block; }
+
+/* ---- Selector de tema flotante ---- */
+.theme-switcher{
+  position:fixed; bottom:24px; right:24px; z-index:999;
+  display:flex; gap:6px; align-items:center;
+  background:var(--bg3); border:1px solid var(--bdr);
+  border-radius:40px; padding:6px 10px;
+  box-shadow:0 4px 20px rgba(0,0,0,.18);
+  transition:all .2s;
+}
+.theme-switcher span{
+  font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted); font-family:var(--mono); margin-right:4px;
+}
+.theme-btn{
+  width:28px; height:28px; border-radius:50%; border:2px solid transparent;
+  cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; font-family:var(--mono); letter-spacing:0;
+}
+.theme-btn:hover{ transform:scale(1.12); }
+.theme-btn.active{ border-color:var(--green2); }
+.theme-btn[data-t="dark"]  { background:#0e1110; color:#72c464; }
+.theme-btn[data-t="accanto"]{ background:#F4F2EE; color:#8B6914; border-color:#DDD8CF; font-family:'Inter',sans-serif; font-size:9px; }
+.theme-btn[data-t="eric"]  { background:#2C2416; color:#C4A53A; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:15px}
+body{max-width:1180px;margin:0 auto;min-height:100vh}
+header{padding:36px 40px 28px;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.brand-eye{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+header h1{font-size:clamp(30px,4.2vw,48px);font-weight:700;letter-spacing:-.025em;line-height:1;color:var(--text)}
+header h1 em{color:var(--green);font-style:normal}
+.meta{background:var(--bg3);border:1px solid var(--bdr);padding:12px 18px;border-radius:var(--r);font-family:var(--mono);font-size:11px;color:var(--muted);line-height:2;text-align:right}
+.meta b{color:var(--green);font-weight:500}
+.app{display:grid;grid-template-columns:340px 1fr;min-height:calc(100vh - 160px)}
+@media(max-width:860px){.app{grid-template-columns:1fr}}
+.sidebar{border-right:1px solid var(--bdr);padding:28px 24px;background:var(--bg2)}
+.sec-side{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin:22px 0 16px}
+.sec-side:first-child{margin-top:0}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.field .hint{font-family:var(--mono);font-size:10px;color:var(--dim);line-height:1.4}
+.field input,.field select{background:var(--bg3);border:1px solid var(--bdr);color:var(--text);padding:9px 11px;font-family:var(--mono);font-size:13px;border-radius:var(--r);transition:border-color .15s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--green2);box-shadow:0 0 0 3px rgba(61,120,51,.18)}
+.field input[type=number]{text-align:right}
+.tipo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tipo-btn{background:var(--bg3);border:1px solid var(--bdr);color:var(--muted);padding:9px 4px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border-radius:var(--r);transition:all .15s}
+.tipo-btn:hover{border-color:var(--bdr2);color:var(--text)}
+.tipo-btn.on-novis{background:var(--green3);border-color:var(--green2);color:var(--green)}
+.tipo-btn.on-vis{background:var(--amber3);border-color:var(--amber2);color:var(--amber)}
+.tipo-hint{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:5px}
+.divider{border:none;border-top:1px solid var(--bdr);margin:4px 0 8px}
+.btn-calc{margin-top:8px;padding:11px 18px;background:var(--green3);border:1px solid var(--green2);color:var(--green);cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--r);transition:all .15s;width:100%}
+.btn-calc:hover{background:var(--green2);color:var(--bg)}
+.content{padding:28px 32px}
+.formula-bar{background:var(--bg3);border:1px solid var(--bdr);border-left:3px solid var(--green2);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;font-family:var(--mono);font-size:11px;color:var(--amber);margin-bottom:24px;line-height:1.6}
+.sec-title{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.tbl-wrap{overflow-x:auto;margin-bottom:10px}
+table.usos{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
+table.usos thead tr{border-bottom:2px solid var(--bdr2)}
+table.usos th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px;text-align:left;font-weight:400;white-space:nowrap}
+th.r,td.r{text-align:right}
+table.usos tbody tr{border-bottom:1px solid var(--bdr)}
+table.usos tbody tr:hover{background:var(--bg3)}
+table.usos td{padding:6px 7px;vertical-align:middle}
+table.usos td input,table.usos td select{background:transparent;border:1px solid transparent;color:var(--text);padding:5px 6px;font-family:var(--mono);font-size:12px;border-radius:2px;width:100%;transition:border-color .12s}
+table.usos td input:hover,table.usos td select:hover{border-color:var(--bdr2)}
+table.usos td input:focus,table.usos td select:focus{outline:none;border-color:var(--green2);background:var(--bg4)}
+table.usos td input[type=number]{text-align:right}
+.calc-cell{font-family:var(--mono);font-size:12px;color:var(--dim);text-align:right;padding:6px 8px;white-space:nowrap}
+.calc-cell.act{color:var(--text)}.calc-cell.iva{color:var(--amber)}.calc-cell.tot{color:var(--green);font-weight:500}
+.btn-del{background:none;border:1px solid transparent;color:var(--dim);cursor:pointer;padding:4px 8px;border-radius:2px;font-size:13px;transition:all .15s}
+.btn-del:hover{border-color:var(--red);color:var(--red);background:var(--red3)}
+.btn-add{width:100%;padding:9px 18px;margin-bottom:24px;background:transparent;border:1px dashed var(--bdr2);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-radius:var(--r);transition:all .15s}
+.btn-add:hover{border-color:var(--green2);color:var(--green);background:var(--green3)}
+.liq-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+.liq-table td{padding:9px 12px;border-bottom:1px solid var(--bdr)}
+.liq-table tr:last-child td{border-bottom:none}
+.liq-k{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.liq-v{font-family:var(--mono);font-size:13px;color:var(--text);text-align:right}
+.liq-sub td{background:var(--bg3)}.liq-sub .liq-k{color:var(--text);font-weight:600;font-size:12px}.liq-sub .liq-v{font-size:14px}
+.liq-sep td{padding:3px;border:none}
+.total-box{background:var(--bg3);border:1px solid var(--green2);border-radius:var(--r);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.total-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.total-amount{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--green);letter-spacing:-.01em}
+.total-desc{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;text-align:right}
+.total-desc b{color:var(--text)}
+.vis-badge{background:var(--amber3);border:1px solid var(--amber2);color:var(--amber);font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:20px;letter-spacing:.1em;margin-top:6px;display:inline-block}
+.params-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+@media(max-width:700px){.params-grid{grid-template-columns:repeat(2,1fr)}}
+.param-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:11px 13px}
+.param-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.param-val{font-family:var(--mono);font-size:16px;color:var(--text)}.param-val.g{color:var(--green)}
+.memoria{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:16px 18px;margin-bottom:20px}
+.memoria-line{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.9;padding-left:14px;position:relative}
+.memoria-line::before{content:'>';position:absolute;left:0;color:var(--green2)}
+.validator{background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r);padding:14px 16px;margin-bottom:20px}
+.validator-title{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.val-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.val-field{flex:1;min-width:150px}
+.val-field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.val-field input{width:100%;background:var(--bg2);border:1px solid var(--bdr2);color:var(--text);padding:8px 10px;font-family:var(--mono);font-size:12px;border-radius:var(--r)}
+#diffLabel{font-family:var(--mono);font-size:11px;line-height:1.9;min-width:200px;padding-bottom:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-action{padding:10px 20px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--bdr2);background:transparent;color:var(--muted);cursor:pointer;border-radius:var(--r);transition:all .15s}
+.btn-action:hover{background:var(--bg3);color:var(--text);border-color:var(--green2)}
+.btn-action.pdf:hover{border-color:var(--red);color:var(--red)}
+.btn-action.xls:hover{border-color:var(--green);color:var(--green)}
+.btn-example{display:inline-flex;align-items:center;gap:6px;background:var(--amber3);border:1px solid var(--amber2);padding:4px 12px;border-radius:20px;font-family:var(--mono);font-size:10px;color:var(--amber);cursor:pointer;letter-spacing:.1em;transition:all .15s}
+.btn-example:hover{background:var(--amber2);color:var(--bg)}
+footer{border-top:1px solid var(--bdr);padding:16px 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer p{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.05em}
+.err{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(212,96,96,.15)!important}
+
+/* Evitar que el autocompletado del browser sobreescriba el fondo de los campos */
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 30px var(--bg3) inset!important;
+  -webkit-text-fill-color:var(--text)!important;
+  caret-color:var(--text);
+}
+/* rb_dir específico: garantizar fondo oscuro siempre */
+#rb_dir{background:var(--bg3)!important;color:var(--text)!important;}
+
+/* Area de impresion: oculta en pantalla */
+#printArea{display:none}
+
+/* Al imprimir: ocultar la app y mostrar solo el reporte */
+@media print{
+  body.printing>header,
+  body.printing>.app,
+  body.printing>footer{display:none!important}
+  body.printing #printArea{display:block!important;color:#1a1a1a;font-family:Arial,sans-serif;font-size:12px;padding:0}
+  body.printing #printArea h1{font-size:20px;border-bottom:2px solid #2d6a2d;padding-bottom:8px;color:#1a1a1a}
+  body.printing #printArea h2{font-size:14px;color:#2d6a2d;margin-top:20px}
+  body.printing #printArea table{width:100%;border-collapse:collapse;margin:10px 0;font-size:11px}
+  body.printing #printArea th,
+  body.printing #printArea td{border:1px solid #ccc;padding:6px 8px;text-align:left}
+  body.printing #printArea th{background:#2d6a2d;color:#fff}
+  body.printing #printArea .tot{background:#eef7ee;font-weight:bold}
+  body.printing #printArea .big{font-size:22px;color:#2d6a2d;font-weight:bold}
+  body.printing #printArea ul{font-size:10px;color:#555;line-height:1.7}
+  body.printing #printArea .meta-tbl td{border:none;padding:2px 8px}
+  html,body{background:#fff!important}
+}
+
+
+/* ===== Estilos exclusivos de Obligaciones ===== */
+:root{ --blue:#5fa8d4; --blue3:#0e2430; }
+.cards2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:700px){.cards2{grid-template-columns:1fr}}
+.oblig-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:18px 20px}
+.oblig-card.ep{border-top:3px solid var(--green2)}
+.oblig-card.sp{border-top:3px solid var(--blue)}
+.oblig-head{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.oblig-total{font-family:var(--mono);font-size:28px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
+.oblig-card.ep .oblig-total{color:var(--green)}
+.oblig-card.sp .oblig-total{color:var(--blue)}
+.oblig-detail{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.9;border-top:1px solid var(--bdr);padding-top:10px}
+.oblig-detail b{color:var(--text)}
+.aviso{background:var(--amber3);border:1px solid var(--amber2);border-radius:var(--r);padding:12px 16px;font-family:var(--mono);font-size:11px;color:var(--amber);line-height:1.6;margin-bottom:20px}
+.aviso b{color:#f0d080}
+.memoria-line.sec{color:var(--amber);margin-top:6px;font-weight:600}.memoria-line.sec::before{content:''}
+
+/* ===== Sistema de pestañas ===== */
+.tabs-bar{display:flex;gap:4px;padding:0 40px;border-bottom:1px solid var(--bdr);background:var(--bg2)}
+.tab-btn{
+  background:transparent;border:none;border-bottom:2px solid transparent;
+  color:var(--muted);padding:16px 24px;cursor:pointer;
+  font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  transition:all .15s;margin-bottom:-1px;
+}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+
+
+
+@media print{
+  body.printing-del>header,body.printing-del>.tabs-bar,body.printing-del>.tab-panel,body.printing-del>footer{display:none!important}
+  body.printing-del #printAreaDEL{display:block!important;color:#1a1a1a;font-family:Arial,sans-serif;font-size:12px}
+  body.printing-del #printAreaDEL h1{font-size:20px;border-bottom:2px solid #2d6a2d;padding-bottom:8px}
+  body.printing-del #printAreaDEL h2{font-size:14px;color:#2d6a2d;margin-top:18px}
+  body.printing-del #printAreaDEL table{width:100%;border-collapse:collapse;margin:10px 0;font-size:11px}
+  body.printing-del #printAreaDEL th,body.printing-del #printAreaDEL td{border:1px solid #ccc;padding:6px 8px;text-align:left}
+  body.printing-del #printAreaDEL th{background:#2d6a2d;color:#fff}
+  body.printing-del #printAreaDEL .tot{background:#eef7ee;font-weight:bold}
+  body.printing-del #printAreaDEL .meta-tbl td{border:none;padding:2px 8px}
+}
+#printAreaDEL{display:none}
+
+
+@media print{
+  body.printing-rb>header,body.printing-rb>.tabs-bar,body.printing-rb>.tab-panel,body.printing-rb>footer{display:none!important}
+  body.printing-rb #printAreaRB{display:block!important;color:#1a1a1a;font-family:Arial,sans-serif;font-size:12px}
+  body.printing-rb #printAreaRB h1{font-size:20px;border-bottom:2px solid #2d6a2d;padding-bottom:8px}
+  body.printing-rb #printAreaRB h2{font-size:14px;color:#2d6a2d;margin-top:18px}
+  body.printing-rb #printAreaRB table{width:100%;border-collapse:collapse;margin:10px 0;font-size:11px}
+  body.printing-rb #printAreaRB th,body.printing-rb #printAreaRB td{border:1px solid #ccc;padding:6px 8px;text-align:left}
+  body.printing-rb #printAreaRB th{background:#2d6a2d;color:#fff}
+  body.printing-rb #printAreaRB .tot{background:#eef7ee;font-weight:bold}
+  body.printing-rb #printAreaRB .meta-tbl td{border:none;padding:2px 8px}
+}
+#printAreaRB{display:none}
+
+
+/* ===== Panel compartido de proyecto (Fase 2) ===== */
+.project-panel{margin:0 40px 0;padding:20px 24px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--r);margin-top:-8px;margin-bottom:20px}
+.pp-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;flex-wrap:wrap;gap:6px}
+.pp-title{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--green)}
+.pp-sub{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+.pp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:860px){.pp-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.pp-grid{grid-template-columns:1fr}}
+.pp-field{display:flex;flex-direction:column;gap:4px}
+.pp-field label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pp-field input,.pp-field select{background:var(--bg2);border:1px solid var(--bdr);color:var(--text);padding:8px 10px;font-family:var(--mono);font-size:12px;border-radius:var(--r)}
+.pp-field input:focus,.pp-field select:focus{outline:none;border-color:var(--green2)}
+.pp-field input[readonly]{opacity:.6;cursor:not-allowed}
+.pp-hint{font-family:var(--mono);font-size:9px;line-height:1.4;min-height:12px}
+
+.btn-geo{padding:9px 16px;background:var(--green3);border:1px solid var(--green2);color:var(--green);cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-radius:var(--r);transition:all .15s;white-space:nowrap}
+.btn-geo:hover{background:var(--green2);color:var(--bg)}
+.btn-geo:disabled{opacity:.5;cursor:wait}
+#pd_tratNombre{font-weight:600;color:var(--green)!important}
+.geo-status{font-family:var(--mono);font-size:10px;margin-top:4px;line-height:1.4}
+
+@media print{.project-panel{display:none!important}}
+/* ===== Panel resumen dinamico (Ajuste 1) ===== */
+.summary-panel{margin:0 40px 20px;padding:16px 24px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r)}
+.sp-title{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.sp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden}
+@media(max-width:860px){.sp-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.sp-grid{grid-template-columns:1fr}}
+.sp-item{background:var(--bg3);padding:10px 14px;display:flex;flex-direction:column;gap:3px}
+.sp-k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.sp-v{font-family:var(--mono);font-size:13px;color:var(--text);text-align:left;font-variant-numeric:tabular-nums}
+.sp-v.empty{color:var(--dim)}
+.sp-v.hl{color:var(--green)}
+@media print{.summary-panel{display:none!important}}
+
+/* ============================================================
+   OVERRIDES VISUALES TEMA ERIC PACHECO LLANOS
+   Solo CSS — ningún cálculo modificado
+   Layout: sidebar oscuro carbón · contenido ivory · acentos oro
+   ============================================================ */
+
+html{ font-family:var(--ff); background:var(--bg); color:var(--text); }
+
+/* Header oscuro */
+header{ background:var(--bg2); }
+
+/* Tabs sobre ivory */
+.tabs-bar{
+  background:var(--bg4); border-bottom:2px solid var(--bdr);
+  padding:0 40px;
+}
+.tab-btn{
+  font-family:var(--ff); font-size:11px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); padding:16px 20px;
+  border-bottom:3px solid transparent; margin-bottom:-2px;
+  transition:all .2s;
+}
+.tab-btn:hover{ color:var(--text); }
+.tab-btn.active{ color:var(--green); border-bottom-color:var(--green2); }
+
+/* Sidebar — carbón oscuro igual al margen izquierdo del CV */
+.sidebar{
+  background:var(--bg2); border-right:2px solid #3D3020;
+}
+.sec-side{
+  font-family:var(--ff); font-size:10px; font-weight:600;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--green2);
+}
+.field label{
+  font-family:var(--ff); font-size:10px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--green2);
+}
+.field .hint{ font-family:var(--ff); font-size:10px; color:#6A5A40; }
+.field input,.field select{
+  font-family:var(--ff); font-size:13px;
+  background:#231D12; border:1px solid #3D3020; color:#F0EDE5;
+  border-radius:var(--r);
+}
+.field input:focus,.field select:focus{
+  border-color:var(--green2); box-shadow:0 0 0 3px rgba(201,168,76,.2);
+}
+.field input[type=number]{ text-align:right; }
+
+/* Panel central — ivory */
+.project-panel{ background:var(--bg4); border-color:var(--bdr); }
+.pp-title{
+  font-family:var(--display); font-size:12px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--green);
+  font-style:italic;
+}
+.pp-sub{ font-family:var(--ff); color:var(--muted); }
+.pp-field label{
+  font-family:var(--ff); font-size:9px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+}
+.pp-field input,.pp-field select{
+  font-family:var(--ff); background:#fff; border-color:var(--bdr); color:var(--text);
+}
+.pp-field input:focus,.pp-field select:focus{
+  border-color:var(--green2); box-shadow:0 0 0 3px rgba(201,168,76,.15);
+}
+.pp-hint{ font-family:var(--ff); color:var(--dim); }
+#pd_tratNombre{ font-weight:700; color:var(--green)!important; }
+
+/* Botón Detectar */
+.btn-geo{
+  background:var(--green); border-color:var(--green); color:#fff;
+  font-family:var(--ff); font-weight:600; letter-spacing:.1em;
+}
+.btn-geo:hover{ background:#9A7B22; color:#fff; }
+
+/* Panel resumen */
+.summary-panel{ background:#fff; border-color:var(--bdr); }
+.sp-title{
+  font-family:var(--ff); font-size:10px; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--muted);
+}
+.sp-item{ background:var(--bg4); }
+.sp-k{ font-family:var(--ff); font-size:9px; letter-spacing:.1em; color:var(--dim); }
+.sp-v{ font-family:var(--display); font-size:14px; font-weight:600; color:var(--text); }
+.sp-v.hl{ color:var(--green); }
+.sp-grid{ background:var(--bdr); border-color:var(--bdr); }
+
+/* Barra de fórmula */
+.formula-bar{
+  background:var(--green3); border-color:var(--bdr); border-left-color:var(--green2);
+  font-family:var(--ff); color:var(--green);
+}
+
+/* Títulos de sección */
+.sec-title{
+  font-family:var(--display); font-size:10px; font-weight:600;
+  letter-spacing:.18em; color:var(--muted); font-style:italic;
+}
+.sec-title::after{ background:var(--bdr); }
+
+/* Tablas */
+table.usos thead tr{ border-bottom-color:var(--bdr2); }
+table.usos tbody tr{ border-bottom-color:var(--bdr); }
+table.usos tbody tr:hover{ background:var(--bg4); }
+table.usos th{
+  font-family:var(--ff); font-size:9px; font-weight:700;
+  letter-spacing:.1em; color:var(--muted);
+}
+table.usos td input,table.usos td select{
+  font-family:var(--ff); color:var(--text);
+}
+table.usos td input:focus,table.usos td select:focus{
+  border-color:var(--green2); background:var(--bg4);
+}
+.calc-cell{ font-family:var(--ff); color:var(--dim); }
+.calc-cell.act{ color:var(--text); }
+.calc-cell.iva{ color:var(--amber); }
+.calc-cell.tot{ color:var(--green); font-weight:600; }
+
+/* Botones */
+.btn-calc{
+  background:var(--green); border-color:var(--green); color:#fff;
+  font-family:var(--ff); font-weight:700; letter-spacing:.1em;
+}
+.btn-calc:hover{ background:#9A7B22; color:#fff; }
+.btn-add{
+  border-color:var(--bdr2); color:var(--muted); font-family:var(--ff); font-weight:500;
+}
+.btn-add:hover{ border-color:var(--green2); color:var(--green); background:var(--green3); }
+.btn-action{
+  font-family:var(--ff); font-size:10px; font-weight:500;
+  letter-spacing:.08em; border-color:var(--bdr); color:var(--muted);
+}
+.btn-action:hover{ background:var(--bg4); color:var(--text); border-color:var(--green2); }
+.btn-del:hover{ border-color:var(--red); color:var(--red); background:var(--red3); }
+.btn-example{
+  background:var(--green3); border-color:var(--green2); color:var(--green);
+  font-family:var(--ff); font-weight:600;
+}
+.btn-example:hover{ background:var(--green2); color:#fff; }
+
+/* Total y cards */
+.total-box{ background:var(--green3); border-color:var(--green2); }
+.total-label{
+  font-family:var(--ff); font-size:10px; font-weight:600;
+  letter-spacing:.18em; color:var(--muted);
+}
+.total-amount{
+  font-family:var(--display); font-size:38px; font-weight:600;
+  color:var(--green); font-style:italic;
+}
+.total-desc{ font-family:var(--ff); color:var(--muted); }
+.total-desc b{ color:var(--text); }
+
+.param-card{ background:#fff; border-color:var(--bdr); }
+.param-lbl{ font-family:var(--ff); font-size:9px; font-weight:600; letter-spacing:.14em; color:var(--dim); }
+.param-val{ font-family:var(--display); font-size:18px; font-weight:600; color:var(--text); }
+.param-val.g{ color:var(--green); }
+
+/* Cards obligaciones */
+.oblig-card{ background:#fff; border-color:var(--bdr); }
+.oblig-card.ep{ border-top:3px solid var(--green2); }
+.oblig-card.sp{ border-top:3px solid #5fa8d4; }
+.oblig-head{ font-family:var(--ff); font-size:10px; font-weight:700; letter-spacing:.16em; color:var(--muted); }
+.oblig-total{ font-family:var(--display); font-weight:600; font-style:italic; }
+.oblig-card.ep .oblig-total{ color:var(--green); }
+.oblig-card.sp .oblig-total{ color:#3a7da8; }
+.oblig-detail{ font-family:var(--ff); color:var(--muted); border-top-color:var(--bdr); }
+.oblig-detail b{ color:var(--text); }
+
+/* Memoria */
+.memoria{ background:var(--bg4); border-color:var(--bdr); }
+.memoria-line{ font-family:var(--ff); color:var(--muted); }
+.memoria-line::before{ color:var(--green2); }
+.memoria-line.sec{ color:var(--green); font-weight:600; }
+
+/* Tabla liquidación */
+.liq-table td{ border-bottom-color:var(--bdr); }
+.liq-k{ font-family:var(--ff); color:var(--muted); }
+.liq-v{ font-family:var(--display); font-weight:600; color:var(--text); }
+.liq-sub td{ background:var(--bg4); }
+.liq-sub .liq-k{ color:var(--text); font-weight:600; }
+
+/* Avisos */
+.aviso{ background:var(--green3); border-color:var(--green2); color:var(--green); }
+.aviso b{ color:var(--green); }
+.vis-badge{ background:var(--green3); border-color:var(--green2); color:var(--green); }
+
+/* RENOBO sidebar oscuro — inputs y displays */
+#rb_dir{ background:#231D12!important; color:#F0EDE5!important; border-color:#3D3020!important; }
+#rb_pct_display{ background:var(--green3)!important; border-color:var(--green2)!important; color:var(--green)!important; font-weight:600; }
+#rb_indice_display,#rb_acnorm_display{ background:#2C2416!important; border-color:#3D3020!important; color:var(--green2)!important; }
+
+/* Autofill — fondo ivory para panel central, carbón para sidebar */
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 30px #fff inset!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+.sidebar input:-webkit-autofill,.sidebar input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 30px #231D12 inset!important;
+  -webkit-text-fill-color:#F0EDE5!important;
+}
+
+/* Footer oscuro */
+footer{ background:var(--bg2); border-top-color:#3D3020; }
+footer p{ font-family:var(--ff); color:#8A7A64; }
+
+</style>
+</head>
+<body>
+
+<header style="padding:0;background:var(--bg2);border-bottom:3px solid var(--green2)">
+
+  <!-- Barra EP — igual al OnePager: sidebar oscuro + datos a la derecha -->
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 40px;gap:20px;flex-wrap:wrap">
+
+    <!-- Monograma + nombre — igual al CV -->
+    <div style="display:flex;align-items:center;gap:18px">
+      <div style="width:56px;height:56px;background:transparent;border:2px solid var(--green2);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-family:var(--display);font-size:26px;font-weight:700;color:var(--green2);letter-spacing:-.03em;line-height:1">EP</span>
+      </div>
+      <div>
+        <div style="font-family:var(--display);font-size:22px;font-weight:600;color:#F0EDE5;letter-spacing:-.01em;line-height:1.1">
+          Eric Pacheco <em style="color:var(--green2);font-style:italic">Llanos</em>
+        </div>
+        <div style="font-family:var(--ff);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--green2);margin-top:4px;font-weight:500">
+          Real Estate &amp; Investment
+        </div>
+      </div>
+    </div>
+
+    <!-- Herramienta + normas -->
+    <div style="text-align:right">
+      <div style="font-family:var(--ff);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--green2);margin-bottom:4px;font-weight:600">Herramienta de Gestión</div>
+      <div style="font-family:var(--display);font-size:20px;font-weight:600;color:#F0EDE5;letter-spacing:-.01em;font-style:italic">Calculadora Urbanística</div>
+      <div style="font-family:var(--ff);font-size:10px;color:#8A7A64;margin-top:3px">Decreto 555/2021 · Decreto 1890/2021 · POT Bogotá D.C.</div>
+    </div>
+
+  </div>
+
+</header>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" data-tab="curaduria" type="button">1. Expensas de Curaduria</button>
+  <button class="tab-btn" data-tab="obligaciones" type="button">2. Obligaciones Urbanisticas</button>
+  <button class="tab-btn" data-tab="delineacion" type="button">4. Delineacion Urbana</button>
+  <button class="tab-btn" data-tab="renobo" type="button">5. VIS/VIP RenoBo</button>
+</div>
+
+<div class="project-panel">
+  <div class="pp-header">
+    <div class="pp-title">Datos generales del proyecto</div>
+    <div class="pp-sub">Se comparten automaticamente con todos los modulos</div>
+  </div>
+  <div class="pp-grid">
+    <div class="pp-field"><label>Direccion</label><input type="text" id="pd_dir" placeholder="Ej. CL 76 12 58"/></div>
+    <div class="pp-field"><label>Ciudad / Municipio</label><select id="pd_ciudad"></select></div>
+    <div class="pp-field"><label>Departamento</label><input type="text" id="pd_depto" readonly placeholder="Auto"/></div>
+    <div class="pp-field"><label>Factor M</label><input type="number" id="pd_factorM" step="0.001" value="0.938"/><div class="pp-hint" id="pd_avisoFactor"></div></div>
+    <div class="pp-field"><label>Coordenadas (lat, lng)</label><input type="text" id="pd_coords" placeholder="Auto o manual: 4.6607,-74.0577"/><div class="pp-hint" id="pd_hintCoords">De Google Maps (clic derecho)</div></div>
+    <div class="pp-field" style="display:flex;justify-content:flex-end"><button class="btn-geo" id="pd_btnGeo" type="button">Detectar predio</button></div>
+    <div class="pp-field"><label>Area lote (m2)</label><input type="number" id="pd_areaLote" placeholder="Ej. 1552,72" step="0.01"/></div>
+    <div class="pp-field"><label>Indice de construccion</label><input type="number" id="pd_indice" placeholder="Ej. 4,50" step="0.01"/>
+      <div class="pp-hint" id="pd_hintIndice">Area construida = lote x indice</div></div>
+    <div class="pp-field"><label>Estrato (capa oficial)</label>
+      <input type="text" id="pd_estratoTxt" readonly placeholder="Se detecta"/>
+      <input type="hidden" id="pd_estrato" value="5"/>
+      <div class="pp-hint" id="pd_hintEstrato">Detectado por manzana</div>
+    </div>
+    <div class="pp-field"><label>Tratamiento urbanistico (capa oficial)</label>
+      <input type="text" id="pd_tratNombre" readonly placeholder="Se detecta automaticamente"/>
+      <input type="hidden" id="pd_trat" value="consolidacion"/>
+      <div class="pp-hint" id="pd_hintTrat">Detectado por cruce espacial - POT 555</div>
+    </div>
+    <div class="pp-field"><label>Valor referencia suelo ($/m2)</label>
+      <input type="text" id="pd_vref" inputmode="decimal" placeholder="Se detecta por manzana"/>
+      <div class="pp-hint" id="pd_hintVref">Editable - manzana detectada se muestra abajo</div>
+    </div>
+    <div class="pp-field"><label>Ano radicacion</label>
+      <select id="pd_anio">
+        <option value="2022">2022</option><option value="2023">2023</option>
+        <option value="2024">2024</option><option value="2025" selected>2025</option>
+        <option value="2026">2026</option>
+      </select>
+    </div>
+    <div class="pp-field"><label>Uso principal</label>
+      <select id="pd_uso">
+        <option value="vivienda" selected>Vivienda</option><option value="comercio">Comercio</option>
+        <option value="oficinas">Oficinas</option><option value="dotacional">Dotacional</option>
+        <option value="industrial">Industrial</option><option value="hotelero">Hotelero</option>
+        <option value="mixto">Mixto</option>
+      </select>
+    </div>
+    <div class="pp-field"><label>Modalidad licencia</label>
+      <select id="pd_modalidad">
+        <option value="obra_nueva" selected>Obra Nueva</option><option value="ampliacion">Ampliacion</option>
+        <option value="modificacion">Modificacion</option><option value="adecuacion">Adecuacion</option>
+        <option value="restauracion">Restauracion</option><option value="reconocimiento">Reconocimiento</option>
+      </select>
+    </div>
+    <div class="pp-field"><label>Area construida NORMATIVA (m2)</label><input type="number" id="pd_areaNormativa" readonly placeholder="Auto: lote x indice"/>
+      <div class="pp-hint" id="pd_hintAreaNorm">Lote x indice - base VIS/VIP y RenoBo</div></div>
+    <div class="pp-field"><label>Area construida PROYECTO (m2)</label><input type="number" id="pd_areaProyecto" placeholder="Cabida real / anteproyecto" step="0.01"/>
+      <div class="pp-hint" id="pd_hintAreaProy">Cabida real - base Curaduria/Delineacion</div></div>
+    <div class="pp-field"><label>Area vendible (m2)</label><input type="number" id="pd_areaVend" placeholder="Opcional" step="0.01"/></div>
+    <div class="pp-field"><label>No. unidades</label><input type="number" id="pd_unidades" placeholder="Opcional"/></div>
+  </div>
+</div>
+
+<div class="summary-panel" id="summaryPanel">
+  <div class="sp-title">Resumen del proyecto (automatico)</div>
+  <div class="sp-grid" id="sp_grid"></div>
+</div>
+
+
+<div class="tab-panel active" id="tab-curaduria">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sec-side">Tipo de proyecto</div>
+    <div class="tipo-grid" id="tipoGrid">
+      <button class="tipo-btn on-novis" data-t="novis">NO VIS</button>
+      <button class="tipo-btn" data-t="vis">VIS</button>
+      <button class="tipo-btn" data-t="vip">VIP</button>
+    </div>
+    <div class="tipo-hint" id="tipoHint">Sin descuento en expensas</div>
+
+    <hr class="divider" style="margin-top:16px">
+    <div class="sec-side">Licencia</div>
+    <div class="field">
+      <label>Modalidad</label>
+      <select id="modalidad"></select>
+    </div>
+    <div class="field">
+      <label>Ano de radicacion</label>
+      <select id="anio"></select>
+      <div class="hint">Se liquida con el UVT del ano de radicacion</div>
+    </div>
+    <div class="field">
+      <label>Factor m - municipio</label>
+      <input type="number" id="factorM" value="0.938" min="0" step="0.001"/>
+      <div class="hint">Bogota D.C. = 0,938</div>
+    </div>
+
+    <hr class="divider">
+    <div class="sec-side">Datos del proyecto</div>
+    <div class="field">
+      <label>Direccion</label>
+      <input type="text" id="direccion" placeholder="Auto (datos generales)" readonly/>
+    </div>
+    <div class="field">
+      <label>Area del lote (m2)</label>
+      <input type="number" id="areaLote" placeholder="Auto (datos generales)" min="0" step="0.01" readonly/>
+      <div class="hint">Automatico desde Datos Generales</div>
+    </div>
+    <div class="field">
+      <label>Estrato</label>
+      <select id="estrato" disabled>
+        <option value="1">Estrato 1</option><option value="2">Estrato 2</option>
+        <option value="3">Estrato 3</option><option value="4">Estrato 4</option>
+        <option value="5" selected>Estrato 5</option><option value="6">Estrato 6</option>
+      </select>
+      <div class="hint">Automatico desde Datos Generales</div>
+    </div>
+    <div class="field">
+      <label>Indice de construccion</label>
+      <input type="number" id="indice" placeholder="Auto (datos generales)" min="0" step="0.01" readonly/>
+      <div class="hint">Automatico desde Datos Generales</div>
+    </div>
+    <div class="field">
+      <label>Area construida total (m2)</label>
+      <input type="number" id="areaTotalConst" placeholder="Auto: lote x indice" min="0" step="0.01"/>
+      <div class="hint" id="hintArea">O ingresa el valor del cuadro de areas</div>
+    </div>
+    <div class="field">
+      <label>Area vendible (m2)</label>
+      <input type="number" id="areaVendible" placeholder="Auto (datos generales)" min="0" step="0.01" readonly/>
+      <div class="hint">Automatico desde Datos Generales</div>
+    </div>
+    <button class="btn-calc" onclick="UI_CUR.calcular()">Recalcular</button>
+  </aside>
+
+  <div class="content">
+    <div class="formula-bar">
+      E = (Cf x i_pred x m) + Suma(Cv x i x j x m)<br>
+      j[101-11000] = 3,8/(0,12+800/Q) - j[>11000] = 2,2/(0,018+800/Q)
+    </div>
+
+    <div class="sec-title">Usos del proyecto <button class="btn-example" onclick="UI_CUR.cargarEjemplo()">Ejemplo real CU1</button></div>
+    <div class="tbl-wrap">
+      <table class="usos">
+        <thead><tr>
+          <th style="min-width:190px">Uso / Descripcion</th>
+          <th style="min-width:130px">Intervencion</th>
+          <th class="r" style="width:110px">Area Q (m2)</th>
+          <th class="r" style="width:180px">Factor i (uso/estrato)</th>
+          <th class="r" style="width:70px">j</th>
+          <th class="r" style="width:120px">CV x i x j x m</th>
+          <th class="r" style="width:110px">IVA 19%</th>
+          <th class="r" style="width:120px">Total uso</th>
+          <th style="width:32px"></th>
+        </tr></thead>
+        <tbody id="usosBody"></tbody>
+      </table>
+    </div>
+    <button class="btn-add" onclick="UI_CUR.agregarUso()">+ Agregar uso</button>
+
+    <div class="sec-title">Liquidacion de expensas</div>
+    <table class="liq-table"><tbody>
+      <tr><td class="liq-k">Subtotal cargo variable neto (sin IVA)</td><td class="liq-v" id="r_cvNeto">$0</td></tr>
+      <tr><td class="liq-k">IVA 19% sobre cargo variable</td><td class="liq-v" id="r_cvIVA">$0</td></tr>
+      <tr class="liq-sub"><td class="liq-k">Total cargo variable + IVA</td><td class="liq-v" id="r_cvTotal">$0</td></tr>
+      <tr class="liq-sep"><td colspan="2"></td></tr>
+      <tr><td class="liq-k">Cargo fijo neto - uso predominante <span id="r_usoPredSpan" style="color:var(--amber);font-size:10px;margin-left:6px"></span></td><td class="liq-v" id="r_cfNeto">$0</td></tr>
+      <tr><td class="liq-k">IVA 19% sobre cargo fijo</td><td class="liq-v" id="r_cfIVA">$0</td></tr>
+      <tr class="liq-sub"><td class="liq-k">Total cargo fijo + IVA</td><td class="liq-v" id="r_cfTotal">$0</td></tr>
+    </tbody></table>
+
+    <div class="total-box">
+      <div>
+        <div class="total-label">Total a pagar en expensas</div>
+        <div class="total-amount" id="r_total">$0</div>
+        <div id="r_visBadge"></div>
+      </div>
+      <div class="total-desc" id="r_breakdown">-</div>
+    </div>
+
+    <div class="params-grid">
+      <div class="param-card"><div class="param-lbl">UVT aplicado</div><div class="param-val g" id="r_uvt">$52.374</div></div>
+      <div class="param-card"><div class="param-lbl">CV base (20,02 UVT)</div><div class="param-val" id="r_cvBase">$1.048.527</div></div>
+      <div class="param-card"><div class="param-lbl">Factor m</div><div class="param-val" id="r_m">0,938</div></div>
+      <div class="param-card"><div class="param-lbl">Usos con cargo</div><div class="param-val g" id="r_nUsos">0</div></div>
+    </div>
+
+    <div class="sec-title">Memoria de calculo</div>
+    <div class="memoria" id="memoria"></div>
+
+    <div class="sec-title">Validar contra liquidacion real</div>
+    <div class="validator">
+      <div class="validator-title">Ingresa los valores de la curaduria para comparar</div>
+      <div class="val-row">
+        <div class="val-field"><label>Total cargo variable + IVA</label><input type="number" id="realCV" placeholder="Ej. 46281321" oninput="UI_CUR.diff()"/></div>
+        <div class="val-field"><label>Total a pagar expensas</label><input type="number" id="realTotal" placeholder="Ej. 46559531" oninput="UI_CUR.diff()"/></div>
+        <div id="diffLabel"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-action xls" onclick="UI_CUR.exportarExcel()">Exportar Excel (CSV)</button>
+      <button class="btn-action pdf" onclick="UI_CUR.exportarPDF()">Exportar PDF</button>
+      <button class="btn-action" onclick="UI_CUR.exportarJSON()">Exportar JSON</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="tab-panel" id="tab-obligaciones">
+<div class="app">
+  <aside class="sidebar">
+    <div class="sec-side">Datos del predio</div>
+    <div class="field">
+      <label>Direccion</label>
+      <input type="text" id="obl_dir" placeholder="Auto (datos generales)" readonly/>
+    </div>
+    <div class="field">
+      <label>Area del terreno AT (m2)</label>
+      <input type="number" id="areaTerreno" placeholder="Ej. 1552,72" min="0" step="0.01"/>
+      <div class="hint">Base de todas las obligaciones</div>
+    </div>
+    <div class="field">
+      <label>Tratamiento urbanistico</label>
+      <select id="tratamiento"></select>
+      <div class="hint" id="hintTrat"></div>
+    </div>
+
+    <hr class="divider">
+    <div class="sec-side">Valor de referencia</div>
+    <div class="field">
+      <label>Ano de radicacion</label>
+      <select id="anioRad"></select>
+      <div class="hint">Define el Vref de Catastro</div>
+    </div>
+    <div class="field">
+      <label>Vref ($/m2) - editable</label>
+      <input type="text" id="vrefManual" inputmode="decimal" placeholder="Auto por ano"/>
+      <div class="hint" id="hintVref">Mayor valor del predio en SIIC Catastro</div>
+    </div>
+    <div class="field">
+      <label>Fecha de radicacion</label>
+      <input type="date" id="fechaRad" value="2026-05-12"/>
+      <div class="hint">Define los factores k y d</div>
+    </div>
+
+    <hr class="divider">
+    <div class="sec-side">Porcentajes (editables)</div>
+    <div class="field">
+      <label>% CSs - cesion suelo EP</label>
+      <input type="number" id="pctCSs" value="10" min="0" step="0.1"/>
+    </div>
+    <div class="field">
+      <label>% Fd - pago dinero EP</label>
+      <input type="number" id="pctFd" value="5" min="0" step="0.1"/>
+    </div>
+    <div class="field">
+      <label>% CS - servicios publicos</label>
+      <input type="number" id="pctCS" value="15" min="0" step="0.1"/>
+    </div>
+
+    <button class="btn-calc" onclick="UI_OBL.calcular()">Recalcular</button>
+  </aside>
+
+  <div class="content">
+    <div class="formula-bar">
+      EP = (CSs x Vref x k) + ((AT x Fd) x Vref x d)<br>
+      OSP = CS x Vref x 0,064 &nbsp;|&nbsp; CSs=10%AT - Fd=5%AT - CS=15%AT
+    </div>
+
+    <div class="sec-title">Liquidacion de obligaciones <button class="btn-example" onclick="UI_OBL.cargarEjemplo()">Ejemplo real SDP</button></div>
+
+    <div class="cards2">
+      <div class="oblig-card ep">
+        <div class="oblig-head">Espacio Publico (Art. 317-318)</div>
+        <div class="oblig-total" id="r_ep">$0</div>
+        <div class="oblig-detail" id="r_epDetail">-</div>
+      </div>
+      <div class="oblig-card sp">
+        <div class="oblig-head">Servicios Publicos (Art. 320)</div>
+        <div class="oblig-total" id="r_sp">$0</div>
+        <div class="oblig-detail" id="r_spDetail">-</div>
+      </div>
+    </div>
+
+    <div class="total-box">
+      <div>
+        <div class="total-label">Total obligaciones urbanisticas</div>
+        <div class="total-amount" id="r_total">$0</div>
+      </div>
+      <div class="total-desc" id="r_breakdown">-</div>
+    </div>
+
+    <div class="params-grid">
+      <div class="param-card"><div class="param-lbl">Area terreno AT</div><div class="param-val" id="p_at">0 m2</div></div>
+      <div class="param-card"><div class="param-lbl">Vref $/m2</div><div class="param-val g" id="p_vref">$0</div></div>
+      <div class="param-card"><div class="param-lbl">Factor k</div><div class="param-val" id="p_k">0,30</div></div>
+      <div class="param-card"><div class="param-lbl">Factor d</div><div class="param-val" id="p_d">0,25</div></div>
+    </div>
+
+    <div class="sec-title">Memoria de calculo</div>
+    <div class="memoria" id="memoria"></div>
+
+    <div class="sec-title">Validar contra liquidacion real</div>
+    <div class="validator">
+      <div class="validator-title">Ingresa los valores de la SDP para comparar</div>
+      <div class="val-row">
+        <div class="val-field"><label>Espacio publico SDP</label><input type="number" id="realEP" placeholder="Ej. 521325740" oninput="UI_OBL.diff()"/></div>
+        <div class="val-field"><label>Servicios publicos SDP</label><input type="number" id="realSP" placeholder="Ej. 117758285" oninput="UI_OBL.diff()"/></div>
+        <div id="diffLabel"></div>
+      </div>
+    </div>
+
+    <div class="aviso">
+      <b>Aviso de prefactibilidad:</b> Esta es una estimacion basada en parametros configurables del POT 555.
+      No constituye concepto normativo oficial. Los porcentajes estan calibrados contra una liquidacion real de
+      tratamiento de Consolidacion; otros tratamientos pueden variar. El Vref proviene de Catastro y es el dato
+      que mas afecta el resultado.
+    </div>
+
+    <div class="actions">
+      <button class="btn-action" onclick="UI_OBL.exportarExcel()">Exportar Excel (CSV)</button>
+      <button class="btn-action" onclick="UI_OBL.exportarPDF()">Exportar PDF</button>
+      <button class="btn-action" onclick="UI_OBL.exportarJSON()">Exportar JSON</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="tab-panel" id="tab-delineacion">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sec-side">Datos del predio</div>
+    <div class="field"><label>Direccion</label><input type="text" id="du_dir" placeholder="Ej. CL 76 12 58"/></div>
+    <div class="field"><label>Estrato</label>
+      <select id="du_estrato">
+        <option value="1">Estrato 1</option><option value="2">Estrato 2</option>
+        <option value="3">Estrato 3</option><option value="4">Estrato 4</option>
+        <option value="5" selected>Estrato 5</option><option value="6">Estrato 6</option>
+      </select>
+    </div>
+
+    <hr class="divider">
+    <div class="sec-side">Proyecto</div>
+    <div class="field"><label>Uso principal</label>
+      <select id="du_uso">
+        <option value="vivienda" selected>Vivienda</option>
+        <option value="comercio">Comercio</option>
+        <option value="oficinas">Oficinas</option>
+        <option value="servicios">Servicios</option>
+        <option value="dotacional">Dotacional</option>
+        <option value="industrial">Industrial</option>
+        <option value="hotelero">Hotelero</option>
+        <option value="mixto">Mixto</option>
+      </select>
+    </div>
+    <div class="field"><label>Tipo de vivienda</label>
+      <select id="du_tipoViv">
+        <option value="novis" selected>NO VIS</option>
+        <option value="vis">VIS</option>
+        <option value="vip">VIP</option>
+      </select>
+    </div>
+    <div class="field"><label>Modalidad de licencia</label>
+      <select id="du_modalidad">
+        <option value="obra_nueva" selected>Obra Nueva</option>
+        <option value="ampliacion">Ampliacion</option>
+        <option value="modificacion">Modificacion</option>
+        <option value="reforzamiento">Reforzamiento estructural</option>
+        <option value="adecuacion">Adecuacion</option>
+        <option value="restauracion">Restauracion</option>
+        <option value="reconocimiento">Reconocimiento</option>
+        <option value="urbanizacion">Urbanizacion</option>
+        <option value="parcelacion">Parcelacion</option>
+      </select>
+    </div>
+    <div class="field"><label><input type="checkbox" id="du_auto" style="width:auto;margin-right:6px"/>Autoconstruccion</label></div>
+    <div class="field"><label><input type="checkbox" id="du_bic" style="width:auto;margin-right:6px"/>Bien de interes cultural</label></div>
+    <div class="field"><label>Area construida total (m2)</label><input type="number" id="du_area" placeholder="Ej. 8452,82" step="0.01"/></div>
+
+    <hr class="divider">
+    <div class="sec-side">Presupuesto de obra</div>
+    <div class="field"><label>Presupuesto total ($)</label><input type="text" id="du_presupuesto" inputmode="decimal" placeholder="Vacio = estimar"/>
+      <div class="hint" id="du_hintPres">Si lo dejas vacio, se estima por uso/estrato/area</div></div>
+    <div class="field"><label>Valor ejecutado real ($)</label><input type="number" id="du_ejecutado" placeholder="Para declaracion final" step="1000000"/>
+      <div class="hint">Opcional. Solo si supera el presupuesto base</div></div>
+
+    <button class="btn-calc" onclick="UI_DEL.calcular()">Recalcular</button>
+  </aside>
+
+  <div class="content">
+    <div class="aviso">
+      <b>Impuesto de Delineacion Urbana:</b> Acuerdo 352/2008. Anticipo 2,6% al expedir licencia +
+      declaracion final 3% sobre el mayor valor ejecutado. Exenciones VIS/VIP vigentes hasta 2029
+      (Acuerdo 780/2020). Los costos minimos por m2 los fija la SDP por resolucion anual (parametrizable).
+    </div>
+
+    <div class="sec-title">Estado tributario <button class="btn-example" onclick="UI_DEL.cargarEjemplo()">Ejemplo</button></div>
+    <div class="memoria" id="du_estado"></div>
+
+    <div class="sec-title">Liquidacion del impuesto</div>
+    <table class="liq-table"><tbody>
+      <tr><td class="liq-k">Base gravable (presupuesto de obra)</td><td class="liq-v" id="du_base">$0</td></tr>
+      <tr><td class="liq-k">Tarifa anticipo</td><td class="liq-v" id="du_tarAnt">2,6%</td></tr>
+      <tr class="liq-sub"><td class="liq-k">Anticipo (al expedir licencia)</td><td class="liq-v" id="du_anticipo">$0</td></tr>
+      <tr class="liq-sep"><td colspan="2"></td></tr>
+      <tr><td class="liq-k">Mayor valor (ejecutado - base, indexado ICCV)</td><td class="liq-v" id="du_mayor">$0</td></tr>
+      <tr><td class="liq-k">Tarifa declaracion final</td><td class="liq-v" id="du_tarFin">3%</td></tr>
+      <tr class="liq-sub"><td class="liq-k">Impuesto declaracion final</td><td class="liq-v" id="du_final">$0</td></tr>
+    </tbody></table>
+
+    <div class="total-box">
+      <div>
+        <div class="total-label">Total impuesto de delineacion</div>
+        <div class="total-amount" id="du_total">$0</div>
+        <div id="du_exBadge"></div>
+      </div>
+      <div class="total-desc" id="du_breakdown">-</div>
+    </div>
+
+    <div class="sec-title">Indicadores financieros</div>
+    <div class="params-grid">
+      <div class="param-card"><div class="param-lbl">Impuesto / m2 construido</div><div class="param-val g" id="du_m2c">$0</div></div>
+      <div class="param-card"><div class="param-lbl">% sobre presupuesto</div><div class="param-val" id="du_pctPres">0%</div></div>
+      <div class="param-card"><div class="param-lbl">Base gravable</div><div class="param-val" id="du_baseCard">$0</div></div>
+      <div class="param-card"><div class="param-lbl">Area construida</div><div class="param-val" id="du_areaCard">0 m2</div></div>
+    </div>
+
+    <div class="sec-title">Memoria de calculo</div>
+    <div class="memoria" id="du_memoria"></div>
+
+    <div class="actions">
+      <button class="btn-action" onclick="UI_DEL.exportarPDF()">Informe PDF</button>
+      <button class="btn-action" onclick="UI_DEL.exportarJSON()">Exportar JSON</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="tab-panel" id="tab-renobo">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sec-side">Datos del proyecto</div>
+    <div class="field">
+      <label>Direccion / proyecto</label>
+      <input type="text" id="rb_dir" placeholder="Ej. 77 ESTORIAS"/>
+    </div>
+    <div class="field"><label>Tratamiento</label>
+      <select id="rb_trat">
+        <option value="consolidacion" selected>Consolidacion</option>
+        <option value="renovacion">Renovacion Urbana</option>
+      </select>
+    </div>
+    <div class="field"><label>Area construida vivienda (m2)</label><input type="number" id="rb_areaViv" placeholder="Ej. 6982,28" step="0.01"/>
+      <div class="hint">Cabida real destinada a vivienda</div></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;min-width:0">
+      <div class="field" style="margin-bottom:0;min-width:0;overflow:hidden">
+        <label>IC (auto)</label>
+        <input type="text" id="rb_indice_display" readonly placeholder="—"
+               style="opacity:.75;cursor:not-allowed;text-align:right;min-width:0;width:100%"/>
+      </div>
+      <div class="field" style="margin-bottom:0;min-width:0;overflow:hidden">
+        <label>AC norm. (m2)</label>
+        <input type="text" id="rb_acnorm_display" readonly placeholder="—"
+               style="opacity:.75;cursor:not-allowed;text-align:right;min-width:0;width:100%"/>
+      </div>
+    </div>
+    <!-- Campos hidden que reciben la propagación automática del MAPA de Integracion -->
+    <input type="hidden" id="rb_indice" value=""/>
+    <input type="hidden" id="rb_areaLote_h" value=""/>
+    <div class="field">
+      <label>% obligacion VIS/VIP</label>
+      <input type="text" id="rb_pct_display" readonly placeholder="Calculando…"
+             style="background:var(--green3);border-color:var(--green2);color:var(--green);font-weight:600;cursor:not-allowed"/>
+      <div class="hint" id="rb_pct_hint" style="color:var(--green2)">Determinado automaticamente por normativa</div>
+    </div>
+    <div class="field">
+      <label>AC(VIS/VIP) calculado (m2)</label>
+      <input type="number" id="rb_acDirecto" placeholder="Auto por normativa" step="0.01"/>
+      <div class="hint">Calculado automáticamente · Puedes sobreescribir si tienes certificación de curaduría</div>
+    </div>
+    <!-- Campo oculto de compatibilidad — lo escribe el motor VIS/VIP, lo lee MotorRenobo -->
+    <input type="hidden" id="rb_pct" value="8"/>
+
+    <hr class="divider">
+    <div class="sec-side">Valor de referencia</div>
+    <div class="field"><label>Ano radicacion</label>
+      <select id="rb_anioRad">
+        <option value="2025" selected>2025</option><option value="2024">2024</option>
+        <option value="2023">2023</option><option value="2022">2022</option>
+      </select>
+    </div>
+    <div class="field"><label>Vref radicacion ($/m2)</label><input type="text" id="rb_vrefRad" inputmode="decimal" placeholder="Auto por ano"/>
+      <div class="hint" id="rb_hintVref">Mayor valor zona homogenea UAECD</div></div>
+    <div class="field"><label>Factor (Art. 323)</label><input type="number" id="rb_factor" value="0.18" step="0.01"/>
+      <div class="hint">Verificado vs Resolucion RenoBo 217</div></div>
+
+    <hr class="divider">
+    <div class="sec-side">Indexacion / vigencia</div>
+    <div class="field"><label>Ano estimado de pago</label>
+      <select id="rb_anioPago">
+        <option value="2025">2025 (mismo ano)</option>
+        <option value="2026" selected>2026</option><option value="2027">2027</option>
+        <option value="2028">2028</option>
+      </select>
+    </div>
+    <div class="field"><label>Modo de indexacion</label>
+      <select id="rb_modo">
+        <option value="real" selected>Caso A: Vref de pago (Catastro)</option>
+        <option value="estimada">Caso B: IPC estimado</option>
+        <option value="ninguna">Sin indexacion</option>
+      </select>
+    </div>
+    <div class="field" id="rb_fieldVrefPago"><label>Vref pago ($/m2) - Catastro</label><input type="text" id="rb_vrefPago" inputmode="decimal" placeholder="Nuevo valor UAECD"/></div>
+    <div class="field" id="rb_fieldIpc" style="display:none"><label>Tasa IPC estimada (%)</label><input type="number" id="rb_ipc" value="5" step="0.1"/></div>
+
+    <button class="btn-calc" onclick="UI_RB.calcular()">Recalcular</button>
+  </aside>
+
+  <div class="content">
+    <div class="aviso">
+      <b>Pago compensatorio VIS/VIP ante RenoBo:</b> Art. 323 Dec. 555/2021.
+      Formula verificada contra Resolucion RenoBo 217/2026 (proyecto 77 ESTORIAS, diferencia $0).
+      Aplica a consolidacion/renovacion que acceden a edificabilidad adicional sobre el indice base.
+    </div>
+
+    <div class="sec-title">Liquidacion <button class="btn-example" onclick="UI_RB.cargarEjemplo()">Ejemplo 77 ESTORIAS</button></div>
+
+    <div class="cards2">
+      <div class="oblig-card ep">
+        <div class="oblig-head">VrComp BASE (radicacion)</div>
+        <div class="oblig-total" id="rb_base">$0</div>
+        <div class="oblig-detail" id="rb_baseDet">-</div>
+      </div>
+      <div class="oblig-card sp">
+        <div class="oblig-head">VrComp INDEXADO (pago)</div>
+        <div class="oblig-total" id="rb_index">$0</div>
+        <div class="oblig-detail" id="rb_indexDet">-</div>
+      </div>
+    </div>
+
+    <div class="total-box">
+      <div>
+        <div class="total-label">Diferencia por indexacion</div>
+        <div class="total-amount" id="rb_delta">$0</div>
+      </div>
+      <div class="total-desc" id="rb_deltaDet">-</div>
+    </div>
+
+    <div class="params-grid">
+      <div class="param-card"><div class="param-lbl">AC(VIS/VIP)</div><div class="param-val g" id="rb_ac">0 m2</div></div>
+      <div class="param-card"><div class="param-lbl">Factor</div><div class="param-val" id="rb_pFactor">0,18</div></div>
+      <div class="param-card"><div class="param-lbl">Vref radicacion</div><div class="param-val" id="rb_pVrefR">$0</div></div>
+      <div class="param-card"><div class="param-lbl">Vref pago</div><div class="param-val" id="rb_pVrefP">$0</div></div>
+    </div>
+    <div id="rb_visvip_badge" style="margin-bottom:16px"></div>
+
+    <div id="rb_alerta"></div>
+
+    <div class="sec-title">Memoria de calculo</div>
+    <div class="memoria" id="rb_memoria"></div>
+
+    <div class="actions">
+      <button class="btn-action" onclick="UI_RB.exportarPDF()">Informe PDF</button>
+      <button class="btn-action" onclick="UI_RB.exportarJSON()">Exportar JSON</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer style="background:var(--bg2);border-top:1px solid #3D3020;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+  <div style="display:flex;align-items:center;gap:12px">
+    <span style="font-family:var(--display);font-size:15px;font-weight:600;color:var(--green2);letter-spacing:-.01em">EP</span>
+    <span style="color:#3D3020;font-size:12px">|</span>
+    <p style="font-family:var(--ff);font-size:11px;color:#8A7A64">Decreto 555/2021 · Decreto 1890/2021 · Tablas CU1 / SDP Bogotá 2026</p>
+  </div>
+  <p style="font-family:var(--ff);font-size:11px;color:#5A5040">Estimación de prefactibilidad. Verificar con la autoridad competente.</p>
+</footer>
+
+<div id="printAreaCur"></div>
+<div id="printAreaObl"></div>
+<div id="printAreaDEL"></div>
+<div id="printAreaRB"></div>
+
+<script>
+/* ============================================================
+ * FORMATO MONETARIO GLOBAL (estandar Colombia)
+ * formatCurrencyCOP(7900000) -> "$ 7.900.000,00"
+ * Los calculos SIEMPRE usan numeros puros; esto es solo display.
+ * ============================================================ */
+function formatCurrencyCOP(value){
+  const n = (typeof value === 'number') ? value : parseFloat(parseMoneyCOP(value));
+  if(isNaN(n)) return '';
+  return '$ ' + n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+/* Convierte un texto con formato ($ 7.900.000,00) a numero puro (7900000) */
+function parseMoneyCOP(txt){
+  if(txt===null || txt===undefined) return 0;
+  if(typeof txt === 'number') return txt;
+  let s = String(txt).trim();
+  if(s==='') return 0;
+  // quitar simbolo, espacios y separador de miles (punto); coma decimal -> punto
+  s = s.replace(/\$/g,'').replace(/\s/g,'').replace(/\./g,'').replace(/,/g,'.');
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+/* Aplica formateo onBlur a un input monetario editable (texto) */
+function attachMoneyInput(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('focus', function(){
+    // al enfocar, mostrar el numero puro para editar comodo
+    const n = parseMoneyCOP(el.value);
+    el.value = n ? String(n) : '';
+  });
+  el.addEventListener('blur', function(){
+    const n = parseMoneyCOP(el.value);
+    el.value = n ? formatCurrencyCOP(n) : '';
+  });
+}
+
+/* ============================================================
+ * MODULO 1: CURADURIA (config + motor + interfaz UI_CUR)
+ * ============================================================ */
+
+/* ===== CAPA 1: CONFIGURACION NORMATIVA ===== */
+/* =============================================================================
+ * configuracion_normativa.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE DATOS NORMATIVOS — Expensas de Curaduría Urbana
+ * Decreto 1077/2015 (Art. 2.2.6.6.8.3 y 2.2.6.6.8.7) · Decreto 1890/2021
+ *
+ * TODO lo que cambie por norma se edita AQUÍ, sin tocar el motor de cálculo.
+ * =============================================================================
+ */
+
+const CONFIG_NORMATIVA = {
+
+  /* --- METADATOS ------------------------------------------------------------ */
+  meta: {
+    version: "1.0",
+    fuente: "Decreto 1890/2021 · Tabla Curaduría Urbana 1 Bogotá 2026",
+    actualizado: "2026-01",
+  },
+
+  /* --- CONSTANTES DE LA FÓRMULA --------------------------------------------- *
+   * E = (Cf × i_pred × m) + Σ(Cv × i × j × m)
+   * Cf y Cv en UVT. Art. 2.2.6.6.8.3.
+   */
+  constantes: {
+    Cf_UVT: 10.01,   // Cargo fijo base en UVT
+    Cv_UVT: 20.02,   // Cargo variable base en UVT
+    IVA: 0.19,       // Impuesto al valor agregado
+  },
+
+  /* --- UVT POR AÑO (Resolución DIAN anual) ----------------------------------- *
+   * Las expensas se liquidan con el UVT del AÑO DE RADICACIÓN.
+   * Editar cada enero al publicarse la nueva resolución.
+   */
+  uvtPorAnio: {
+    "2026": 52374,   // Res. DIAN 238/2025
+    "2025": 49799,
+    "2024": 47065,
+    "2023": 42412,
+    "2022": 38004,
+  },
+
+  /* --- FACTOR m — POR MUNICIPIO ---------------------------------------------- *
+   * Depende del tamaño de mercado y categorización presupuestal del municipio.
+   * Bogotá D.C. = 0,938 (tabla CU1 2026).
+   */
+  factorM: {
+    "bogota": 0.938,
+    "_default": 1.0,   // Otros municipios: parametrizable
+  },
+
+  /* --- FACTOR i — POR USO Y ESTRATO ------------------------------------------ *
+   * Art. 2.2.6.6.8.3. Determina la intensidad del cargo según el uso.
+   * Vivienda: depende del estrato. Comercio: depende del rango de área.
+   */
+  factorI: {
+    vivienda: {        // por estrato
+      "1": 0.5, "2": 0.5, "3": 1.0, "4": 1.5, "5": 2.0, "6": 2.5,
+    },
+    comercio: [        // por rango de Q (comercio/industria/institucional/dotacional)
+      { hasta: 300,    i: 2.9 },
+      { hasta: 1000,   i: 3.2 },
+      { hasta: Infinity, i: 4.0 },
+    ],
+    sin_cargo: 0.0,    // parqueaderos, circulación, zonas comunes, áreas colectivas
+  },
+
+  /* --- FACTOR j — POR ÁREA Q -------------------------------------------------- *
+   * Fórmula CONTINUA que regula la relación expensa/área. NO depende del estrato.
+   * Cada tramo tiene su fórmula. Parametrizado como coeficientes a/b:  j = a/(b + 800/Q)
+   */
+  factorJ: {
+    construccion: [
+      { hastaQ: 100,      tipo: "constante", valor: 0.45 },
+      { hastaQ: 11000,    tipo: "formula",   a: 3.8, b: 0.12,  divQ: 800 },
+      { hastaQ: Infinity, tipo: "formula",   a: 2.2, b: 0.018, divQ: 800 },
+    ],
+    urbanismo: [
+      { hastaQ: Infinity, tipo: "formula",   a: 4.0, b: 0.025, divQ: 2000 },
+    ],
+  },
+
+  /* --- MODALIDADES DE LICENCIA ----------------------------------------------- *
+   * factorAreaQ: multiplica el área antes de calcular j (ej. modificación = 30%).
+   * usaUrbanismoJ: usa la fórmula j de urbanismo en lugar de construcción.
+   * soloCargoFijo: no genera cargo variable.
+   * descuentoCfPct: descuento aplicado solo al cargo fijo.
+   */
+  modalidades: {
+    obra_nueva:    { label: "Obra Nueva / Ampliación",            factorAreaQ: 1.00, usaUrbanismoJ: false, soloCargoFijo: false, descuentoCfPct: 0 },
+    modificacion:  { label: "Modificación",                       factorAreaQ: 0.30, usaUrbanismoJ: false, soloCargoFijo: false, descuentoCfPct: 0 },
+    restauracion:  { label: "Restauración / Reforzamiento",       factorAreaQ: 0.30, usaUrbanismoJ: false, soloCargoFijo: false, descuentoCfPct: 0 },
+    urbanismo:     { label: "Urbanismo / Parcelación",            factorAreaQ: 1.00, usaUrbanismoJ: true,  soloCargoFijo: false, descuentoCfPct: 0 },
+    adecuacion:    { label: "Adecuación sin obras (solo Cf×50%)", factorAreaQ: 1.00, usaUrbanismoJ: false, soloCargoFijo: true,  descuentoCfPct: 0.50 },
+  },
+
+  /* --- CASOS ESPECIALES ------------------------------------------------------ */
+  casosEspeciales: {
+    // Ley 810/2003 Art. 11 — VIS/VIP: 50% sobre el total
+    descuentoVIS_VIP: 0.50,
+
+    // Art. 2.2.6.6.8.12 — VIS individual unifamiliar/bifamiliar E1-3
+    visIndividual: {
+      expensaUVT: 8.34,         // expensa única por unidad
+      descuento: 0.50,          // liquidada al 50%
+      m2PorUnidad: 60,          // estimación de unidades = areaTotal / m2PorUnidad
+    },
+
+    // Art. 2.2.6.6.8.3 Par. 4 — revisión por particulares: -30% cargo variable
+    descuentoRevisionParticular: 0.30,
+
+    // Dotacionales públicos salud/educación/bienestar: 50% sobre total
+    descuentoDotacionalPublico: 0.50,
+  },
+
+  /* --- CATÁLOGO DE USOS (para la interfaz) ----------------------------------- *
+   * Lista desplegable de factores i disponibles en la tabla de usos.
+   */
+  catalogoUsos: [
+    { i: 0.0, label: "Sin cargo — parqueos / circulación / colectivo" },
+    { i: 0.5, label: "Vivienda E1-2  (i = 0,5)" },
+    { i: 1.0, label: "Vivienda E3    (i = 1,0)" },
+    { i: 1.5, label: "Vivienda E4    (i = 1,5)" },
+    { i: 2.0, label: "Vivienda E5    (i = 2,0)" },
+    { i: 2.5, label: "Vivienda E6    (i = 2,5)" },
+    { i: 2.9, label: "Comercio Q ≤ 300 m²    (i = 2,9)" },
+    { i: 3.2, label: "Comercio Q ≤ 1.000 m²  (i = 3,2)" },
+    { i: 4.0, label: "Comercio Q > 1.000 m²  (i = 4,0)" },
+  ],
+};
+
+// Permite uso como módulo o global (navegador con file://)
+
+
+/* ===== CAPA 2: MOTOR DE CALCULO (puro) ===== */
+/* =============================================================================
+ * motor_calculo.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE LÓGICA NORMATIVA — Funciones puras, sin DOM.
+ * Depende únicamente de CONFIG_NORMATIVA.
+ * =============================================================================
+ */
+
+const MotorCuraduria = (function (CFG) {
+  "use strict";
+
+  /* --- Helpers -------------------------------------------------------------- */
+  function uvtDelAnio(anio) {
+    return CFG.uvtPorAnio[String(anio)] || CFG.uvtPorAnio["2026"];
+  }
+  function factorMunicipio(municipio) {
+    return CFG.factorM[municipio] != null ? CFG.factorM[municipio] : CFG.factorM._default;
+  }
+
+  /* --- Factor j (por área Q) ------------------------------------------------ *
+   * Aplica la modalidad: ajusta Q (ej. modificación 30%) y elige tabla j.
+   */
+  function calcularFactorJ(Q, modalidadKey) {
+    if (!Q || Q <= 0) return 0;
+    const mod = CFG.modalidades[modalidadKey] || CFG.modalidades.obra_nueva;
+    const Qajustado = Q * (mod.factorAreaQ || 1);
+    const tabla = mod.usaUrbanismoJ ? CFG.factorJ.urbanismo : CFG.factorJ.construccion;
+
+    for (const tramo of tabla) {
+      if (Qajustado <= tramo.hastaQ) {
+        if (tramo.tipo === "constante") return tramo.valor;
+        return tramo.a / (tramo.b + tramo.divQ / Qajustado);
+      }
+    }
+    return 0;
+  }
+
+  /* --- Cargo variable de UN uso --------------------------------------------- */
+  function calcularCargoVariableUso(uso, ctx) {
+    const Q = uso.area || 0;
+    const i = uso.i || 0;
+    if (Q <= 0 || i <= 0) {
+      return { ...uso, j: 0, cvNeto: 0, iva: 0, total: 0 };
+    }
+    const j = calcularFactorJ(Q, ctx.modalidad);
+    const cvBase = CFG.constantes.Cv_UVT * ctx.uvt;     // CV en pesos
+    const cvNeto = cvBase * i * j * ctx.m;
+    const iva = cvNeto * CFG.constantes.IVA;
+    return { ...uso, j, cvNeto, iva, total: cvNeto + iva };
+  }
+
+  /* --- Uso predominante (mayor área con i > 0) ------------------------------ */
+  function determinarUsoPredominante(usos) {
+    let pred = null;
+    for (const u of usos) {
+      if ((u.i || 0) > 0 && (u.area || 0) > 0) {
+        if (!pred || u.area > pred.area) pred = u;
+      }
+    }
+    return pred; // puede ser null
+  }
+
+  /* --- Cargo fijo ----------------------------------------------------------- */
+  function calcularCargoFijo(iPred, ctx) {
+    const mod = CFG.modalidades[ctx.modalidad] || CFG.modalidades.obra_nueva;
+    let cfNeto = CFG.constantes.Cf_UVT * iPred * ctx.m * ctx.uvt;
+    if (mod.descuentoCfPct) cfNeto *= (1 - mod.descuentoCfPct);
+    return cfNeto;
+  }
+
+  /* --- LIQUIDACIÓN COMPLETA ------------------------------------------------- *
+   * proyecto = {
+   *   tipo: 'novis'|'vis'|'vip',
+   *   modalidad: clave,
+   *   anio: '2026',
+   *   municipio: 'bogota',
+   *   areaTotalConstruida: número (para VIS individual),
+   *   usos: [ { nombre, i, area } ]
+   * }
+   */
+  function liquidar(proyecto) {
+    const ctx = {
+      modalidad: proyecto.modalidad || "obra_nueva",
+      anio: proyecto.anio || "2026",
+      uvt: uvtDelAnio(proyecto.anio),
+      m: proyecto.factorM != null ? proyecto.factorM : factorMunicipio(proyecto.municipio || "bogota"),
+    };
+    const mod = CFG.modalidades[ctx.modalidad] || CFG.modalidades.obra_nueva;
+    const esVIS = proyecto.tipo === "vis" || proyecto.tipo === "vip";
+    const descVIS = esVIS ? (1 - CFG.casosEspeciales.descuentoVIS_VIP) : 1;
+
+    const memoria = [];
+    memoria.push(`UVT ${ctx.anio} = $${ctx.uvt.toLocaleString("es-CO")}`);
+    memoria.push(`Factor m (municipio) = ${ctx.m}`);
+    memoria.push(`CV base = ${CFG.constantes.Cv_UVT} UVT × $${ctx.uvt.toLocaleString("es-CO")} = $${Math.round(CFG.constantes.Cv_UVT * ctx.uvt).toLocaleString("es-CO")}`);
+    memoria.push(`Modalidad: ${mod.label}`);
+    if (esVIS) memoria.push(`Proyecto ${proyecto.tipo.toUpperCase()} → descuento 50% (Ley 810/2003 Art. 11)`);
+
+    /* CASO: VIS individual --------------------------------------------------- */
+    if (ctx.modalidad === "vis_individual" || proyecto.modalidad === "vis_individual") {
+      const ce = CFG.casosEspeciales.visIndividual;
+      const und = Math.max(1, Math.ceil((proyecto.areaTotalConstruida || ce.m2PorUnidad) / ce.m2PorUnidad));
+      const cfNeto = ce.expensaUVT * ce.descuento * ctx.uvt * und;
+      const cfIva = cfNeto * CFG.constantes.IVA;
+      memoria.push(`VIS individual: ${ce.expensaUVT} UVT × ${ce.descuento} × ${und} und. = $${Math.round(cfNeto).toLocaleString("es-CO")}`);
+      return armarResultado({ ctx, esVIS, usosCalc: [], cvNeto: 0, cfNeto, cfIva, usoPred: { nombre: `VIS individual (${und} und.)`, i: 0 }, memoria });
+    }
+
+    /* CASO: adecuación / solo cargo fijo ------------------------------------- */
+    if (mod.soloCargoFijo) {
+      const pred = determinarUsoPredominante(proyecto.usos) || { i: 1.0, nombre: "Uso único" };
+      let cfNeto = calcularCargoFijo(pred.i, ctx) * descVIS;
+      const cfIva = cfNeto * CFG.constantes.IVA;
+      memoria.push(`Adecuación: solo cargo fijo × ${(1 - mod.descuentoCfPct) * 100}% = $${Math.round(cfNeto).toLocaleString("es-CO")}`);
+      return armarResultado({ ctx, esVIS, usosCalc: [], cvNeto: 0, cfNeto, cfIva, usoPred: pred, memoria });
+    }
+
+    /* CASO GENERAL: cargo variable por uso ----------------------------------- */
+    const usosCalc = proyecto.usos.map(u => calcularCargoVariableUso(u, ctx));
+    usosCalc.forEach(u => {
+      if (u.cvNeto > 0) {
+        memoria.push(`${u.nombre || "Uso"}: Q=${u.area} m² → j=${u.j.toFixed(4)} | CV×${u.i}×${u.j.toFixed(2)}×${ctx.m} = $${Math.round(u.cvNeto).toLocaleString("es-CO")}`);
+      }
+    });
+
+    let cvNeto = usosCalc.reduce((s, u) => s + u.cvNeto, 0) * descVIS;
+
+    const pred = determinarUsoPredominante(proyecto.usos);
+    let cfNeto = pred ? calcularCargoFijo(pred.i, ctx) * descVIS : 0;
+    const cfIva = cfNeto * CFG.constantes.IVA;
+
+    if (pred) memoria.push(`Uso predominante: ${pred.nombre || "—"} (mayor área, i=${pred.i}) → cargo fijo`);
+
+    return armarResultado({ ctx, esVIS, usosCalc, cvNeto, cfNeto, cfIva, usoPred: pred, memoria });
+  }
+
+  /* --- Ensamblar resultado -------------------------------------------------- */
+  function armarResultado({ ctx, esVIS, usosCalc, cvNeto, cfNeto, cfIva, usoPred, memoria }) {
+    const ivaCV = cvNeto * CFG.constantes.IVA;
+    const totalCV = cvNeto + ivaCV;
+    const cfTotal = cfNeto + cfIva;
+    const total = totalCV + cfTotal;
+
+    return {
+      contexto: ctx,
+      esVIS,
+      usos: usosCalc,
+      cargoVariable: { neto: cvNeto, iva: ivaCV, total: totalCV },
+      cargoFijo: { neto: cfNeto, iva: cfIva, total: cfTotal },
+      usoPredominante: usoPred,
+      totalExpensas: total,
+      memoria,
+    };
+  }
+
+  /* --- API pública ---------------------------------------------------------- */
+  return {
+    calcularFactorJ,
+    calcularCargoVariableUso,
+    determinarUsoPredominante,
+    calcularCargoFijo,
+    liquidar,
+    uvtDelAnio,
+    factorMunicipio,
+  };
+
+})(CONFIG_NORMATIVA);
+
+
+
+/* ===== CAPA 3: INTERFAZ ===== */
+const UI_CUR = (function(){
+  "use strict";
+  const CFG = CONFIG_NORMATIVA, M = MotorCuraduria;
+  const fmt = n => formatCurrencyCOP(n||0);
+  const f2  = n => parseFloat(n).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const $ = id => document.getElementById(id);
+
+  let tipo='novis', usos=[], uid=0, ultimoResultado=null;
+
+  /* --- Inicializar selects desde la config --- */
+  function initSelects(){
+    const ms=$('modalidad');
+    Object.entries(CFG.modalidades).forEach(([k,v])=>{
+      ms.innerHTML += '<option value="'+k+'">'+v.label+'</option>';
+    });
+    ms.innerHTML += '<option value="vis_individual">VIS individual unif./bifam. E1-3</option>';
+    const as=$('anio');
+    Object.keys(CFG.uvtPorAnio).sort().reverse().forEach(y=>{
+      as.innerHTML += '<option value="'+y+'"'+(y==='2026'?' selected':'')+'>'+y+' - UVT $'+CFG.uvtPorAnio[y].toLocaleString('es-CO')+'</option>';
+    });
+  }
+
+  function iOptsHTML(sel){
+    return CFG.catalogoUsos.map(o=>'<option value="'+o.i+'"'+(o.i==sel?' selected':'')+'>'+o.label+'</option>').join('');
+  }
+
+  /* --- Tabla de usos --- */
+  function agregarUso(nombre,tipo_uso,area,i){
+    nombre=nombre!==undefined?nombre:''; tipo_uso=tipo_uso!==undefined?tipo_uso:'obra_nueva';
+    area=area!==undefined?parseFloat(area)||0:0; i=i!==undefined?parseFloat(i):2.0;
+    const id=++uid; usos.push({id,nombre,i,area});
+    const tr=document.createElement('tr'); tr.id='row'+id;
+    tr.innerHTML=
+      '<td><input type="text" value="'+nombre+'" placeholder="Ej. Vivienda NO VIS" oninput="UI_CUR.upd('+id+",'nombre',this.value)\"/></td>"+
+      '<td><select onchange="UI_CUR.upd('+id+",'tipo',this.value)\">"+
+        '<option value="obra_nueva"'+(tipo_uso==='obra_nueva'?' selected':'')+'>Obra Nueva</option>'+
+        '<option value="area_intervencion"'+(tipo_uso==='area_intervencion'?' selected':'')+'>Area de Intervencion</option>'+
+        '<option value="sin_cargo"'+(tipo_uso==='sin_cargo'?' selected':'')+'>Sin cargo (i=0)</option>'+
+      '</select></td>'+
+      '<td><input type="number" value="'+(area||'')+'" min="0" step="0.01" placeholder="m2" oninput="UI_CUR.upd('+id+",'area',parseFloat(this.value)||0)\"/></td>"+
+      '<td><select onchange="UI_CUR.upd('+id+",'i',parseFloat(this.value))\">"+iOptsHTML(i)+'</select></td>'+
+      '<td class="calc-cell" id="j'+id+'">-</td>'+
+      '<td class="calc-cell" id="cv'+id+'">-</td>'+
+      '<td class="calc-cell iva" id="iva'+id+'">-</td>'+
+      '<td class="calc-cell" id="tot'+id+'">-</td>'+
+      '<td><button class="btn-del" onclick="UI_CUR.del('+id+')">X</button></td>';
+    $('usosBody').appendChild(tr); calcular();
+  }
+  function upd(id,campo,valor){
+    const u=usos.find(x=>x.id===id); if(!u)return;
+    if(campo==='tipo'){ if(valor==='sin_cargo'){u.i=0; const r=$('row'+id); if(r)r.querySelector('select:last-of-type').value='0';} }
+    else u[campo]=valor;
+    calcular();
+  }
+  function del(id){ usos=usos.filter(x=>x.id!==id); const r=$('row'+id); if(r)r.remove(); calcular(); }
+
+  /* --- Calcular: arma proyecto y llama al MOTOR --- */
+  function calcular(){
+    const proyecto={
+      tipo, modalidad:$('modalidad').value, anio:$('anio').value,
+      factorM:parseFloat($('factorM').value)||0.938,
+      areaTotalConstruida:parseFloat($('areaTotalConst').value)||0,
+      usos:usos.map(u=>({nombre:u.nombre,i:u.i,area:u.area}))
+    };
+    const r=M.liquidar(proyecto); ultimoResultado=r;
+
+    // Actualizar filas
+    r.usos.forEach(u=>{
+      const orig=usos.find(x=>x.nombre===u.nombre&&x.area===u.area)||usos.find(x=>x.area===u.area);
+      const id=orig?orig.id:null; if(id===null)return;
+      const jE=$('j'+id),cvE=$('cv'+id),ivaE=$('iva'+id),totE=$('tot'+id); if(!jE)return;
+      const act=u.cvNeto>0;
+      jE.className='calc-cell'+(act?' act':''); cvE.className='calc-cell'+(act?' act':'');
+      ivaE.className='calc-cell iva'; totE.className='calc-cell'+(act?' tot':'');
+      jE.textContent=u.j>0?u.j.toFixed(2).replace('.',','):'-';
+      cvE.textContent=u.cvNeto>0?fmt(u.cvNeto):'-';
+      ivaE.textContent=u.iva>0?fmt(u.iva):'-';
+      totE.textContent=u.total>0?fmt(u.total):'-';
+    });
+
+    // Resultados
+    $('r_cvNeto').textContent=fmt(r.cargoVariable.neto);
+    $('r_cvIVA').textContent=fmt(r.cargoVariable.iva);
+    $('r_cvTotal').textContent=fmt(r.cargoVariable.total);
+    $('r_cfNeto').textContent=fmt(r.cargoFijo.neto);
+    $('r_cfIVA').textContent=fmt(r.cargoFijo.iva);
+    $('r_cfTotal').textContent=fmt(r.cargoFijo.total);
+    $('r_total').textContent=fmt(r.totalExpensas);
+    $('r_uvt').textContent=fmt(r.contexto.uvt);
+    $('r_cvBase').textContent=fmt(CFG.constantes.Cv_UVT*r.contexto.uvt);
+    $('r_m').textContent=r.contexto.m.toFixed(3).replace('.',',');
+    $('r_nUsos').textContent=r.usos.filter(u=>u.cvNeto>0).length;
+    $('r_usoPredSpan').textContent=r.usoPredominante?(r.usoPredominante.nombre+' (i='+r.usoPredominante.i+')'):'-';
+    $('r_breakdown').innerHTML='CV+IVA: <b>'+fmt(r.cargoVariable.total)+'</b><br>CF+IVA: <b>'+fmt(r.cargoFijo.total)+'</b>';
+    $('r_visBadge').innerHTML=r.esVIS?'<span class="vis-badge">50% descuento VIS/VIP aplicado</span>':'';
+
+    // Memoria
+    $('memoria').innerHTML=r.memoria.map(m=>'<div class="memoria-line">'+m+'</div>').join('');
+    diff();
+  }
+
+  /* --- Validador --- */
+  function diff(){
+    const rcv=parseFloat($('realCV').value)||0, rt=parseFloat($('realTotal').value)||0, el=$('diffLabel');
+    if(!ultimoResultado){el.innerHTML='';return;}
+    const badge=(lbl,calc,real)=>{const d=Math.round(calc-real),p=(d/real*100).toFixed(1),c=Math.abs(d)<100000?'#72c464':'#d46060';return lbl+': <span style="color:'+c+';font-weight:600">'+(d>=0?'+':'')+fmt(d)+' ('+p+'%)</span>';};
+    let h='';
+    if(rcv>0)h+=badge('CV',ultimoResultado.cargoVariable.total,rcv)+'<br>';
+    if(rt>0)h+=badge('Total',ultimoResultado.totalExpensas,rt);
+    el.innerHTML=h||'<span style="color:var(--dim)">Ingresa valores para comparar</span>';
+  }
+
+  /* --- Ejemplo real --- */
+  function cargarEjemplo(){
+    usos=[]; $('usosBody').innerHTML='';
+    $('modalidad').value='obra_nueva'; $('anio').value='2026'; $('factorM').value='0.938';
+    $('direccion').value='CL 76 12 58 / CL 76 12 70 / CL 77 12 65'; $('estrato').value='5';
+    $('areaLote').value='1552.72'; $('indice').value='4.50';
+    $('areaTotalConst').value='10557.34'; $('areaVendible').value='8167.52';
+    $('hintArea').textContent='Exp. 11001-1-25-1177 - Lago de Chapinero';
+    agregarUso('Viv. Multifamiliar NO VIS - parqueos','sin_cargo',6114.06,0);
+    agregarUso('Viv. Multifamiliar NO VIS - colectivo','sin_cargo',2053.46,0);
+    agregarUso('Viv. Multifamiliar NO VIS - intervencion','area_intervencion',8167.52,2.0);
+    agregarUso('Comercio - Obra Nueva','obra_nueva',322.30,3.2);
+    $('realCV').value='46281321'; $('realTotal').value='46559531';
+    calcular();
+  }
+
+  /* --- Tipo proyecto --- */
+  function initTipo(){
+    document.querySelectorAll('.tipo-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=btn.dataset.t;
+        document.querySelectorAll('.tipo-btn').forEach(b=>b.classList.remove('on-novis','on-vis'));
+        btn.classList.add(t==='novis'?'on-novis':'on-vis'); tipo=t;
+        $('tipoHint').textContent=t==='novis'?'Sin descuento en expensas':'50% descuento - Ley 810/2003 Art. 11';
+        calcular();
+      });
+    });
+  }
+
+  /* --- Auto area --- */
+  function initAutoArea(){
+    ['areaLote','indice'].forEach(id=>$(id).addEventListener('input',()=>{
+      const l=parseFloat($('areaLote').value)||0, x=parseFloat($('indice').value)||0;
+      if(l>0&&x>0){$('areaTotalConst').value=(l*x).toFixed(2); $('hintArea').textContent=f2(l)+' x '+f2(x)+' = '+f2(l*x)+' m2';}
+      calcular();
+    }));
+    ['modalidad','anio','factorM','areaTotalConst','estrato'].forEach(id=>{
+      $(id).addEventListener('input',calcular); $(id).addEventListener('change',calcular);
+    });
+  }
+
+  /* --- EXPORT JSON --- */
+  function exportarJSON(){
+    if(!ultimoResultado)calcular();
+    const d=construirDataExport();
+    descargar(JSON.stringify(d,null,2),'application/json','expensas_'+fechaArchivo()+'.json');
+  }
+
+  /* --- EXPORT EXCEL (CSV con BOM, abre en Excel) --- */
+  function exportarExcel(){
+    if(!ultimoResultado)calcular();
+    const r=ultimoResultado;
+    let csv='\ufeff'; // BOM para que Excel lea acentos
+    csv+='LIQUIDACION DE EXPENSAS DE CURADURIA\n';
+    csv+='Direccion;'+($('direccion').value||'')+'\n';
+    csv+='Modalidad;'+$('modalidad').value+'\n';
+    csv+='Ano radicacion;'+r.contexto.anio+'\n';
+    csv+='UVT aplicado;'+r.contexto.uvt+'\n';
+    csv+='Factor m;'+r.contexto.m+'\n\n';
+    csv+='USO;AREA Q (m2);FACTOR i;FACTOR j;CV x i x j x m;IVA 19%;TOTAL\n';
+    r.usos.forEach(u=>{
+      csv+=(u.nombre||'')+';'+u.area+';'+u.i+';'+(u.j||0).toFixed(4)+';'+Math.round(u.cvNeto)+';'+Math.round(u.iva)+';'+Math.round(u.total)+'\n';
+    });
+    csv+='\n;;;;Subtotal CV neto;;'+Math.round(r.cargoVariable.neto)+'\n';
+    csv+=';;;;IVA CV 19%;;'+Math.round(r.cargoVariable.iva)+'\n';
+    csv+=';;;;Total cargo variable;;'+Math.round(r.cargoVariable.total)+'\n';
+    csv+=';;;;Cargo fijo neto;;'+Math.round(r.cargoFijo.neto)+'\n';
+    csv+=';;;;IVA CF 19%;;'+Math.round(r.cargoFijo.iva)+'\n';
+    csv+=';;;;Total cargo fijo;;'+Math.round(r.cargoFijo.total)+'\n';
+    csv+=';;;;TOTAL EXPENSAS;;'+Math.round(r.totalExpensas)+'\n';
+    descargar(csv,'text/csv;charset=utf-8','expensas_'+fechaArchivo()+'.csv');
+  }
+
+  /* --- EXPORT PDF (impresion directa de la pagina, sin iframe ni ventana) --- */
+  function exportarPDF(){
+    if(!ultimoResultado)calcular();
+    const r=ultimoResultado;
+    const filas=r.usos.map(u=>'<tr><td>'+(u.nombre||'')+'</td><td style="text-align:right">'+f2(u.area)+'</td><td style="text-align:right">'+u.i+'</td><td style="text-align:right">'+(u.j||0).toFixed(2)+'</td><td style="text-align:right">'+fmt(u.cvNeto)+'</td><td style="text-align:right">'+fmt(u.iva)+'</td><td style="text-align:right">'+fmt(u.total)+'</td></tr>').join('');
+    const mem=r.memoria.map(m=>'<li>'+m+'</li>').join('');
+    const html='<h1>Liquidacion de Expensas de Curaduria</h1>'+
+      '<table class="meta-tbl"><tr><td><b>Direccion:</b></td><td>'+($('direccion').value||'-')+'</td><td><b>Modalidad:</b></td><td>'+$('modalidad').value+'</td></tr>'+
+      '<tr><td><b>Ano radicacion:</b></td><td>'+r.contexto.anio+'</td><td><b>UVT:</b></td><td>'+fmt(r.contexto.uvt)+'</td></tr>'+
+      '<tr><td><b>Factor m:</b></td><td>'+r.contexto.m+'</td><td><b>Tipo:</b></td><td>'+tipo.toUpperCase()+'</td></tr></table>'+
+      '<h2>Cargo variable por uso</h2>'+
+      '<table><tr><th>Uso</th><th>Area Q</th><th>i</th><th>j</th><th>CVxixjxm</th><th>IVA</th><th>Total</th></tr>'+filas+
+      '<tr class="tot"><td colspan="4">Subtotal cargo variable</td><td>'+fmt(r.cargoVariable.neto)+'</td><td>'+fmt(r.cargoVariable.iva)+'</td><td>'+fmt(r.cargoVariable.total)+'</td></tr></table>'+
+      '<h2>Cargo fijo (uso predominante: '+(r.usoPredominante?r.usoPredominante.nombre:'-')+')</h2>'+
+      '<table><tr><td>Cargo fijo neto</td><td style="text-align:right">'+fmt(r.cargoFijo.neto)+'</td></tr>'+
+      '<tr><td>IVA 19%</td><td style="text-align:right">'+fmt(r.cargoFijo.iva)+'</td></tr>'+
+      '<tr class="tot"><td>Total cargo fijo</td><td style="text-align:right">'+fmt(r.cargoFijo.total)+'</td></tr></table>'+
+      '<h2>Total a pagar</h2><p class="big">'+fmt(r.totalExpensas)+'</p>'+
+      (r.esVIS?'<p style="color:#a67c00">Descuento 50% VIS/VIP aplicado (Ley 810/2003 Art. 11)</p>':'')+
+      '<h2>Memoria de calculo</h2><ul>'+mem+'</ul>'+
+      '<p style="font-size:9px;color:#888;margin-top:30px">Decreto 1077/2015 - Decreto 1890/2021 - Tabla CU1 Bogota 2026. Estimacion de planeacion; verificar con la curaduria competente.</p>';
+    const cont=$('printAreaCur');
+    cont.innerHTML=html;
+    document.body.classList.add('printing');
+    window.print();
+    // Limpiar despues de imprimir
+    setTimeout(function(){ document.body.classList.remove('printing'); }, 500);
+  }
+
+  /* --- Helpers export --- */
+  function construirDataExport(){
+    const r=ultimoResultado;
+    return {
+      fecha:new Date().toLocaleDateString('es-CO'),
+      proyecto:{direccion:$('direccion').value,tipo,modalidad:$('modalidad').value,anio:r.contexto.anio,
+        uvt:r.contexto.uvt,factor_m:r.contexto.m,estrato:$('estrato').value,
+        area_lote:parseFloat($('areaLote').value)||null,indice:parseFloat($('indice').value)||null,
+        area_construida:parseFloat($('areaTotalConst').value)||null,area_vendible:parseFloat($('areaVendible').value)||null},
+      usos:r.usos.map(u=>({nombre:u.nombre,area_m2:u.area,factor_i:u.i,factor_j:u.j,cv_neto:Math.round(u.cvNeto),iva:Math.round(u.iva),total:Math.round(u.total)})),
+      liquidacion:{cargo_variable_neto:Math.round(r.cargoVariable.neto),cargo_variable_iva:Math.round(r.cargoVariable.iva),cargo_variable_total:Math.round(r.cargoVariable.total),
+        cargo_fijo_neto:Math.round(r.cargoFijo.neto),cargo_fijo_iva:Math.round(r.cargoFijo.iva),cargo_fijo_total:Math.round(r.cargoFijo.total),
+        total_expensas:Math.round(r.totalExpensas),descuento_vis_vip:r.esVIS},
+      memoria:r.memoria
+    };
+  }
+  function fechaArchivo(){return new Date().toISOString().slice(0,10);}
+  function descargar(contenido,tipo,nombre){
+    const blob=new Blob([contenido],{type:tipo}),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url; a.download=nombre; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+
+  /* --- init --- */
+  function init(){ initSelects(); initTipo(); initAutoArea(); agregarUso(); }
+  return { init,calcular,agregarUso,upd,del,diff,cargarEjemplo,exportarJSON,exportarExcel,exportarPDF };
+})();
+
+
+
+
+/* ============================================================
+ * MODULO 2: OBLIGACIONES URBANISTICAS (config + motor + UI_OBL)
+ * ============================================================ */
+
+/* ===== CAPA 1: CONFIGURACION ===== */
+/* =============================================================================
+ * configuracion_obligaciones.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE DATOS NORMATIVOS — Obligaciones Urbanísticas (Espacio Público + Servicios)
+ * Decreto Distrital 555/2021 (Art. 317, 318, 320) · Resolución 2103/2024
+ * Verificado contra liquidación oficial SDP 2-2026-28119 (Exp. 11001-1-25-1177)
+ *
+ * Editar AQUÍ todo lo que cambie por norma, sin tocar el motor.
+ * =============================================================================
+ */
+
+const CONFIG_OBLIGACIONES = {
+
+  meta: {
+    version: "1.0",
+    fuente: "Decreto 555/2021 Art. 317-318-320 · Res. 2103/2024 · Dec. 670/2025 Art. 1352",
+    calibrado: "Liquidación SDP 2-2026-28119 (Consolidación, 14-may-2026)",
+  },
+
+  /* --- PORCENTAJES DE ÁREA POR TRATAMIENTO ---------------------------------- *
+   * Porcentajes sobre el Área del Terreno (AT) para calcular las áreas a ceder.
+   * CALIBRADO contra un caso de CONSOLIDACIÓN. Otros tratamientos: parametrizable.
+   *
+   * pctCSs : % de AT para cesión en suelo de espacio público (Art. 318)
+   * pctFd  : % de AT para el componente de pago en dinero de espacio público
+   * pctCS  : % de AT para cesión de servicios públicos / redes locales (Art. 320)
+   */
+  tratamientos: {
+    consolidacion: { label: "Consolidación",        pctCSs: 0.10, pctFd: 0.05, pctCS: 0.15, verificado: true },
+    desarrollo:    { label: "Desarrollo",           pctCSs: 0.10, pctFd: 0.05, pctCS: 0.15, verificado: false },
+    renovacion:    { label: "Renovación urbana",    pctCSs: 0.10, pctFd: 0.05, pctCS: 0.15, verificado: false },
+    mejoramiento:  { label: "Mejoramiento integral",pctCSs: 0.00, pctFd: 0.00, pctCS: 0.00, verificado: false },
+    conservacion:  { label: "Conservación",         pctCSs: 0.00, pctFd: 0.00, pctCS: 0.00, verificado: false },
+  },
+
+  /* --- FACTORES DE PROGRESIVIDAD k y d (Resolución 2103/2024) ---------------- *
+   * k: factor de la cesión en suelo de espacio público
+   * d: factor del pago compensatorio en dinero
+   * Varían por período. En ningún caso k < 0,30 ni d < 0,25.
+   */
+  progresividad: [
+    { label: "Hasta 31-dic-2024", desde: "2000-01-01", hasta: "2024-12-31", k: 0.30, d: 0.25 },
+    { label: "Hasta 31-dic-2027", desde: "2025-01-01", hasta: "2027-12-31", k: 0.30, d: 0.25 },
+    { label: "Desde 01-ene-2028", desde: "2028-01-01", hasta: "2099-12-31", k: 0.50, d: 0.45 },
+  ],
+
+  /* --- FACTOR FIJO SERVICIOS PÚBLICOS (Art. 320) ----------------------------- *
+   * OSP = CS × Vref × factorSP
+   */
+  factorServiciosPublicos: 0.064,
+
+  /* --- VALORES DE REFERENCIA Vref ($/m²) ------------------------------------- *
+   * Mayor valor de referencia del predio en el SIIC de Catastro, vigente al año
+   * de radicación. NO es un valor único: depende del predio. Editable por año.
+   * Estos valores son los del caso real (barrio 008312, manzana 14, predio 07).
+   */
+  vrefPorAnio: {
+    "2025": 7900000,
+    "2024": 7500000,
+    "2023": 7100000,
+    "2022": 7000000,
+    "2020": 6000000,
+    "2019": 5800000,
+    "2018": 5000000,
+    "2017": 4400000,
+    "2016": 4000000,
+    "2015": 3700000,
+  },
+};
+
+
+
+/* ===== CAPA 2: MOTOR ===== */
+/* =============================================================================
+ * motor_obligaciones.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE LÓGICA NORMATIVA — Funciones puras, sin DOM.
+ * Obligaciones urbanísticas de Espacio Público y Servicios Públicos.
+ * Depende de CONFIG_OBLIGACIONES.
+ * =============================================================================
+ */
+
+const MotorObligaciones = (function (CFG) {
+  "use strict";
+
+  /* --- Factores k y d vigentes según fecha de radicación -------------------- */
+  function factoresVigentes(fechaRad) {
+    const f = fechaRad || new Date().toISOString().slice(0, 10);
+    for (const p of CFG.progresividad) {
+      if (f >= p.desde && f <= p.hasta) return { k: p.k, d: p.d, periodo: p.label };
+    }
+    // Por defecto: el más reciente
+    const ult = CFG.progresividad[CFG.progresividad.length - 1];
+    return { k: ult.k, d: ult.d, periodo: ult.label };
+  }
+
+  /* --- Valor de referencia por año (o el provisto manualmente) -------------- */
+  function vrefDelAnio(anio, manual) {
+    if (manual && manual > 0) return manual;
+    return CFG.vrefPorAnio[String(anio)] || CFG.vrefPorAnio["2025"];
+  }
+
+  /* --- LIQUIDACIÓN COMPLETA -------------------------------------------------- *
+   * proyecto = {
+   *   areaTerreno: número (AT en m²),
+   *   tratamiento: 'consolidacion' | ...,
+   *   anioRadicacion: '2025',
+   *   fechaRadicacion: '2026-05-12'  (para k y d),
+   *   vrefManual: número opcional ($/m²),
+   *   // overrides opcionales de porcentajes:
+   *   pctCSs, pctFd, pctCS
+   * }
+   */
+  function liquidar(proyecto) {
+    const AT = proyecto.areaTerreno || 0;
+    const trat = CFG.tratamientos[proyecto.tratamiento] || CFG.tratamientos.consolidacion;
+    const Vref = vrefDelAnio(proyecto.anioRadicacion, proyecto.vrefManual);
+    const { k, d, periodo } = factoresVigentes(proyecto.fechaRadicacion);
+
+    // Porcentajes (permite override manual)
+    const pctCSs = proyecto.pctCSs != null ? proyecto.pctCSs : trat.pctCSs;
+    const pctFd  = proyecto.pctFd  != null ? proyecto.pctFd  : trat.pctFd;
+    const pctCS  = proyecto.pctCS  != null ? proyecto.pctCS  : trat.pctCS;
+
+    const memoria = [];
+    memoria.push(`Área del terreno (AT) = ${AT.toLocaleString("es-CO")} m²`);
+    memoria.push(`Tratamiento: ${trat.label}`);
+    memoria.push(`Valor de referencia (Vref) = $${Vref.toLocaleString("es-CO")} /m² (Catastro, vigencia radicación)`);
+    memoria.push(`Factores de progresividad (${periodo}): k=${k} · d=${d}`);
+
+    /* --- ESPACIO PÚBLICO: EP = (CSs × Vref × k) + ((AT × Fd) × Vref × d) ----- */
+    const CSs = AT * pctCSs;                  // área cesión en suelo
+    const compCesion = CSs * Vref * k;
+
+    const areaFd = AT * pctFd;                // área base del componente en dinero
+    const compDinero = areaFd * Vref * d;
+
+    const totalEP = compCesion + compDinero;
+
+    memoria.push(`— Espacio Público (Art. 317-318) —`);
+    memoria.push(`CSs = ${(pctCSs * 100)}% × AT = ${CSs.toFixed(2)} m²`);
+    memoria.push(`Componente cesión = CSs × Vref × k = ${CSs.toFixed(2)} × $${Vref.toLocaleString("es-CO")} × ${k} = $${Math.round(compCesion).toLocaleString("es-CO")}`);
+    memoria.push(`Área pago dinero = ${(pctFd * 100)}% × AT = ${areaFd.toFixed(2)} m²`);
+    memoria.push(`Componente dinero = (AT×Fd) × Vref × d = ${areaFd.toFixed(2)} × $${Vref.toLocaleString("es-CO")} × ${d} = $${Math.round(compDinero).toLocaleString("es-CO")}`);
+    memoria.push(`Total Espacio Público = $${Math.round(totalEP).toLocaleString("es-CO")}`);
+
+    /* --- SERVICIOS PÚBLICOS: OSP = CS × Vref × 0,064 ------------------------- */
+    const CS = AT * pctCS;
+    const totalSP = CS * Vref * CFG.factorServiciosPublicos;
+
+    memoria.push(`— Servicios Públicos (Art. 320) —`);
+    memoria.push(`CS = ${(pctCS * 100)}% × AT = ${CS.toFixed(2)} m²`);
+    memoria.push(`OSP = CS × Vref × ${CFG.factorServiciosPublicos} = ${CS.toFixed(2)} × $${Vref.toLocaleString("es-CO")} × ${CFG.factorServiciosPublicos} = $${Math.round(totalSP).toLocaleString("es-CO")}`);
+
+    const totalGeneral = totalEP + totalSP;
+
+    return {
+      contexto: { AT, tratamiento: trat.label, Vref, k, d, periodo, pctCSs, pctFd, pctCS },
+      espacioPublico: {
+        CSs, compCesion,
+        areaFd, compDinero,
+        total: totalEP,
+      },
+      serviciosPublicos: {
+        CS, total: totalSP,
+      },
+      totalGeneral,
+      memoria,
+    };
+  }
+
+  return { liquidar, factoresVigentes, vrefDelAnio };
+
+})(CONFIG_OBLIGACIONES);
+
+
+
+/* ===== CAPA 3: INTERFAZ ===== */
+const UI_OBL = (function(){
+  "use strict";
+  const CFG = CONFIG_OBLIGACIONES, M = MotorObligaciones;
+  const fmt = n => formatCurrencyCOP(n||0);
+  const f2 = n => parseFloat(n).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const $ = id => document.getElementById(id);
+  let ultimo=null;
+
+  function initSelects(){
+    const ts=$('tratamiento');
+    Object.entries(CFG.tratamientos).forEach(([k,v])=>{
+      ts.innerHTML += '<option value="'+k+'"'+(k==='consolidacion'?' selected':'')+'>'+v.label+(v.verificado?' (verificado)':'')+'</option>';
+    });
+    const as=$('anioRad');
+    Object.keys(CFG.vrefPorAnio).sort().reverse().forEach(y=>{
+      as.innerHTML += '<option value="'+y+'"'+(y==='2025'?' selected':'')+'>'+y+' - Vref $'+CFG.vrefPorAnio[y].toLocaleString('es-CO')+'</option>';
+    });
+    actualizarHints();
+  }
+  function actualizarHints(){
+    const t=CFG.tratamientos[$('tratamiento').value];
+    $('hintTrat').textContent = t.verificado?'Calibrado contra liquidacion real':'Porcentajes parametrizables (no verificado)';
+    if(t){ $('pctCSs').value=(t.pctCSs*100); $('pctFd').value=(t.pctFd*100); $('pctCS').value=(t.pctCS*100); }
+    const y=$('anioRad').value;
+    $('hintVref').textContent='Auto '+y+': $'+(CFG.vrefPorAnio[y]||0).toLocaleString('es-CO')+'/m2';
+  }
+
+  function calcular(){
+    const proyecto={
+      areaTerreno: parseFloat($('areaTerreno').value)||0,
+      tratamiento: $('tratamiento').value,
+      anioRadicacion: $('anioRad').value,
+      fechaRadicacion: $('fechaRad').value,
+      vrefManual: parseMoneyCOP($('vrefManual').value)||0,
+      pctCSs: (parseFloat($('pctCSs').value)||0)/100,
+      pctFd: (parseFloat($('pctFd').value)||0)/100,
+      pctCS: (parseFloat($('pctCS').value)||0)/100,
+    };
+    const r=M.liquidar(proyecto); ultimo=r;
+
+    $('r_ep').textContent=fmt(r.espacioPublico.total);
+    $('r_epDetail').innerHTML='Cesion suelo: <b>'+fmt(r.espacioPublico.compCesion)+'</b><br>Pago dinero: <b>'+fmt(r.espacioPublico.compDinero)+'</b><br>CSs: '+f2(r.espacioPublico.CSs)+' m2';
+    $('r_sp').textContent=fmt(r.serviciosPublicos.total);
+    $('r_spDetail').innerHTML='CS: <b>'+f2(r.serviciosPublicos.CS)+' m2</b><br>Factor: <b>0,064</b><br>Redes pluvial/acueducto/alcantarillado';
+    $('r_total').textContent=fmt(r.totalGeneral);
+    $('r_breakdown').innerHTML='Espacio publico: <b>'+fmt(r.espacioPublico.total)+'</b><br>Servicios publicos: <b>'+fmt(r.serviciosPublicos.total)+'</b>';
+    $('p_at').textContent=f2(r.contexto.AT)+' m2';
+    $('p_vref').textContent=fmt(r.contexto.Vref);
+    $('p_k').textContent=r.contexto.k.toFixed(2).replace('.',',');
+    $('p_d').textContent=r.contexto.d.toFixed(2).replace('.',',');
+    $('memoria').innerHTML=r.memoria.map(m=>'<div class="memoria-line'+(m.startsWith('—')?' sec':'')+'">'+m.replace(/—/g,'').trim()+'</div>').join('');
+    diff();
+  }
+
+  function diff(){
+    const rep=parseFloat($('realEP').value)||0, rsp=parseFloat($('realSP').value)||0, el=$('diffLabel');
+    if(!ultimo){el.innerHTML='';return;}
+    const badge=(lbl,calc,real)=>{const d=Math.round(calc-real),p=(d/real*100).toFixed(2),c=Math.abs(d)<1000?'#72c464':'#d46060';return lbl+': <span style="color:'+c+';font-weight:600">'+(d>=0?'+':'')+fmt(d)+' ('+p+'%)</span>';};
+    let h='';
+    if(rep>0)h+=badge('EP',ultimo.espacioPublico.total,rep)+'<br>';
+    if(rsp>0)h+=badge('SP',ultimo.serviciosPublicos.total,rsp);
+    el.innerHTML=h||'<span style="color:var(--dim)">Ingresa valores para comparar</span>';
+  }
+
+  function cargarEjemplo(){
+    $('obl_dir').value='CL 76 12 58 / CL 76 12 70 / CL 77 12 65';
+    $('areaTerreno').value='1552.72';
+    $('tratamiento').value='consolidacion';
+    $('anioRad').value='2025';
+    $('vrefManual').value=formatCurrencyCOP(7900000);
+    $('fechaRad').value='2026-05-12';
+    actualizarHints();
+    $('pctCSs').value='10'; $('pctFd').value='5'; $('pctCS').value='15';
+    $('realEP').value='521325740'; $('realSP').value='117758285';
+    calcular();
+  }
+
+  function exportarJSON(){
+    if(!ultimo)calcular();
+    const d={fecha:new Date().toLocaleDateString('es-CO'),direccion:$('obl_dir').value,
+      contexto:ultimo.contexto,espacioPublico:ultimo.espacioPublico,serviciosPublicos:ultimo.serviciosPublicos,
+      totalGeneral:Math.round(ultimo.totalGeneral),memoria:ultimo.memoria};
+    descargar(JSON.stringify(d,null,2),'application/json','obligaciones_'+fa()+'.json');
+  }
+  function exportarExcel(){
+    if(!ultimo)calcular();
+    const r=ultimo; let c='\ufeff';
+    c+='LIQUIDACION DE OBLIGACIONES URBANISTICAS\n';
+    c+='Direccion;'+($('obl_dir').value||'')+'\n';
+    c+='Area terreno (AT);'+r.contexto.AT+'\n';
+    c+='Tratamiento;'+r.contexto.tratamiento+'\n';
+    c+='Vref;'+r.contexto.Vref+'\n';
+    c+='Factor k;'+r.contexto.k+'\nFactor d;'+r.contexto.d+'\n\n';
+    c+='OBLIGACION;AREA (m2);FORMULA;VALOR\n';
+    c+='EP - Cesion suelo;'+r.espacioPublico.CSs.toFixed(2)+';CSs x Vref x k;'+Math.round(r.espacioPublico.compCesion)+'\n';
+    c+='EP - Pago dinero;'+r.espacioPublico.areaFd.toFixed(2)+';(AT x Fd) x Vref x d;'+Math.round(r.espacioPublico.compDinero)+'\n';
+    c+='EP TOTAL;;;'+Math.round(r.espacioPublico.total)+'\n';
+    c+='Servicios publicos;'+r.serviciosPublicos.CS.toFixed(2)+';CS x Vref x 0.064;'+Math.round(r.serviciosPublicos.total)+'\n';
+    c+='TOTAL GENERAL;;;'+Math.round(r.totalGeneral)+'\n';
+    descargar(c,'text/csv;charset=utf-8','obligaciones_'+fa()+'.csv');
+  }
+  function exportarPDF(){
+    if(!ultimo)calcular();
+    const r=ultimo;
+    const mem=r.memoria.map(m=>'<li>'+m.replace(/—/g,'').trim()+'</li>').join('');
+    $('printAreaObl').innerHTML=
+      '<h1>Liquidacion de Obligaciones Urbanisticas</h1>'+
+      '<table class="meta-tbl"><tr><td><b>Direccion:</b></td><td>'+($('obl_dir').value||'-')+'</td><td><b>Tratamiento:</b></td><td>'+r.contexto.tratamiento+'</td></tr>'+
+      '<tr><td><b>Area terreno:</b></td><td>'+f2(r.contexto.AT)+' m2</td><td><b>Vref:</b></td><td>'+fmt(r.contexto.Vref)+'/m2</td></tr>'+
+      '<tr><td><b>Factor k:</b></td><td>'+r.contexto.k+'</td><td><b>Factor d:</b></td><td>'+r.contexto.d+'</td></tr></table>'+
+      '<h2>Espacio Publico (Art. 317-318)</h2>'+
+      '<table><tr><th>Componente</th><th>Area</th><th>Formula</th><th>Valor</th></tr>'+
+      '<tr><td>Cesion en suelo</td><td>'+f2(r.espacioPublico.CSs)+' m2</td><td>CSs x Vref x k</td><td>'+fmt(r.espacioPublico.compCesion)+'</td></tr>'+
+      '<tr><td>Pago en dinero</td><td>'+f2(r.espacioPublico.areaFd)+' m2</td><td>(AT x Fd) x Vref x d</td><td>'+fmt(r.espacioPublico.compDinero)+'</td></tr>'+
+      '<tr class="tot"><td colspan="3">Total Espacio Publico</td><td>'+fmt(r.espacioPublico.total)+'</td></tr></table>'+
+      '<h2>Servicios Publicos (Art. 320)</h2>'+
+      '<table><tr><td>OSP = CS x Vref x 0,064</td><td>CS='+f2(r.serviciosPublicos.CS)+' m2</td><td style="text-align:right">'+fmt(r.serviciosPublicos.total)+'</td></tr></table>'+
+      '<h2>Total a pagar</h2><p class="big">'+fmt(r.totalGeneral)+'</p>'+
+      '<h2>Memoria de calculo</h2><ul>'+mem+'</ul>'+
+      '<p style="font-size:9px;color:#888;margin-top:30px">Decreto 555/2021 - Res. 2103/2024. Estimacion de prefactibilidad; no constituye concepto normativo oficial. Verificar con la SDP.</p>';
+    document.body.classList.add('printing'); window.print();
+    setTimeout(function(){document.body.classList.remove('printing');},500);
+  }
+  function fa(){return new Date().toISOString().slice(0,10);}
+  function descargar(cont,tipo,nombre){
+    const b=new Blob([cont],{type:tipo}),u=URL.createObjectURL(b),a=document.createElement('a');
+    a.href=u;a.download=nombre;document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(u),1000);
+  }
+
+  function init(){
+    initSelects();
+    ['tratamiento','anioRad'].forEach(id=>$(id).addEventListener('change',()=>{actualizarHints();calcular();}));
+    ['direccion','areaTerreno','vrefManual','fechaRad','pctCSs','pctFd','pctCS'].forEach(id=>{
+      $(id).addEventListener('input',calcular); $(id).addEventListener('change',calcular);
+    });
+    calcular();
+  }
+  return {init,calcular,diff,cargarEjemplo,exportarJSON,exportarExcel,exportarPDF};
+})();
+
+
+
+/* ============================================================
+ * MODULO 4: DELINEACION URBANA (config + motor + interfaz UI_DEL)
+ * ============================================================ */
+/* =============================================================================
+ * configuracion_tributaria_bogota.json (como JS para uso con file://)
+ * -----------------------------------------------------------------------------
+ * CAPA DE DATOS TRIBUTARIOS — Impuesto de Delineación Urbana
+ * Acuerdo 352/2008 · Decreto 807/1993 · Acuerdo 780/2020 · Resoluciones SDP
+ *
+ * Toda actualización normativa se hace AQUÍ, sin tocar el motor.
+ * =============================================================================
+ */
+
+const CONFIG_TRIBUTARIA = {
+
+  meta: {
+    version: "1.0",
+    fuente: "Acuerdo 352/2008 · Acuerdo 780/2020 · Decreto 807/1993 · Resoluciones SDP",
+    actualizado: "2026-06",
+    nota: "Costos mínimos por m² parametrizables — la SDP los actualiza por resolución anual.",
+  },
+
+  /* --- TARIFAS (Art. 6 y 7 Acuerdo 352/2008) -------------------------------- */
+  tarifas: {
+    anticipo: 0.026,            // 2,6% sobre el presupuesto, al expedir la licencia
+    declaracionFinal: 0.03,     // 3% sobre el mayor valor (ejecutado - presupuesto)
+    reconocimientoGeneral: 0.026,
+    reconocimientoHabitacionalE12: 0.01,  // 1% reconocimiento habitacional estratos 1-2
+  },
+
+  /* --- EXENCIONES (Acuerdo 780/2020, vigente hasta 2029) -------------------- *
+   * El motor evalúa estas reglas en orden; la primera que coincida aplica.
+   * estratos: lista de estratos a los que aplica (null = cualquiera)
+   * modalidades: lista de modalidades (null = cualquiera)
+   * tipoVivienda: 'vis'|'vip'|null
+   */
+  exenciones: [
+    {
+      id: "vip",
+      label: "Vivienda de Interés Prioritario (VIP)",
+      condicion: { tipoVivienda: "vip" },
+      resultado: "exento", tarifa: 0,
+      norma: "Acuerdo 352/2008 · Acuerdo 780/2020",
+    },
+    {
+      id: "vis_obranueva_e123",
+      label: "Obra nueva VIS estratos 1, 2 y 3",
+      condicion: { tipoVivienda: "vis", modalidades: ["obra_nueva"], estratos: [1, 2, 3] },
+      resultado: "exento", tarifa: 0,
+      norma: "Acuerdo 780/2020 (exención extendida hasta 2029)",
+    },
+    {
+      id: "autoconstruccion_e12",
+      label: "Autoconstrucción estratos 1 y 2",
+      condicion: { autoconstruccion: true, estratos: [1, 2] },
+      resultado: "exento", tarifa: 0,
+      norma: "Acuerdo 780/2020",
+    },
+    {
+      id: "amp_mod_adec_e123",
+      label: "Ampliación/modificación/adecuación estratos 1, 2 y 3",
+      condicion: { modalidades: ["ampliacion", "modificacion", "adecuacion"], estratos: [1, 2, 3] },
+      resultado: "exento", tarifa: 0,
+      norma: "Acuerdo 780/2020",
+    },
+    {
+      id: "restauracion_bic",
+      label: "Restauración/conservación de bienes de interés cultural",
+      condicion: { modalidades: ["restauracion"], bic: true },
+      resultado: "exento", tarifa: 0,
+      norma: "Acuerdo 780/2020",
+    },
+    {
+      id: "reconocimiento_hab_e12",
+      label: "Reconocimiento habitacional estratos 1 y 2",
+      condicion: { modalidades: ["reconocimiento"], estratos: [1, 2] },
+      resultado: "tarifa_reducida", tarifa: 0.01,
+      norma: "Acuerdo 352/2008 Art. 6",
+    },
+  ],
+
+  /* --- ESTIMADOR DE PRESUPUESTO (costos de referencia por m²) --------------- *
+   * Usado SOLO si el usuario no tiene presupuesto propio. Son valores de
+   * REFERENCIA editables, no los costos mínimos oficiales de la SDP.
+   * $/m² construido según uso y estrato (orden de magnitud 2026).
+   */
+  costosReferenciaM2: {
+    vivienda: { "1": 1800000, "2": 2000000, "3": 2400000, "4": 3000000, "5": 3500000, "6": 4200000 },
+    comercio: { "_default": 3200000 },
+    oficinas: { "_default": 3400000 },
+    dotacional: { "_default": 2800000 },
+    industrial: { "_default": 2600000 },
+    hotelero: { "_default": 3800000 },
+    _default: 3000000,
+  },
+
+  /* --- COSTOS MÍNIMOS SDP POR M² -------------------------------------------- *
+   * ⚠️ La base gravable no puede ser inferior a estos valores.
+   * Los fija la SDP por resolución anual. PARAMETRIZABLE — actualizar cada año.
+   * Si está vacío o en 0, el motor no aplica piso mínimo (usa el presupuesto tal cual).
+   */
+  costosMinimosSDP_M2: {
+    _vigencia: "referencial — reemplazar con Resolución SDP vigente",
+    vivienda: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 },
+    _default: 0,
+  },
+
+  /* --- INDEXACIÓN ICCV (DANE) ----------------------------------------------- *
+   * El mayor valor de la declaración final se indexa con el ICCV.
+   * Factor parametrizable (1.0 = sin indexación). Editable según DANE.
+   */
+  indexacionICCV: 1.0,
+
+  /* --- MODALIDADES DE LICENCIA ---------------------------------------------- */
+  modalidades: {
+    obra_nueva:    "Obra Nueva",
+    ampliacion:    "Ampliación",
+    modificacion:  "Modificación",
+    reforzamiento: "Reforzamiento estructural",
+    adecuacion:    "Adecuación",
+    restauracion:  "Restauración",
+    reconocimiento:"Reconocimiento",
+    urbanizacion:  "Urbanización",
+    parcelacion:   "Parcelación",
+  },
+
+  /* --- USOS ------------------------------------------------------------------ */
+  usos: ["vivienda", "comercio", "oficinas", "servicios", "dotacional", "industrial", "hotelero", "mixto"],
+};
+
+
+
+/* =============================================================================
+ * motor_delineacion.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE LÓGICA TRIBUTARIA — Impuesto de Delineación Urbana. Funciones puras.
+ * Depende de CONFIG_TRIBUTARIA.
+ * =============================================================================
+ */
+
+const MotorDelineacion = (function (CFG) {
+  "use strict";
+
+  /* --- ESTIMADOR DE PRESUPUESTO (si el usuario no lo tiene) ------------------ */
+  function estimarPresupuesto(uso, estrato, areaConstruida) {
+    const tabla = CFG.costosReferenciaM2[uso] || {};
+    let costoM2 = tabla[String(estrato)] || tabla._default || CFG.costosReferenciaM2._default;
+    return { costoM2, presupuesto: costoM2 * (areaConstruida || 0) };
+  }
+
+  /* --- PISO MÍNIMO SDP ------------------------------------------------------- */
+  function costoMinimoSDP(uso, estrato) {
+    const t = CFG.costosMinimosSDP_M2[uso];
+    if (t && t[String(estrato)]) return t[String(estrato)];
+    return CFG.costosMinimosSDP_M2._default || 0;
+  }
+
+  /* --- EVALUAR EXENCIONES ---------------------------------------------------- *
+   * Devuelve el primer beneficio cuya condición se cumpla, o null (sin beneficio).
+   */
+  function evaluarExencion(p) {
+    for (const ex of CFG.exenciones) {
+      const c = ex.condicion;
+      let aplica = true;
+      if (c.tipoVivienda && p.tipoVivienda !== c.tipoVivienda) aplica = false;
+      if (c.modalidades && !c.modalidades.includes(p.modalidad)) aplica = false;
+      if (c.estratos && !c.estratos.includes(Number(p.estrato))) aplica = false;
+      if (c.autoconstruccion && !p.autoconstruccion) aplica = false;
+      if (c.bic && !p.bic) aplica = false;
+      if (aplica) return ex;
+    }
+    return null;
+  }
+
+  /* --- LIQUIDACIÓN COMPLETA -------------------------------------------------- *
+   * p = {
+   *   uso, estrato, areaConstruida, modalidad, tipoVivienda ('novis'|'vis'|'vip'),
+   *   autoconstruccion (bool), bic (bool),
+   *   presupuestoObra (número; 0 = estimar),
+   *   valorEjecutado (número; 0 = igual al presupuesto, sin mayor valor)
+   * }
+   */
+  function liquidar(p) {
+    const memoria = [];
+    const T = CFG.tarifas;
+
+    // 1. Determinar base gravable (presupuesto, con piso mínimo SDP)
+    let presupuesto = p.presupuestoObra || 0;
+    let estimado = null;
+    if (!presupuesto || presupuesto <= 0) {
+      estimado = estimarPresupuesto(p.uso, p.estrato, p.areaConstruida);
+      presupuesto = estimado.presupuesto;
+      memoria.push(`Presupuesto estimado: ${(p.areaConstruida || 0).toLocaleString("es-CO")} m² × $${(estimado.costoM2).toLocaleString("es-CO")}/m² = $${Math.round(presupuesto).toLocaleString("es-CO")}`);
+    } else {
+      memoria.push(`Presupuesto de obra (ingresado) = $${Math.round(presupuesto).toLocaleString("es-CO")}`);
+    }
+
+    // Piso mínimo SDP
+    const minSDP = costoMinimoSDP(p.uso, p.estrato) * (p.areaConstruida || 0);
+    let baseGravable = presupuesto;
+    if (minSDP > 0 && minSDP > presupuesto) {
+      baseGravable = minSDP;
+      memoria.push(`Base ajustada al mínimo SDP: $${Math.round(minSDP).toLocaleString("es-CO")} (mayor que el presupuesto)`);
+    }
+
+    // 2. Evaluar exención
+    const ex = evaluarExencion(p);
+    let exencionAplicada = null, tarifaAnticipo = T.anticipo, tarifaFinal = T.declaracionFinal;
+
+    if (ex) {
+      exencionAplicada = ex;
+      if (ex.resultado === "exento") {
+        memoria.push(`EXENTO: ${ex.label} → impuesto $0 (${ex.norma})`);
+        return armar({ p, baseGravable, presupuesto, estimado, exencionAplicada: ex,
+          anticipo: 0, mayorValor: 0, impuestoFinal: 0, total: 0,
+          tarifaAnticipo: 0, tarifaFinal: 0, memoria });
+      }
+      if (ex.resultado === "tarifa_reducida") {
+        tarifaAnticipo = ex.tarifa;
+        tarifaFinal = ex.tarifa;
+        memoria.push(`Tarifa reducida: ${ex.label} → ${(ex.tarifa * 100)}% (${ex.norma})`);
+      }
+    } else {
+      memoria.push(`No aplica exención → tarifa general (anticipo 2,6% + final 3%)`);
+    }
+
+    // 3. Anticipo (al expedir licencia)
+    const anticipo = baseGravable * tarifaAnticipo;
+    memoria.push(`Anticipo = base × ${(tarifaAnticipo * 100).toFixed(1)}% = $${Math.round(baseGravable).toLocaleString("es-CO")} × ${(tarifaAnticipo * 100).toFixed(1)}% = $${Math.round(anticipo).toLocaleString("es-CO")}`);
+
+    // 4. Declaración final sobre el mayor valor (si hay valor ejecutado mayor)
+    const valorEjecutado = p.valorEjecutado || 0;
+    let mayorValor = 0, impuestoFinal = 0;
+    if (valorEjecutado > baseGravable) {
+      mayorValor = (valorEjecutado - baseGravable) * (CFG.indexacionICCV || 1);
+      impuestoFinal = mayorValor * tarifaFinal;
+      memoria.push(`Mayor valor = (ejecutado − base) × ICCV = ($${Math.round(valorEjecutado).toLocaleString("es-CO")} − $${Math.round(baseGravable).toLocaleString("es-CO")}) × ${CFG.indexacionICCV} = $${Math.round(mayorValor).toLocaleString("es-CO")}`);
+      memoria.push(`Impuesto final = mayor valor × ${(tarifaFinal * 100).toFixed(0)}% = $${Math.round(impuestoFinal).toLocaleString("es-CO")}`);
+    } else {
+      memoria.push(`Sin mayor valor (valor ejecutado ≤ base) → declaración final $0`);
+    }
+
+    const total = anticipo + impuestoFinal;
+    memoria.push(`TOTAL impuesto = anticipo + final = $${Math.round(total).toLocaleString("es-CO")}`);
+
+    return armar({ p, baseGravable, presupuesto, estimado, exencionAplicada,
+      anticipo, mayorValor, impuestoFinal, total, tarifaAnticipo, tarifaFinal, memoria });
+  }
+
+  function armar(o) {
+    return {
+      proyecto: o.p,
+      baseGravable: o.baseGravable,
+      presupuesto: o.presupuesto,
+      estimado: o.estimado,
+      exencion: o.exencionAplicada,
+      tarifaAnticipo: o.tarifaAnticipo,
+      tarifaFinal: o.tarifaFinal,
+      anticipo: o.anticipo,
+      mayorValor: o.mayorValor,
+      impuestoFinal: o.impuestoFinal,
+      totalImpuesto: o.total,
+      memoria: o.memoria,
+    };
+  }
+
+  return { liquidar, evaluarExencion, estimarPresupuesto, costoMinimoSDP };
+
+})(CONFIG_TRIBUTARIA);
+
+
+
+const UI_DEL = (function(){
+  "use strict";
+  const CFG = CONFIG_TRIBUTARIA, M = MotorDelineacion;
+  const $ = id => document.getElementById(id);
+  const fmt = n => formatCurrencyCOP(n||0);
+  const f2 = n => parseFloat(n||0).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+  let ultimo=null;
+
+  function leer(){
+    return {
+      direccion: $('du_dir').value,
+      uso: $('du_uso').value,
+      estrato: parseInt($('du_estrato').value),
+      tipoVivienda: $('du_tipoViv').value,
+      modalidad: $('du_modalidad').value,
+      autoconstruccion: $('du_auto').checked,
+      bic: $('du_bic').checked,
+      areaConstruida: parseFloat($('du_area').value)||0,
+      presupuestoObra: parseMoneyCOP($('du_presupuesto').value)||0,
+      valorEjecutado: parseFloat($('du_ejecutado').value)||0,
+    };
+  }
+
+  function calcular(){
+    const p = leer();
+    const r = M.liquidar(p); ultimo={r,p};
+
+    // Estado tributario
+    let estadoHtml = '';
+    if(r.exencion){
+      const tipo = r.exencion.resultado==='exento'?'EXENTO':'TARIFA REDUCIDA '+(r.exencion.tarifa*100)+'%';
+      estadoHtml = '<div class="memoria-line sec">'+tipo+'</div>'+
+        '<div class="memoria-line">'+r.exencion.label+'</div>'+
+        '<div class="memoria-line">Norma: '+r.exencion.norma+'</div>';
+    } else {
+      estadoHtml = '<div class="memoria-line sec">SUJETO A IMPUESTO (sin exencion)</div>'+
+        '<div class="memoria-line">Tarifa general: anticipo 2,6% + declaracion final 3%</div>'+
+        '<div class="memoria-line">Norma: Acuerdo 352/2008 Art. 6-7</div>';
+    }
+    $('du_estado').innerHTML = estadoHtml;
+    if(r.estimado){
+      $('du_hintPres').textContent = 'Estimado: '+f2(p.areaConstruida)+' m2 x '+fmt(r.estimado.costoM2)+'/m2';
+    } else {
+      $('du_hintPres').textContent = 'Si lo dejas vacio, se estima por uso/estrato/area';
+    }
+
+    // Liquidacion
+    $('du_base').textContent = fmt(r.baseGravable);
+    $('du_tarAnt').textContent = (r.tarifaAnticipo*100).toFixed(1).replace('.',',')+'%';
+    $('du_anticipo').textContent = fmt(r.anticipo);
+    $('du_mayor').textContent = fmt(r.mayorValor);
+    $('du_tarFin').textContent = (r.tarifaFinal*100).toFixed(0)+'%';
+    $('du_final').textContent = fmt(r.impuestoFinal);
+    $('du_total').textContent = fmt(r.totalImpuesto);
+    $('du_breakdown').innerHTML = 'Anticipo: <b>'+fmt(r.anticipo)+'</b><br>Final: <b>'+fmt(r.impuestoFinal)+'</b>';
+    $('du_exBadge').innerHTML = r.exencion && r.exencion.resultado==='exento'
+      ? '<span class="vis-badge">Proyecto exento - '+r.exencion.norma+'</span>' : '';
+
+    // Indicadores
+    const area = p.areaConstruida||0;
+    $('du_m2c').textContent = area>0?fmt(r.totalImpuesto/area):'$0';
+    $('du_pctPres').textContent = r.baseGravable>0?((r.totalImpuesto/r.baseGravable*100).toFixed(2).replace('.',','))+'%':'0%';
+    $('du_baseCard').textContent = fmt(r.baseGravable);
+    $('du_areaCard').textContent = f2(area)+' m2';
+
+    $('du_memoria').innerHTML = r.memoria.map(m=>'<div class="memoria-line">'+m+'</div>').join('');
+  }
+
+  function cargarEjemplo(){
+    $('du_dir').value='CL 76 12 58 / Lago de Chapinero';
+    $('du_estrato').value='5'; $('du_uso').value='vivienda'; $('du_tipoViv').value='novis';
+    $('du_modalidad').value='obra_nueva'; $('du_auto').checked=false; $('du_bic').checked=false;
+    $('du_area').value='8452.82'; $('du_presupuesto').value=formatCurrencyCOP(25000000000); $('du_ejecutado').value='';
+    calcular();
+  }
+
+  function exportarJSON(){
+    if(!ultimo)calcular();
+    const d={fecha:new Date().toLocaleDateString('es-CO'),proyecto:ultimo.p,
+      baseGravable:Math.round(ultimo.r.baseGravable),exencion:ultimo.r.exencion,
+      anticipo:Math.round(ultimo.r.anticipo),impuestoFinal:Math.round(ultimo.r.impuestoFinal),
+      totalImpuesto:Math.round(ultimo.r.totalImpuesto),memoria:ultimo.r.memoria};
+    const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');
+    a.href=u;a.download='delineacion_'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(u),1000);
+  }
+
+  function exportarPDF(){
+    if(!ultimo)calcular();
+    const {r,p}=ultimo;
+    const mem=r.memoria.map(m=>'<li>'+m+'</li>').join('');
+    const exTxt = r.exencion ? (r.exencion.resultado==='exento'?'EXENTO - '+r.exencion.label:'Tarifa reducida '+(r.exencion.tarifa*100)+'% - '+r.exencion.label) : 'Sujeto a impuesto (sin exencion)';
+    $('printAreaDEL').innerHTML=
+      '<h1>Liquidacion Impuesto de Delineacion Urbana</h1>'+
+      '<table class="meta-tbl"><tr><td><b>Direccion:</b></td><td>'+(p.direccion||'-')+'</td><td><b>Estrato:</b></td><td>'+p.estrato+'</td></tr>'+
+      '<tr><td><b>Uso:</b></td><td>'+p.uso+'</td><td><b>Modalidad:</b></td><td>'+p.modalidad+'</td></tr>'+
+      '<tr><td><b>Area construida:</b></td><td>'+f2(p.areaConstruida)+' m2</td><td><b>Tipo:</b></td><td>'+p.tipoVivienda.toUpperCase()+'</td></tr></table>'+
+      '<h2>Estado tributario</h2><p>'+exTxt+'</p>'+
+      '<h2>Liquidacion</h2>'+
+      '<table><tr><th>Concepto</th><th>Valor</th></tr>'+
+      '<tr><td>Base gravable</td><td>'+fmt(r.baseGravable)+'</td></tr>'+
+      '<tr><td>Anticipo ('+(r.tarifaAnticipo*100).toFixed(1)+'%)</td><td>'+fmt(r.anticipo)+'</td></tr>'+
+      '<tr><td>Mayor valor</td><td>'+fmt(r.mayorValor)+'</td></tr>'+
+      '<tr><td>Impuesto final ('+(r.tarifaFinal*100).toFixed(0)+'%)</td><td>'+fmt(r.impuestoFinal)+'</td></tr>'+
+      '<tr class="tot"><td>TOTAL IMPUESTO</td><td>'+fmt(r.totalImpuesto)+'</td></tr></table>'+
+      '<h2>Memoria de calculo</h2><ul>'+mem+'</ul>'+
+      '<p style="font-size:9px;color:#888;margin-top:30px">Acuerdo 352/2008 - Acuerdo 780/2020. Estimacion de prefactibilidad; no constituye liquidacion oficial. Los costos minimos por m2 los fija la SDP. Verificar con la Secretaria Distrital de Hacienda.</p>';
+    document.body.classList.add('printing-del'); window.print();
+    setTimeout(function(){document.body.classList.remove('printing-del');},500);
+  }
+
+  function init(){
+    ['du_dir','du_estrato','du_uso','du_tipoViv','du_modalidad','du_auto','du_bic','du_area','du_presupuesto','du_ejecutado'].forEach(id=>{
+      const el=$(id); if(el){el.addEventListener('input',calcular);el.addEventListener('change',calcular);}
+    });
+    calcular();
+  }
+  return {init,calcular,cargarEjemplo,exportarJSON,exportarPDF};
+})();
+
+
+/* ============================================================
+ * MOTOR VIS_VIP AUTOMÁTICO — vis_vip_rules embebido
+ * ------------------------------------------------------------
+ * Fuente: vis_vip_rules.json v4.0
+ * Decreto 555/2021 · Resolución 940/2022 (RENOBO)
+ * CARGADO UNA SOLA VEZ. No volver a leer PDFs en cada cálculo.
+ * ============================================================ */
+const VIS_VIP_RULES = (function(){
+  "use strict";
+
+  /* ---- TABLAS NORMATIVAS (embebidas) ------------------------------------ */
+  const TABLAS = {
+    Renovacion_Urbana: {
+      transitorio: [
+        { ice_max:2.0,  aplica:false, pct_VIP:0,   pct_VIS:0,   pct_VIS_AIM:0   },
+        { ice_max:3.0,  aplica:true,  pct_VIP:4,   pct_VIS:8,   pct_VIS_AIM:2.5 },
+        { ice_max:4.0,  aplica:true,  pct_VIP:6,   pct_VIS:12,  pct_VIS_AIM:7   },
+        { ice_max:5.0,  aplica:true,  pct_VIP:3,   pct_VIS:6,   pct_VIS_AIM:7   },
+        { ice_max:7.0,  aplica:true,  pct_VIP:6,   pct_VIS:6,   pct_VIS_AIM:7   },
+        { ice_max:9999, aplica:true,  pct_VIP:6,   pct_VIS:8,   pct_VIS_AIM:15  },
+      ],
+      definitivo: [
+        { ice_max:2.0,  aplica:false, pct_VIP:0,   pct_VIS:0,   pct_VIS_AIM:0   },
+        { ice_max:3.0,  aplica:true,  pct_VIP:5,   pct_VIS:10,  pct_VIS_AIM:5   },
+        { ice_max:4.0,  aplica:true,  pct_VIP:7.5, pct_VIS:15,  pct_VIS_AIM:10  },
+        { ice_max:5.0,  aplica:true,  pct_VIP:5,   pct_VIS:10,  pct_VIS_AIM:10  },
+        { ice_max:7.0,  aplica:true,  pct_VIP:10,  pct_VIS:10,  pct_VIS_AIM:10  },
+        { ice_max:9999, aplica:true,  pct_VIP:10,  pct_VIS:15,  pct_VIS_AIM:15  },
+      ],
+    },
+    Consolidacion: {
+      transitorio: [
+        { ice_max:3.0,  aplica:false, pct_VIP:0,   pct_VIS:0  },
+        { ice_max:4.0,  aplica:true,  pct_VIP:2.5, pct_VIS:6  },
+        { ice_max:9999, aplica:true,  pct_VIP:3,   pct_VIS:8  },
+      ],
+      definitivo: [
+        { ice_max:3.0,  aplica:false, pct_VIP:0,   pct_VIS:0  },
+        { ice_max:4.0,  aplica:true,  pct_VIP:5,   pct_VIS:10 },
+        { ice_max:9999, aplica:true,  pct_VIP:6,   pct_VIS:12 },
+      ],
+    },
+  };
+
+  /* Mapeo del valor que llega de ProjectData / SHP → clave interna */
+  const MAPA_TRATAMIENTO = {
+    renovacion:            "Renovacion_Urbana",
+    "renovacion urbana":   "Renovacion_Urbana",
+    "renovación urbana":   "Renovacion_Urbana",
+    "Renovacion Urbana":   "Renovacion_Urbana",
+    consolidacion:         "Consolidacion",
+    "consolidacion":       "Consolidacion",
+    "consolidación":       "Consolidacion",
+    "Consolidacion":       "Consolidacion",
+    desarrollo:            "Desarrollo",
+    "Desarrollo":          "Desarrollo",
+    mejoramiento:          "Mejoramiento_Integral",
+    "mejoramiento integral":"Mejoramiento_Integral",
+    "Mejoramiento Integral":"Mejoramiento_Integral",
+    "mejoramiento Integral":"Mejoramiento_Integral",
+    conservacion:          "Conservacion",
+    "conservacion":        "Conservacion",
+    "conservación":        "Conservacion",
+    "Conservacion":        "Conservacion",
+  };
+
+  /* ---- FUNCIÓN PRINCIPAL ------------------------------------------------- */
+  function determinar(projectData){
+    const tRaw  = (projectData.tratamientoUrbanistico || projectData.tratamiento || "").toLowerCase().trim();
+    const tKey  = MAPA_TRATAMIENTO[tRaw] || MAPA_TRATAMIENTO[projectData.tratamientoUrbanistico] || null;
+    const ICe   = (parseFloat(projectData.indiceConstruccion) || 0);
+    const lote  = (parseFloat(projectData.areaLote) || 0);
+    const AC    = (parseFloat(projectData.areaConstruidaNormativa) || lote * ICe);
+    const anio  = parseInt(projectData.anioRadicacion) || new Date().getFullYear();
+    const uso   = (projectData.uso || "vivienda").toLowerCase();
+    const esAIM = !!projectData.esAIM;
+
+    /* Régimen temporal: Res. 940/2022 Art. 5 */
+    const regimen = (anio <= 2027) ? "transitorio" : "definitivo";
+
+    /* Resultado base */
+    const resultado = {
+      aplica:         false,
+      regimen:        regimen,
+      pct_VIP:        0,
+      pct_VIS:        0,
+      area_VIP_m2:    0,
+      area_VIS_m2:    0,
+      norma:          "—",
+      articulo:       "—",
+      formula:        "—",
+      excepcion:      null,
+      alerta:         null,
+      tratamientoKey: tKey,
+    };
+
+    if(!tKey){ resultado.alerta = "Tratamiento no reconocido: "+tRaw; return resultado; }
+
+    /* ---- CONSERVACIÓN ---------------------------------------------------- */
+    if(tKey === "Conservacion"){
+      resultado.norma = "D.555/2021 – Cap. Patrimonio";
+      resultado.articulo = "Tratamiento de Conservación: sin obligación VIS/VIP";
+      resultado.formula = "N/A";
+      return resultado;
+    }
+
+    /* ---- RENOVACIÓN URBANA / CONSOLIDACIÓN ------------------------------- */
+    if(tKey === "Renovacion_Urbana" || tKey === "Consolidacion"){
+      if(!ICe || ICe <= 0){ resultado.alerta = "Ingresa el índice de construcción para calcular la obligación VIS/VIP."; return resultado; }
+
+      const tabla = TABLAS[tKey][regimen];
+      let fila = tabla[tabla.length - 1]; // fallback último rango
+      for(let i = 0; i < tabla.length; i++){
+        if(ICe <= tabla[i].ice_max){ fila = tabla[i]; break; }
+      }
+
+      let pVIP = esAIM ? 0 : fila.pct_VIP;
+      let pVIS = esAIM ? (fila.pct_VIS_AIM || 0) : fila.pct_VIS;
+      if(esAIM) resultado.excepcion = "AIM: VIP=N/A — VIS aplica con porcentaje AIM";
+
+      resultado.aplica     = fila.aplica;
+      resultado.pct_VIP    = pVIP;
+      resultado.pct_VIS    = pVIS;
+      resultado.area_VIP_m2 = fila.aplica ? +(AC * pVIP / 100).toFixed(2) : 0;
+      resultado.area_VIS_m2 = fila.aplica ? +(AC * pVIS / 100).toFixed(2) : 0;
+      resultado.norma     = "D.555/2021 · Res.940/2022";
+      resultado.articulo  = "Art. 322 D.555/2021 · Art. "+(regimen==="transitorio"?"5":"4")+" Res.940/2022 · Régimen "+regimen+" (radicación "+anio+")";
+      resultado.formula   = "A1 = AC("+AC.toLocaleString("es-CO",{maximumFractionDigits:2})+" m²) × "+pVIP+"% = "+resultado.area_VIP_m2.toLocaleString("es-CO",{maximumFractionDigits:2})+" m²";
+      return resultado;
+    }
+
+    /* ---- DESARROLLO ------------------------------------------------------ */
+    if(tKey === "Desarrollo"){
+      const usosNoAplican = ["industrial","dotacional"];
+      if(usosNoAplican.includes(uso)){
+        resultado.norma = "Art. 293 D.555/2021"; resultado.articulo = "Art. 293 Párr. 1 D.555/2021";
+        resultado.excepcion = "Uso "+uso+": exento de obligación VIS/VIP (Art. 293 Párr. 1)";
+        return resultado;
+      }
+      const ANU = (parseFloat(projectData.areaNetaUrbanizable) || lote * 0.65);
+      resultado.aplica     = true;
+      resultado.pct_VIP    = 20;
+      resultado.pct_VIS    = 20;
+      resultado.area_VIP_m2 = +(ANU * 0.20).toFixed(2);
+      resultado.area_VIS_m2 = +(ANU * 0.20).toFixed(2);
+      resultado.norma     = "Art. 293 D.555/2021 · Art. 4.a Res.940/2022";
+      resultado.articulo  = "Art. 293-295 D.555/2021";
+      resultado.formula   = "Suelo = 20% × ANU("+ANU.toLocaleString("es-CO",{maximumFractionDigits:0})+" m²) = "+resultado.area_VIP_m2.toLocaleString("es-CO",{maximumFractionDigits:2})+" m² (suelo útil)";
+      if(!projectData.areaNetaUrbanizable) resultado.alerta = "ANU estimada (65% del lote). Ingresa el valor real para mayor precisión.";
+      return resultado;
+    }
+
+    /* ---- MEJORAMIENTO INTEGRAL ------------------------------------------- */
+    if(tKey === "Mejoramiento_Integral"){
+      if(lote < 2000){
+        resultado.norma = "Art. 338 D.555/2021";
+        resultado.articulo = "Art. 338 D.555/2021 — Lote <2000 m²: sin obligación VIS/VIP";
+        resultado.formula = "N/A";
+        return resultado;
+      }
+      /* Excepción moradores ≥70% */
+      if((parseFloat(projectData.moradoresVinculadosPct)||0) >= 70){
+        resultado.aplica   = true;
+        resultado.excepcion = "Moradores vinculados ≥70% → Exento de VIP (Art. 338 Nota 6 / Art. 377 D.555/2021)";
+        resultado.norma    = "Art. 338 D.555/2021";
+        resultado.articulo = "Art. 338 Nota 6 D.555/2021";
+        return resultado;
+      }
+      const areaVend = parseFloat(projectData.areaVendible) || 0;
+      resultado.aplica     = true;
+      resultado.pct_VIP    = 20;
+      resultado.area_VIP_m2 = areaVend > 0 ? +(areaVend * 0.20).toFixed(2) : 0;
+      resultado.norma     = "Art. 338 D.555/2021";
+      resultado.articulo  = "Art. 338 D.555/2021 — predios ≥2000 m²: 20% área vendible para VIP";
+      resultado.formula   = areaVend > 0
+        ? "A_VIP = 20% × área vendible("+areaVend.toLocaleString("es-CO",{maximumFractionDigits:2})+" m²) = "+resultado.area_VIP_m2.toLocaleString("es-CO",{maximumFractionDigits:2})+" m²"
+        : "A_VIP = 20% × área vendible (ingresar área vendible)";
+      if(!areaVend) resultado.alerta = "Ingresa el área vendible del proyecto para calcular m² VIP.";
+      return resultado;
+    }
+
+    return resultado;
+  }
+
+  return { determinar };
+})();
+
+
+/* ============================================================
+ * MODULO 5: RENOBO VIS/VIP (config + motor + interfaz UI_RB)
+ * ============================================================ */
+/* =============================================================================
+ * configuracion_renobo.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE DATOS — Pago compensatorio VIS/VIP ante RenoBo
+ * Art. 322 y 323 Decreto Distrital 555/2021 · Decreto 520/2022
+ * Resolución 940/2022 (mod. 182/2025, 1534/2025)
+ *
+ * VERIFICADO contra Resolución RenoBo 217 (29-may-2026), proyecto 77 ESTORIAS,
+ * Exp. 11001-1-25-1177 → VrComp = $794.300.760 (diferencia $0).
+ * =============================================================================
+ */
+
+const CONFIG_RENOBO = {
+
+  meta: {
+    version: "1.0",
+    fuente: "Art. 322-323 Dec. 555/2021 · Dec. 520/2022 · Res. RenoBo 940/2022",
+    calibrado: "Resolución RenoBo 217 (29-may-2026) — proyecto 77 ESTORIAS",
+    nota: "Aplica a tratamientos de CONSOLIDACIÓN y RENOVACIÓN URBANA que acceden a edificabilidad adicional sobre el índice base.",
+  },
+
+  /* --- FÓRMULA (Art. 323) ---------------------------------------------------- *
+   * VrComp = factor × AC(VIS/VIP) × Vref
+   * AC(VIS/VIP) = pctObligacion × área construida destinada a vivienda
+   *
+   * factor 0,18 y pctObligacion 8% VERIFICADOS contra liquidación oficial.
+   */
+  factor: 0.18,                 // factor del Art. 323 (verificado)
+  pctObligacionPorTratamiento: {
+    consolidacion: 0.08,        // 8% — Numeral 2, Art. 322 (verificado vs Res. 217)
+    renovacion:    0.08,        // mismo régimen del Art. 322-323 (parametrizable)
+  },
+
+  /* --- VALORES DE REFERENCIA Vref ($/m²) ------------------------------------ *
+   * Mayor valor de referencia catastral (UAECD) de la zona homogénea, vigente
+   * al año de radicación en debida forma. Editable por año.
+   */
+  vrefPorAnio: {
+    "2025": 7900000,
+    "2024": 7500000,
+    "2023": 7100000,
+    "2022": 7000000,
+  },
+
+  /* --- INDEXACIÓN ------------------------------------------------------------ *
+   * Art. 7 (séptimo) de la resolución: la liquidación pierde vigencia cuando la
+   * UAECD actualiza los valores catastrales de referencia. Si el pago se hace en
+   * vigencia posterior, debe re-liquidarse con el nuevo Vref.
+   */
+  ipcEstimadoDefault: 0.05,     // tasa estimada si no se conoce el Vref del año de pago
+
+  textoVigencia: "La resolución de RenoBo pierde vigencia cuando la UAECD actualiza los valores catastrales de referencia (Art. séptimo). Si el pago no se ha realizado y Catastro actualiza el Vref, debe iniciarse un NUEVO trámite de liquidación con el valor vigente, quedando sin efecto la liquidación anterior.",
+};
+
+
+
+/* =============================================================================
+ * motor_renobo.js
+ * -----------------------------------------------------------------------------
+ * CAPA DE LÓGICA — Pago compensatorio VIS/VIP RenoBo. Funciones puras.
+ * Verificado contra Resolución RenoBo 217 (proyecto 77 ESTORIAS).
+ * =============================================================================
+ */
+
+const MotorRenobo = (function (CFG) {
+  "use strict";
+
+  function vrefDelAnio(anio, manual) {
+    if (manual && manual > 0) return manual;
+    return CFG.vrefPorAnio[String(anio)] || CFG.vrefPorAnio["2025"];
+  }
+
+  /* --- LIQUIDACIÓN CON INDEXACIÓN -------------------------------------------- *
+   * p = {
+   *   areaConstruidaVivienda,  // m² (cabida real destinada a vivienda)
+   *   tratamiento,             // 'consolidacion' | 'renovacion'
+   *   anioRadicacion, anioPago,
+   *   vrefRadicacion,          // $/m² (manual o auto por año)
+   *   modoIndexacion,          // 'real' (Caso A) | 'estimada' (Caso B) | 'ninguna'
+   *   vrefPago,                // $/m² (Caso A) — ingresado por usuario según Catastro
+   *   ipcEstimado,             // fracción (Caso B), ej. 0.05
+   *   factor, pctObligacion    // overrides opcionales
+   * }
+   */
+  function liquidar(p) {
+    const memoria = [];
+    const factor = p.factor != null ? p.factor : CFG.factor;
+    /* pctObligacion ya viene resuelto por VIS_VIP_RULES desde UI_RB.calcular().
+     * El fallback al 8% solo opera si por alguna razón no llegara el valor. */
+    const pctObl = p.pctObligacion != null ? p.pctObligacion
+      : (CFG.pctObligacionPorTratamiento[p.tratamiento] || 0.08);
+
+    const areaViv = p.areaConstruidaVivienda || 0;
+    const VrefRad = vrefDelAnio(p.anioRadicacion, p.vrefRadicacion);
+
+    // AC(VIS/VIP): si se ingresa directo (de la certificación de curaduría) se usa ese;
+    // si no, se calcula como % × área construida vivienda.
+    let AC;
+    if (p.acDirecto && p.acDirecto > 0) {
+      AC = p.acDirecto;
+      memoria.push(`AC(VIS/VIP) = ${AC.toFixed(2)} m² (de certificación de curaduría)`);
+    } else {
+      AC = areaViv * pctObl;
+      memoria.push(`AC(VIS/VIP) = ${(pctObl * 100)}% × ${areaViv.toLocaleString("es-CO")} m² = ${AC.toFixed(2)} m²`);
+    }
+
+    // Base (foto inicial, radicación)
+    const VrComp_Base = factor * AC * VrefRad;
+    memoria.push(`VrComp_Base = ${factor} × ${AC.toFixed(2)} × $${VrefRad.toLocaleString("es-CO")} = $${Math.round(VrComp_Base).toLocaleString("es-CO")}`);
+
+    // Indexación
+    let VrComp_Indexado = VrComp_Base;
+    let VrefPagoEfectivo = VrefRad;
+    let perdioVigencia = false;
+    const modo = p.modoIndexacion || "ninguna";
+    const hayPagoPosterior = (p.anioPago || p.anioRadicacion) > p.anioRadicacion;
+
+    if (hayPagoPosterior && modo === "real") {
+      // Caso A: Vref de pago conocido (Catastro actualizado)
+      VrefPagoEfectivo = p.vrefPago || VrefRad;
+      VrComp_Indexado = factor * AC * VrefPagoEfectivo;
+      perdioVigencia = VrefPagoEfectivo !== VrefRad;
+      memoria.push(`— Indexación REAL (Caso A) —`);
+      memoria.push(`Vref pago (${p.anioPago}) = $${VrefPagoEfectivo.toLocaleString("es-CO")} /m² (Catastro actualizado)`);
+      memoria.push(`VrComp_Indexado = ${factor} × ${AC.toFixed(2)} × $${VrefPagoEfectivo.toLocaleString("es-CO")} = $${Math.round(VrComp_Indexado).toLocaleString("es-CO")}`);
+    } else if (hayPagoPosterior && modo === "estimada") {
+      // Caso B: proyección con IPC estimado
+      const ipc = p.ipcEstimado != null ? p.ipcEstimado : CFG.ipcEstimadoDefault;
+      VrComp_Indexado = VrComp_Base * (1 + ipc);
+      VrefPagoEfectivo = VrefRad * (1 + ipc);
+      perdioVigencia = ipc > 0;
+      memoria.push(`— Indexación ESTIMADA (Caso B) —`);
+      memoria.push(`Tasa estimada (IPC/UVT proyectado) = ${(ipc * 100).toFixed(2)}%`);
+      memoria.push(`VrComp_Indexado = VrComp_Base × (1 + ${ipc}) = $${Math.round(VrComp_Indexado).toLocaleString("es-CO")}`);
+    } else {
+      memoria.push(`Sin indexación (pago en el mismo año de radicación)`);
+    }
+
+    const delta = VrComp_Indexado - VrComp_Base;
+    const pctVar = VrComp_Base > 0 ? (delta / VrComp_Base) : 0;
+
+    return {
+      contexto: { areaViv, tratamiento: p.tratamiento, factor, pctObligacion: pctObl_(pctObl),
+        VrefRad, VrefPagoEfectivo, anioRadicacion: p.anioRadicacion, anioPago: p.anioPago, modo },
+      AC,
+      VrComp_Base,
+      VrComp_Indexado,
+      delta,
+      pctVariacion: pctVar,
+      perdioVigencia,
+      memoria,
+    };
+    function pctObl_(x){ return x; }
+  }
+
+  return { liquidar, vrefDelAnio };
+
+})(CONFIG_RENOBO);
+
+
+
+const UI_RB = (function(){
+  "use strict";
+  const CFG = CONFIG_RENOBO, M = MotorRenobo;
+  const $ = id => document.getElementById(id);
+  const fmt = n => formatCurrencyCOP(n||0);
+  const f2 = n => parseFloat(n||0).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+  let ultimo=null;
+
+  function toggleModo(){
+    const m=$('rb_modo').value;
+    $('rb_fieldVrefPago').style.display = m==='real'?'flex':'none';
+    $('rb_fieldIpc').style.display = m==='estimada'?'flex':'none';
+  }
+
+  function leer(){
+    /* pctObligacion ya NO viene del input manual: se resuelve automáticamente
+     * en calcular() mediante VIS_VIP_RULES y se escribe en rb_pct (hidden).
+     * Aquí se lee solo como dato de respaldo; la lógica real está en calcular(). */
+    return {
+      direccion: $('rb_dir').value,
+      tratamiento: $('rb_trat').value,
+      areaConstruidaVivienda: parseFloat($('rb_areaViv').value)||0,
+      pctObligacion: (parseFloat($('rb_pct').value)||0)/100,   // escrito por calcular()
+      acDirecto: parseFloat($('rb_acDirecto').value)||0,
+      anioRadicacion: parseInt($('rb_anioRad').value),
+      vrefRadicacion: parseMoneyCOP($('rb_vrefRad').value)||0,
+      factor: parseFloat($('rb_factor').value)||0.18,
+      anioPago: parseInt($('rb_anioPago').value),
+      modoIndexacion: $('rb_modo').value,
+      vrefPago: parseMoneyCOP($('rb_vrefPago').value)||0,
+      ipcEstimado: (parseFloat($('rb_ipc').value)||0)/100,
+    };
+  }
+
+  function calcular(){
+    /* ---- PASO 1: leer datos directamente del DOM — fuente más confiable ------
+     * ProjectData vive dentro del closure de Integracion y no siempre está
+     * sincronizado en el momento exacto en que este módulo ejecuta.
+     * Los campos del panel central (pd_*) siempre tienen el valor actual. */
+    const domIndice   = parseFloat(document.getElementById('pd_indice')      ?.value) || 0;
+    const domLote     = parseFloat(document.getElementById('pd_areaLote')     ?.value) || 0;
+    const domAcNorm   = parseFloat(document.getElementById('pd_areaNormativa')?.value)
+                     || (domLote > 0 && domIndice > 0 ? domLote * domIndice : 0);
+    const domTrat     = document.getElementById('rb_trat')    ?.value || 'consolidacion';
+    const domAnio     = document.getElementById('rb_anioRad') ?.value || '2025';
+    const domUso      = document.getElementById('pd_uso')     ?.value || 'vivienda';
+    const domAVend    = parseFloat(document.getElementById('pd_areaVend')?.value) || 0;
+    const domAcDirecto = parseFloat(document.getElementById('rb_acDirecto')?.value) || 0;
+
+    /* Rellenar rb_dir desde pd_dir solo si está vacío (no sobrescribir al usuario) */
+    const rbDirEl = document.getElementById('rb_dir');
+    const pdDirEl = document.getElementById('pd_dir');
+    if(rbDirEl && pdDirEl && !rbDirEl.value.trim() && pdDirEl.value.trim()){
+      rbDirEl.value = pdDirEl.value;
+    }
+
+    /* Actualizar campos display del sidebar con lo que usa el motor */
+    const elInd = document.getElementById('rb_indice_display');
+    const elAcN = document.getElementById('rb_acnorm_display');
+    if(elInd) elInd.value = domIndice > 0
+      ? domIndice.toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2}) : '';
+    if(elAcN) elAcN.value = domAcNorm > 0
+      ? domAcNorm.toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2}) : '';
+
+    /* ---- PASO 2: determinar % VIS/VIP automáticamente ----------------------- */
+    const vv = VIS_VIP_RULES.determinar({
+      tratamientoUrbanistico:  domTrat,
+      indiceConstruccion:      domIndice,
+      areaLote:                domLote,
+      areaConstruidaNormativa: domAcNorm,
+      anioRadicacion:          domAnio,
+      uso:                     domUso,
+      areaVendible:            domAVend,
+      esAIM:                   false,
+      moradoresVinculadosPct:  0,
+    });
+
+    /* ---- PASO 3: escribir % y AC calculado en campos del sidebar ------------ */
+    /* Para RenoBo el % relevante es SIEMPRE pct_VIS (obligación sobre AC de vivienda).
+     * pct_VIP se usa como fallback solo si no hay pct_VIS (ej. Mejoramiento Integral). */
+    const pctVIS      = vv.pct_VIS  || 0;
+    const pctVIP      = vv.pct_VIP  || 0;
+    const pctParaRenobo = pctVIS > 0 ? pctVIS : pctVIP;   // VIS primero, VIP como fallback
+    document.getElementById('rb_pct').value = pctParaRenobo;
+
+    /* AC calculado = pct_VIS × AC normativa / 100
+     * Solo se escribe si el usuario NO ha ingresado un valor manual (data-manual). */
+    if(vv.aplica && domAcNorm > 0){
+      const acAuto = +(domAcNorm * pctVIS / 100).toFixed(2);  // siempre sobre pct_VIS
+      const elAcD = document.getElementById('rb_acDirecto');
+      if(elAcD && !elAcD.dataset.manual){
+        elAcD.value = acAuto > 0 ? acAuto : '';
+        elAcD.placeholder = 'Auto: ' + (acAuto > 0
+          ? acAuto.toLocaleString('es-CO',{minimumFractionDigits:2}) + ' m²' : '—');
+      }
+    } else if(!vv.aplica){
+      const elAcD = document.getElementById('rb_acDirecto');
+      if(elAcD && !elAcD.dataset.manual){ elAcD.value = ''; elAcD.placeholder = 'Sin obligación'; }
+    }
+
+    /* Badge display del % en sidebar */
+    const displayEl = document.getElementById('rb_pct_display');
+    const hintEl    = document.getElementById('rb_pct_hint');
+    if(displayEl){
+      if(!vv.aplica && !vv.alerta){
+        displayEl.value = '0% — Sin obligación';
+        displayEl.style.cssText = 'background:var(--bg3);border-color:var(--bdr);color:var(--muted);font-weight:600;cursor:not-allowed';
+      } else if(vv.alerta){
+        displayEl.value = '— Falta dato';
+        displayEl.style.cssText = 'background:var(--amber3);border-color:var(--amber2);color:var(--amber);font-weight:600;cursor:not-allowed';
+      } else {
+        const pctStr = (vv.pct_VIS > 0 ? vv.pct_VIS + '% VIS' : '')
+                     + (vv.pct_VIS > 0 && vv.pct_VIP > 0 ? ' / ' : '')
+                     + (vv.pct_VIP > 0 ? vv.pct_VIP + '% VIP' : '');
+        displayEl.value = pctStr + ' (' + vv.regimen + ')';
+        displayEl.style.cssText = 'background:var(--green3);border-color:var(--green2);color:var(--green);font-weight:600;cursor:not-allowed';
+      }
+    }
+    if(hintEl) hintEl.innerHTML = vv.alerta
+      ? '<span style="color:var(--amber)">⚠ ' + vv.alerta + '</span>'
+      : (vv.excepcion
+          ? '<span style="color:var(--amber)">' + vv.excepcion + '</span>'
+          : '<span style="color:var(--green2)">' + vv.articulo + '</span>');
+
+    /* Badge normativo en el panel de parámetros */
+    const badgeEl = document.getElementById('rb_visvip_badge');
+    if(badgeEl && vv.aplica){
+      badgeEl.innerHTML =
+        '<div style="background:var(--bg3);border:1px solid var(--bdr);border-left:3px solid var(--green2);' +
+        'padding:10px 14px;border-radius:0 4px 4px 0;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7">' +
+        '<span style="color:var(--green2);font-weight:600">Obligación automática:</span> ' + vv.formula + '<br>' +
+        '<span style="color:var(--dim)">' + vv.articulo + '</span>' +
+        (vv.excepcion ? '<br><span style="color:var(--amber)">' + vv.excepcion + '</span>' : '') +
+        '</div>';
+    } else if(badgeEl){ badgeEl.innerHTML = ''; }
+
+    /* ---- PASO 4: pasar al motor existente (sin modificarlo) ----------------- */
+    const p = leer();
+    const r = M.liquidar(p); ultimo = {r, p};
+
+    $('rb_base').textContent = fmt(r.VrComp_Base);
+    $('rb_baseDet').innerHTML = 'AC: <b>'+f2(r.AC)+' m2</b><br>Vref: <b>'+fmt(r.contexto.VrefRad)+'</b><br>Ano '+r.contexto.anioRadicacion;
+    $('rb_index').textContent = fmt(r.VrComp_Indexado);
+    $('rb_indexDet').innerHTML = 'Vref pago: <b>'+fmt(r.contexto.VrefPagoEfectivo)+'</b><br>Ano '+r.contexto.anioPago+'<br>Modo: '+(r.contexto.modo==='real'?'Catastro real':(r.contexto.modo==='estimada'?'IPC estimado':'sin indexar'));
+    $('rb_delta').textContent = fmt(r.delta);
+    $('rb_deltaDet').innerHTML = 'Variacion: <b>'+(r.pctVariacion>=0?'+':'')+(r.pctVariacion*100).toFixed(2).replace('.',',')+'%</b><br>'+(r.delta>0?'Mayor pago por actualizacion':'Sin cambio');
+    $('rb_ac').textContent = f2(r.AC)+' m2';
+    $('rb_pFactor').textContent = r.contexto.factor.toString().replace('.',',');
+    $('rb_pVrefR').textContent = fmt(r.contexto.VrefRad);
+    $('rb_pVrefP').textContent = fmt(r.contexto.VrefPagoEfectivo);
+    $('rb_alerta').innerHTML = r.perdioVigencia
+      ? '<div class="aviso" style="border-color:var(--red);background:var(--red3);color:#e89090"><b>ALERTA DE VIGENCIA:</b> '+CFG.textoVigencia+'</div>' : '';
+    $('rb_memoria').innerHTML = r.memoria.map(m=>'<div class="memoria-line'+(m.startsWith('—')?' sec':'')+'">'+m.replace(/—/g,'').trim()+'</div>').join('');
+  }
+
+  function cargarEjemplo(){
+    $('rb_dir').value='77 ESTORIAS / Lago de Chapinero';
+    $('rb_trat').value='consolidacion';
+    $('rb_areaViv').value='6982.28';
+    // rb_pct ya NO se setea manualmente — lo determina automáticamente VIS_VIP_RULES
+    $('rb_acDirecto').value='558.58';
+    $('rb_anioRad').value='2025';
+    $('rb_vrefRad').value=formatCurrencyCOP(7900000);
+    $('rb_factor').value='0.18';
+    $('rb_anioPago').value='2026';
+    $('rb_modo').value='real';
+    $('rb_vrefPago').value=formatCurrencyCOP(8532000);
+    toggleModo();
+    calcular();
+  }
+
+  function exportarJSON(){
+    if(!ultimo)calcular();
+    const d={fecha:new Date().toLocaleDateString('es-CO'),proyecto:ultimo.p,
+      AC:ultimo.r.AC,VrComp_Base:Math.round(ultimo.r.VrComp_Base),
+      VrComp_Indexado:Math.round(ultimo.r.VrComp_Indexado),delta:Math.round(ultimo.r.delta),
+      perdioVigencia:ultimo.r.perdioVigencia,memoria:ultimo.r.memoria};
+    const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');
+    a.href=u;a.download='renobo_visvip_'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(u),1000);
+  }
+
+  function exportarPDF(){
+    if(!ultimo)calcular();
+    const {r,p}=ultimo;
+    const mem=r.memoria.map(m=>'<li>'+m.replace(/—/g,'').trim()+'</li>').join('');
+    $('printAreaRB').innerHTML=
+      '<h1>Liquidacion Pago Compensatorio VIS/VIP - RenoBo</h1>'+
+      '<table class="meta-tbl"><tr><td><b>Proyecto:</b></td><td>'+(p.direccion||'-')+'</td><td><b>Tratamiento:</b></td><td>'+p.tratamiento+'</td></tr></table>'+
+      '<h2>Formula (Art. 323 Dec. 555/2021)</h2>'+
+      '<p>VrComp = '+r.contexto.factor+' x AC(VIS/VIP) x Vref</p>'+
+      '<h2>Liquidacion</h2>'+
+      '<table><tr><th>Concepto</th><th>Valor</th></tr>'+
+      '<tr><td>AC(VIS/VIP)</td><td>'+f2(r.AC)+' m2</td></tr>'+
+      '<tr><td>Vref radicacion ('+r.contexto.anioRadicacion+')</td><td>'+fmt(r.contexto.VrefRad)+'/m2</td></tr>'+
+      '<tr class="tot"><td>VrComp BASE</td><td>'+fmt(r.VrComp_Base)+'</td></tr>'+
+      '<tr><td>Vref pago ('+r.contexto.anioPago+')</td><td>'+fmt(r.contexto.VrefPagoEfectivo)+'/m2</td></tr>'+
+      '<tr class="tot"><td>VrComp INDEXADO</td><td>'+fmt(r.VrComp_Indexado)+'</td></tr>'+
+      '<tr><td>Diferencia</td><td>'+fmt(r.delta)+' ('+(r.pctVariacion*100).toFixed(2)+'%)</td></tr></table>'+
+      (r.perdioVigencia?'<h2>Alerta de vigencia</h2><p>'+CFG.textoVigencia+'</p>':'')+
+      '<h2>Memoria de calculo</h2><ul>'+mem+'</ul>'+
+      '<p style="font-size:9px;color:#888;margin-top:30px">Art. 322-323 Dec. 555/2021. Verificado vs Resolucion RenoBo 217/2026. Estimacion; no constituye liquidacion oficial. La liquidacion oficial la emite RenoBo.</p>';
+    document.body.classList.add('printing-rb'); window.print();
+    setTimeout(function(){document.body.classList.remove('printing-rb');},500);
+  }
+
+  function init(){
+    $('rb_modo').addEventListener('change',function(){toggleModo();calcular();});
+    /* rb_pct ya es un campo hidden escrito automáticamente — NO se añade listener manual */
+    ['rb_dir','rb_trat','rb_areaViv','rb_acDirecto','rb_anioRad','rb_vrefRad','rb_factor',
+     'rb_anioPago','rb_vrefPago','rb_ipc','rb_indice','rb_areaLote_h'].forEach(id=>{
+      const el=$(id); if(el){el.addEventListener('input',calcular);el.addEventListener('change',calcular);}
+    });
+    /* Marcar rb_acDirecto como manual cuando el usuario escribe; limpiar la marca si borra */
+    const elAcD = $('rb_acDirecto');
+    if(elAcD){
+      elAcD.addEventListener('input', function(){
+        this.dataset.manual = this.value.trim() !== '' ? '1' : '';
+      });
+    }
+    /* Forzar primer cálculo con delay para que Integracion.init() haya
+     * propagado ya todos los valores de ProjectData */
+    toggleModo();
+    setTimeout(calcular, 150);
+  }
+  return {init,calcular,cargarEjemplo,exportarJSON,exportarPDF};
+})();
+
+
+/* ============================================================
+ * CONTROLADOR DE PESTANAS
+ * ============================================================ */
+(function(){
+  UI_CUR.init();
+  UI_OBL.init();
+  UI_DEL.init();
+  UI_RB.init();
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+    });
+  });
+})();
+
+
+
+/* ============================================================
+ * SpatialDataService (Fase 4 - multicapa)
+ * ------------------------------------------------------------
+ * Servicio espacial unificado. Levanta en memoria las capas
+ * geograficas oficiales y resuelve por Point-in-Polygon:
+ *   - Tratamiento urbanistico (carga al inicio, liviana)
+ *   - Valor de referencia de suelo por manzana (carga DIFERIDA por ano)
+ *   - Estrato socioeconomico (preparado; pendiente capa oficial)
+ *
+ * Requiere servidor local (fetch de los JSON no funciona en file://).
+ * Reemplaza y amplia al anterior TreatmentDataService.
+ * ============================================================ */
+const SpatialDataService = (function(){
+  "use strict";
+
+  // --- Cache de capas en memoria ---
+  const _capas = {
+    tratamiento: { data:null, cargando:null },
+    valorRef: {},   // por ano: { '2025': {data, cargando}, ... }
+    estrato: { data:null, cargando:null, disponible:false },
+  };
+
+  const MAPA_TRATAMIENTO = {
+    "1":"conservacion", "2":"consolidacion", "3":"mejoramiento", "4":"renovacion", "5":"desarrollo",
+  };
+
+  /* --- Cargar un JSON una sola vez ------------------------------------------ */
+  async function _fetchJSON(url){
+    const resp = await fetch(url);
+    if(!resp.ok) throw new Error('No se pudo cargar '+url+' (HTTP '+resp.status+')');
+    return resp.json();
+  }
+
+  /* --- TRATAMIENTO (carga al inicio) ---------------------------------------- */
+  async function cargarTratamiento(){
+    if(_capas.tratamiento.data) return true;
+    if(_capas.tratamiento.cargando) return _capas.tratamiento.cargando;
+    _capas.tratamiento.cargando = (async()=>{ try{ const d = await _fetchJSON('tratamientos_geo.json'); _capas.tratamiento.data = d; } catch(e){ console.warn('tratamientos_geo.json no disponible'); } return true; })();
+    return _capas.tratamiento.cargando;
+  }
+
+  /* --- VALOR DE REFERENCIA (carga diferida por ano) ------------------------- */
+  async function cargarValorRef(anio){
+    anio = String(anio);
+    if(!_capas.valorRef[anio]) _capas.valorRef[anio] = { data:null, cargando:null };
+    const slot = _capas.valorRef[anio];
+    if(slot.data) return true;
+    if(slot.cargando) return slot.cargando;
+    slot.cargando = (async()=>{ try{ const d = await _fetchJSON('valor_ref_'+anio+'.json'); slot.data = d; } catch(e){ console.warn('valor_ref no disponible'); } return true; })();
+    return slot.cargando;
+  }
+
+  /* --- ESTRATO (preparado, pendiente capa) ---------------------------------- */
+  async function cargarEstrato(){
+    if(_capas.estrato.data) return true;
+    if(_capas.estrato.cargando) return _capas.estrato.cargando;
+    _capas.estrato.cargando = (async()=>{
+      try{
+        const d = await _fetchJSON('estrato_geo.json');
+        _capas.estrato.data = d; _capas.estrato.disponible = true; return true;
+      }catch(e){ _capas.estrato.disponible = false; return false; }
+    })();
+    return _capas.estrato.cargando;
+  }
+
+  /* --- Point-in-Polygon (ray casting) --------------------------------------- */
+  function _anillo(lng,lat,a){
+    let dentro=false;
+    for(let i=0,j=a.length-1;i<a.length;j=i++){
+      const xi=a[i][0],yi=a[i][1],xj=a[j][0],yj=a[j][1];
+      if(((yi>lat)!==(yj>lat))&&(lng<(xj-xi)*(lat-yi)/(yj-yi)+xi)) dentro=!dentro;
+    }
+    return dentro;
+  }
+  function _pip(lng,lat,coords,tipo){
+    if(tipo==='Polygon'){
+      if(!_anillo(lng,lat,coords[0])) return false;
+      for(let h=1;h<coords.length;h++) if(_anillo(lng,lat,coords[h])) return false;
+      return true;
+    } else if(tipo==='MultiPolygon'){
+      for(const p of coords){
+        if(_anillo(lng,lat,p[0])){
+          let hueco=false;
+          for(let h=1;h<p.length;h++) if(_anillo(lng,lat,p[h])){ hueco=true; break; }
+          if(!hueco) return true;
+        }
+      }
+      return false;
+    }
+    return false;
+  }
+  function _buscar(features, lat, lng){
+    for(const f of features){ if(_pip(lng,lat,f.g.coordinates,f.g.type)) return f; }
+    return null;
+  }
+
+  /* --- CONSULTAS PUBLICAS --------------------------------------------------- */
+  async function tratamientoPorCoords(lat,lng){
+    await cargarTratamiento();
+    const f = _buscar(_capas.tratamiento.data.features, lat, lng);
+    if(!f) return { encontrado:false };
+    return { encontrado:true, codigo:f.t, nombreOficial:_capas.tratamiento.data.codigos[f.t],
+             categoriaEstandar:MAPA_TRATAMIENTO[f.t]||null };
+  }
+
+  async function valorRefPorCoords(lat,lng,anio){
+    await cargarValorRef(anio);
+    const f = _buscar(_capas.valorRef[String(anio)].data.features, lat, lng);
+    if(!f) return { encontrado:false };
+    return { encontrado:true, manzana:f.m, valor:f.v, anio:String(anio) };
+  }
+
+  async function estratoPorCoords(lat,lng){
+    const ok = await cargarEstrato();
+    if(!ok || !_capas.estrato.disponible) return { encontrado:false, disponible:false };
+    const f = _buscar(_capas.estrato.data.features, lat, lng);
+    if(!f) return { encontrado:false, disponible:true };
+    return { encontrado:true, estrato:f.e, manzana:f.m };
+  }
+
+  /* --- GEOCODIFICACION (Nominatim) ------------------------------------------ */
+  async function geocodificar(direccion, ciudad){
+    const q = encodeURIComponent((direccion||'')+', '+(ciudad||'Bogota')+', Colombia');
+    const resp = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+q,
+                             { headers:{'Accept':'application/json'} });
+    if(!resp.ok) throw new Error('Geocodificacion fallida (HTTP '+resp.status+')');
+    const arr = await resp.json();
+    if(!arr.length) return { ok:false, mensaje:'Direccion no encontrada. Ingresa coordenadas manualmente.' };
+    return { ok:true, lat:parseFloat(arr[0].lat), lng:parseFloat(arr[0].lon), display:arr[0].display_name };
+  }
+
+  /* --- CONSULTA COMPLETA (las 3 capas en paralelo) -------------------------- */
+  async function consultarPredio(lat, lng, anio){
+    const [trat, vref, estr] = await Promise.all([
+      tratamientoPorCoords(lat,lng),
+      valorRefPorCoords(lat,lng,anio||'2025'),
+      estratoPorCoords(lat,lng),
+    ]);
+    return { lat, lng, anio:String(anio||'2025'), tratamiento:trat, valorRef:vref, estrato:estr };
+  }
+
+  return {
+    cargarTratamiento, cargarValorRef, cargarEstrato,
+    tratamientoPorCoords, valorRefPorCoords, estratoPorCoords,
+    geocodificar, consultarPredio,
+    estratoDisponible: ()=>_capas.estrato.disponible,
+  };
+})();
+
+
+
+/* ============================================================
+ * CAPA DE INTEGRACION (Fase 2) - ProjectData + DataBus
+ * ------------------------------------------------------------
+ * Capa ADITIVA: sincroniza datos generales entre modulos
+ * rellenando los campos existentes y disparando su calcular().
+ * NO modifica ninguna formula, motor ni resultado.
+ * ============================================================ */
+const Integracion = (function(){
+  "use strict";
+  const $ = id => document.getElementById(id);
+
+  /* --- TABLA DE MUNICIPIOS (Factor M) --------------------------------------- *
+   * Bogota VERIFICADO (0,938 vs liquidacion real). Otros: pendientes de dato
+   * oficial; se agregaran luego. El selector permite "Otro" -> captura manual.
+   */
+  const MUNICIPIOS = {
+    "bogota":      { label:"Bogota D.C.", departamento:"Bogota D.C.", categoria:"Especial", factorM:0.938, verificado:true },
+    "otro":        { label:"Otro municipio (ingresar Factor M)", departamento:"", categoria:"", factorM:null, verificado:false },
+  };
+
+  /* --- ESTADO GLOBAL CENTRAL ------------------------------------------------ */
+  const ProjectData = {
+    // --- Identificacion ---
+    direccion:"", ciudad:"bogota", municipio:"Bogota D.C.", departamento:"Bogota D.C.",
+    // --- Variables urbanisticas maestras (Ajuste 4) ---
+    areaLote:"", indiceConstruccion:"",
+    areaConstruidaNormativa:"",   // = areaLote x indiceConstruccion (calculada)
+    areaConstruidaProyecto:"",    // cabida real (editable)
+    areaVendible:"", areaUtil:"", numeroUnidades:"",
+    estrato:"5", uso:"vivienda", modalidadLicencia:"obra_nueva",
+    tratamientoUrbanistico:"consolidacion",
+    // --- Datos economicos / tributarios ---
+    anioRadicacion:"2025", factorM:0.938,
+    valorReferenciaSuelo:"", estratoZona:"",
+    valorVentas:"", valorConstruccion:"",
+    // --- Alias de compatibilidad (no romper codigo existente) ---
+    get indice(){ return this.indiceConstruccion; },
+    set indice(v){ this.indiceConstruccion = v; },
+    get tratamiento(){ return this.tratamientoUrbanistico; },
+    set tratamiento(v){ this.tratamientoUrbanistico = v; },
+    get modalidad(){ return this.modalidadLicencia; },
+    set modalidad(v){ this.modalidadLicencia = v; },
+    get numUnidades(){ return this.numeroUnidades; },
+    set numUnidades(v){ this.numeroUnidades = v; },
+  };
+
+  /* --- DATABUS: sincronizador (patron observador) --------------------------- */
+  const suscriptores = [];
+  const DataBus = {
+    get(campo){ return ProjectData[campo]; },
+    getAll(){ return Object.assign({}, ProjectData); },
+    set(campo, valor){
+      if(ProjectData[campo] === valor) return;
+      ProjectData[campo] = valor;
+      this.notify(campo, valor);
+    },
+    subscribe(fn){ suscriptores.push(fn); },
+    notify(campo, valor){ suscriptores.forEach(fn => { try{ fn(campo, valor); }catch(e){} }); },
+  };
+
+  /* --- MAPA DE ADAPTADORES --------------------------------------------------- *
+   * campo global -> [ {id: campo del modulo, tipo: 'input'|'select'} ]
+   * Solo se mapean datos que son EL MISMO concepto en cada modulo.
+   */
+  const MAPA = {
+    direccion: [ {id:"direccion"}, {id:"obl_dir"}, {id:"du_dir"} ],  // rb_dir excluido: se rellena 1 vez si vacío
+    estrato:   [ {id:"estrato"}, {id:"du_estrato"} ],
+    areaLote:  [ {id:"areaLote"}, {id:"areaTerreno"}, {id:"rb_areaLote_h"} ],
+    indiceConstruccion: [ {id:"indice"}, {id:"rb_indice"} ],
+    areaVendible: [ {id:"areaVendible"} ],
+    tratamientoUrbanistico:[ {id:"tratamiento"}, {id:"rb_trat"} ],
+    anioRadicacion:[ {id:"anio"}, {id:"anioRad"}, {id:"rb_anioRad"} ],
+    uso:       [ {id:"du_uso"} ],
+    modalidadLicencia: [ {id:"du_modalidad"} ],
+    // Area Construida PROYECTO (cabida real) -> Curaduria y Delineacion
+    areaConstruidaProyecto: [ {id:"areaTotalConst"}, {id:"du_area"} ],
+    // Area Construida NORMATIVA (lote x indice) -> RenoBo / VIS-VIP (Ajuste 3)
+    areaConstruidaNormativa: [ {id:"rb_areaViv"} ],
+    factorM:   [ {id:"factorM"} ],
+    valorReferenciaSuelo: [ {id:"vrefManual"}, {id:"rb_vrefRad"} ],
+  };
+
+  /* Modulos y su funcion de recalculo (para refrescar tras inyectar datos) */
+  const RECALC = {
+    cur: ()=> window.UI_CUR && UI_CUR.calcular && UI_CUR.calcular(),
+    obl: ()=> window.UI_OBL && UI_OBL.calcular && UI_OBL.calcular(),
+    del: ()=> window.UI_DEL && UI_DEL.calcular && UI_DEL.calcular(),
+    rb:  ()=> window.UI_RB  && UI_RB.calcular  && UI_RB.calcular(),
+  };
+
+  /* --- Propagar un campo global a los campos de los modulos ----------------- *
+   * Regla anti-sobrescritura: solo rellena si el campo del modulo esta VACIO,
+   * salvo forzar=true (cuando el usuario edita el panel central explicitamente).
+   */
+  // IDs de campos editables que muestran moneda formateada
+  const CAMPOS_MONEDA = ["vrefManual","rb_vrefRad","rb_vrefPago","du_presupuesto","pd_vref"];
+
+  function propagar(campo, valor, forzar){
+    const destinos = MAPA[campo];
+    if(!destinos) return;
+    destinos.forEach(d=>{
+      const el = $(d.id);
+      if(!el) return;
+      const vacio = (el.value===undefined || el.value===null || String(el.value).trim()==="");
+      if(forzar || vacio){
+        el.value = CAMPOS_MONEDA.indexOf(d.id)>=0 ? formatCurrencyCOP(parseMoneyCOP(valor)) : valor;
+        // disparar eventos para que el modulo recalcule
+        el.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+  }
+
+  /* --- Sincronizar TODO ProjectData hacia los modulos ----------------------- */
+  function sincronizarTodo(forzar){
+    Object.keys(MAPA).forEach(campo=>{
+      const v = ProjectData[campo];
+      if(v!==undefined && v!==null && String(v).trim()!=="") propagar(campo, v, forzar);
+    });
+    Object.values(RECALC).forEach(fn=>fn());
+    renderResumen();
+  }
+
+  /* --- Ciudad -> Factor M automatico ---------------------------------------- */
+  function aplicarCiudad(key){
+    const m = MUNICIPIOS[key] || MUNICIPIOS.otro;
+    ProjectData.ciudad = key;
+    ProjectData.municipio = m.label;
+    ProjectData.departamento = m.departamento;
+    $('pd_depto').value = m.departamento;
+    const aviso = $('pd_avisoFactor');
+    const inputFM = $('pd_factorM');
+    if(m.factorM!==null){
+      ProjectData.factorM = m.factorM;
+      inputFM.value = m.factorM;
+      inputFM.readOnly = m.verificado;
+      aviso.innerHTML = m.verificado
+        ? '<span style="color:var(--green)">Factor M '+m.factorM+' verificado (categoria '+m.categoria+')</span>'
+        : '<span style="color:var(--amber)">Factor M parametrizable - verificar</span>';
+    } else {
+      inputFM.readOnly = false;
+      inputFM.value = "";
+      aviso.innerHTML = '<span style="color:var(--amber)">Ingresa el Factor M del municipio manualmente</span>';
+    }
+    propagar('factorM', ProjectData.factorM, true);
+    RECALC.cur();
+  }
+
+  /* --- Leer panel central -> ProjectData ------------------------------------ */
+  function leerPanel(origenId){
+    ProjectData.direccion = $('pd_dir').value;
+    ProjectData.areaLote = $('pd_areaLote').value;
+    ProjectData.indiceConstruccion = $('pd_indice').value;
+    // estrato y tratamiento NO se leen aqui: provienen del cruce espacial
+    ProjectData.anioRadicacion = $('pd_anio').value;
+    ProjectData.uso = $('pd_uso').value;
+    ProjectData.modalidadLicencia = $('pd_modalidad').value;
+
+    // AREA CONSTRUIDA NORMATIVA = lote x indice (siempre calculada, solo lectura)
+    const lote = parseFloat($('pd_areaLote').value)||0;
+    const idx = parseFloat($('pd_indice').value)||0;
+    if(lote>0 && idx>0){
+      const an = lote * idx;
+      $('pd_areaNormativa').value = an.toFixed(2);
+      ProjectData.areaConstruidaNormativa = an.toFixed(2);
+      $('pd_hintAreaNorm').innerHTML = '<span style="color:var(--green)">'+lote.toLocaleString('es-CO')+' x '+idx+' = '+an.toLocaleString('es-CO',{maximumFractionDigits:2})+' m2</span>';
+    } else {
+      ProjectData.areaConstruidaNormativa = "";
+    }
+
+    // AREA CONSTRUIDA PROYECTO = cabida real (editable). Si esta vacia, sugerir la normativa.
+    let proy = $('pd_areaProyecto').value;
+    if((proy===undefined || String(proy).trim()==="") && ProjectData.areaConstruidaNormativa){
+      // No sobrescribir si el usuario ya escribio; solo prellenar visualmente
+      proy = ProjectData.areaConstruidaNormativa;
+      $('pd_areaProyecto').value = proy;
+    }
+    ProjectData.areaConstruidaProyecto = proy;
+
+    ProjectData.areaVendible = $('pd_areaVend').value;
+    ProjectData.numeroUnidades = $('pd_unidades').value;
+    const fm = parseFloat($('pd_factorM').value);
+    if(!isNaN(fm)) ProjectData.factorM = fm;
+    // V_REF: editable como override manual
+    const vr = parseMoneyCOP($('pd_vref').value);
+    if(!isNaN(vr) && vr>0) ProjectData.valorReferenciaSuelo = vr;
+  }
+
+  /* --- Al editar el panel central, propagar (forzando) ---------------------- */
+  function onPanelChange(ev){
+    const origenId = ev && ev.target ? ev.target.id : null;
+    leerPanel(origenId);
+    sincronizarTodo(true);
+  }
+
+  /* --- DETECCION AUTOMATICA DE TRATAMIENTO (capa oficial) ------------------- *
+   * Prioridad absoluta: el tratamiento SIEMPRE proviene del cruce espacial.
+   * Acepta coordenadas manuales (campo pd_coords) o geocodifica la direccion.
+   */
+  const NOMBRE_ESTANDAR = {
+    consolidacion:"Consolidacion", renovacion:"Renovacion Urbana",
+    desarrollo:"Desarrollo", mejoramiento:"Mejoramiento Integral", conservacion:"Conservacion",
+  };
+
+  function setStatus(msg, tipo){
+    const c = {ok:"var(--green)", warn:"var(--amber)", err:"var(--red)", info:"var(--muted)"}[tipo||"info"];
+    $('pd_hintTrat').innerHTML = '<span style="color:'+c+'">'+msg+'</span>';
+  }
+
+  function aplicarTratamiento(categoria, nombreOficial){
+    if(!categoria) return;
+    ProjectData.tratamiento = categoria;
+    $('pd_trat').value = categoria;
+    $('pd_tratNombre').value = nombreOficial || NOMBRE_ESTANDAR[categoria] || categoria;
+    propagar('tratamiento', categoria, true);
+  }
+
+  function aplicarValorRef(valor, manzana, anio){
+    if(!valor) return;
+    ProjectData.valorReferenciaSuelo = valor;
+    $('pd_vref').value = formatCurrencyCOP(valor);
+    $('pd_hintVref').innerHTML = '<span style="color:var(--green)">Manzana '+manzana+' ('+anio+'): '+formatCurrencyCOP(valor)+'/m2</span>';
+    propagar('valorReferenciaSuelo', valor, true);
+  }
+
+  function aplicarEstrato(estrato){
+    if(estrato===undefined || estrato===null) return;
+    ProjectData.estratoZona = estrato;
+    $('pd_estratoTxt').value = (estrato===0 || estrato==='0') ? "Sin estrato (0)" : "Estrato " + estrato;
+    // Solo propagar a modulos de calculo si es un estrato residencial valido (1-6)
+    if(estrato>=1 && estrato<=6){
+      ProjectData.estrato = estrato;
+      propagar('estrato', estrato, true);
+    }
+  }
+
+  function parseCoords(txt){
+    if(!txt) return null;
+    const m = txt.split(/[, ]+/).map(s=>parseFloat(s.trim())).filter(n=>!isNaN(n));
+    if(m.length>=2) return { lat:m[0], lng:m[1] };
+    return null;
+  }
+
+  async function detectarPredio(){
+    const btn = $('pd_btnGeo');
+    btn.disabled = true;
+    try{
+      // 1. Obtener coordenadas (manuales o por geocodificacion)
+      let lat, lng, origen;
+      const coordsManual = parseCoords($('pd_coords').value);
+      if(coordsManual){
+        lat = coordsManual.lat; lng = coordsManual.lng; origen = "coordenadas";
+      } else {
+        const dir = $('pd_dir').value;
+        if(!dir || dir.trim()===""){ setStatus("Ingresa una direccion o coordenadas.", "warn"); btn.disabled=false; return; }
+        setStatus("Geocodificando direccion...", "info");
+        const geo = await SpatialDataService.geocodificar(dir, ProjectData.municipio);
+        if(!geo.ok){ setStatus(geo.mensaje, "err"); btn.disabled=false; return; }
+        lat = geo.lat; lng = geo.lng; origen = "direccion";
+        $('pd_coords').value = lat.toFixed(5)+','+lng.toFixed(5);
+      }
+
+      // 2. Consultar las 3 capas en paralelo (V_REF segun ano de radicacion)
+      setStatus("Consultando capas oficiales (tratamiento, valor, estrato)...", "info");
+      const anio = $('pd_anio').value;
+      const r = await SpatialDataService.consultarPredio(lat, lng, anio);
+
+      // 3. Aplicar resultados
+      let resumen = [];
+      if(r.tratamiento.encontrado){
+        aplicarTratamiento(r.tratamiento.categoriaEstandar, r.tratamiento.nombreOficial);
+        resumen.push("Tratamiento: "+r.tratamiento.nombreOficial);
+      } else { resumen.push("Tratamiento: no encontrado"); }
+
+      if(r.valorRef.encontrado){
+        aplicarValorRef(r.valorRef.valor, r.valorRef.manzana, r.valorRef.anio);
+        resumen.push("V.Ref: $"+r.valorRef.valor.toLocaleString('es-CO')+"/m2 (manz. "+r.valorRef.manzana+")");
+      } else {
+        resumen.push("V.Ref: no encontrado para "+anio);
+      }
+
+      if(r.estrato.encontrado){
+        aplicarEstrato(r.estrato.estrato);
+        const etxt = (r.estrato.estrato===0) ? "Sin estrato" : "Estrato "+r.estrato.estrato;
+        resumen.push(etxt);
+        $('pd_hintEstrato').innerHTML = '<span style="color:var(--green)">'+etxt+' (manz. '+r.estrato.manzana+')</span>';
+      } else if(!r.estrato.disponible){
+        $('pd_hintEstrato').innerHTML = '<span style="color:var(--amber)">Capa de estrato no cargada</span>';
+      } else {
+        $('pd_hintEstrato').innerHTML = '<span style="color:var(--amber)">Estrato no encontrado en ese punto</span>';
+      }
+
+      // Recalcular todos los modulos una sola vez al final
+      Object.values(RECALC).forEach(fn=>fn());
+      renderResumen();
+      setStatus("✓ Predio detectado (via "+origen+"): "+resumen.join(" · "), "ok");
+    } catch(e){
+      setStatus("Error: "+e.message+" (¿servidor local activo?)", "err");
+    }
+    btn.disabled = false;
+  }
+
+  /* --- MATRIZ DE VARIABLES POR MODULO (Ajuste 4, documentacion) ------------- */
+  const MATRIZ_VARIABLES = {
+    "Expensas Curaduria":   "areaConstruidaProyecto",
+    "Delineacion Urbana":   "areaConstruidaProyecto (presupuesto de obra)",
+    "Obligaciones EP/SP":   "areaLote",
+    "VIS/VIP RenoBo":       "areaConstruidaNormativa",
+  };
+
+  /* --- PANEL RESUMEN DINAMICO (Ajuste 1) ------------------------------------ */
+  function fmtNum(v, sufijo){
+    if(v===undefined || v===null || String(v).trim()==="") return null;
+    const n = parseFloat(v);
+    if(isNaN(n)) return String(v);
+    return n.toLocaleString('es-CO',{maximumFractionDigits:2}) + (sufijo||"");
+  }
+  function renderResumen(){
+    const P = ProjectData;
+    const tratNombre = NOMBRE_ESTANDAR[P.tratamientoUrbanistico] || P.tratamientoUrbanistico || "";
+    const estTxt = (P.estratoZona===0||P.estratoZona==='0') ? "Sin estrato" : (P.estratoZona!==""&&P.estratoZona!=null ? "Estrato "+P.estratoZona : (P.estrato?"Estrato "+P.estrato:""));
+    const items = [
+      ["Direccion", P.direccion],
+      ["Ciudad", P.municipio],
+      ["Area lote", fmtNum(P.areaLote," m2")],
+      ["Indice constr.", P.indiceConstruccion],
+      ["Tratamiento", tratNombre, true],
+      ["Estrato", estTxt],
+      ["Uso", P.uso],
+      ["Modalidad", P.modalidadLicencia],
+      ["A. constr. normativa", fmtNum(P.areaConstruidaNormativa," m2"), true],
+      ["A. constr. proyecto", fmtNum(P.areaConstruidaProyecto," m2")],
+      ["Area vendible", fmtNum(P.areaVendible," m2")],
+      ["No. unidades", P.numeroUnidades],
+      ["Valor ref. suelo", P.valorReferenciaSuelo?("$"+parseFloat(P.valorReferenciaSuelo).toLocaleString('es-CO')+"/m2"):null, true],
+      ["Factor M", P.factorM],
+    ];
+    const grid = $('sp_grid');
+    if(!grid) return;
+    grid.innerHTML = items.map(function(it){
+      var k=it[0], v=it[1], hl=it[2];
+      var vacio = (v===undefined||v===null||String(v).trim()==="");
+      var cls = vacio ? "sp-v empty" : (hl ? "sp-v hl" : "sp-v");
+      var val = vacio ? "—" : v;
+      return '<div class="sp-item"><div class="sp-k">'+k+'</div><div class="'+cls+'">'+val+'</div></div>';
+    }).join('');
+  }
+
+  function init(){
+    // Poblar selector de ciudades
+    const sel = $('pd_ciudad');
+    Object.entries(MUNICIPIOS).forEach(([k,v])=>{
+      sel.innerHTML += '<option value="'+k+'"'+(k==='bogota'?' selected':'')+'>'+v.label+'</option>';
+    });
+    // Listeners del panel central (estrato y tratamiento ya NO son editables manual;
+    // V_REF SI es editable como override)
+    ['pd_dir','pd_areaLote','pd_indice','pd_anio','pd_uso','pd_modalidad','pd_areaProyecto','pd_areaVend','pd_unidades','pd_factorM','pd_coords','pd_vref'].forEach(id=>{
+      const el=$(id); if(el){ el.addEventListener('input',onPanelChange); el.addEventListener('change',onPanelChange); }
+    });
+    $('pd_ciudad').addEventListener('change',function(){ aplicarCiudad(this.value); });
+    $('pd_btnGeo').addEventListener('click', detectarPredio);
+    /* Listeners extra para disparar RENOBO inmediatamente cuando el usuario
+     * escribe el índice o el área del lote (los valores más críticos para VIS/VIP) */
+    ['pd_indice','pd_areaLote','pd_anio'].forEach(function(id){
+      const el = $(id);
+      if(!el) return;
+      el.addEventListener('input',  function(){ setTimeout(function(){ RECALC.rb && RECALC.rb(); }, 0); });
+      el.addEventListener('change', function(){ setTimeout(function(){ RECALC.rb && RECALC.rb(); }, 0); });
+    });
+    // Estado inicial
+    aplicarCiudad('bogota');
+    $('pd_tratNombre').value = NOMBRE_ESTANDAR[ProjectData.tratamiento] || "";
+    $('pd_estratoTxt').value = "Estrato " + ProjectData.estrato;
+    setStatus("Ingresa direccion o coordenadas y pulsa Detectar predio.", "info");
+    renderResumen();
+  }
+
+  return { init, DataBus, ProjectData, sincronizarTodo, aplicarCiudad, detectarPredio, aplicarTratamiento, renderResumen, MATRIZ_VARIABLES, MUNICIPIOS };
+})();
+
+Integracion.init();
+/* Formateo monetario onBlur en campos editables ($ con separadores) */
+['vrefManual','rb_vrefRad','rb_vrefPago','du_presupuesto','pd_vref'].forEach(function(id){ attachMoneyInput(id); });
+
+</script>
+<!-- ============================================================
+     SELECTOR DE TEMA — solo CSS/DOM, sin tocar cálculos
+     ============================================================ -->
+<script>
+(function(){
+  var TEMAS = {
+    dark:    { attr: null,      logoDefault: true,  logoAccanto: false, logoEP: false, title: 'Calculadora Urbanística POT 555 - Bogotá' },
+    accanto: { attr:'accanto',  logoDefault: false, logoAccanto: true,  logoEP: false, title: 'Calculadora Urbanística - Grupo Accanto' },
+    eric:    { attr:'eric',     logoDefault: false, logoAccanto: false, logoEP: true,  title: 'Calculadora Urbanística - Eric Pacheco Llanos' },
+  };
+
+  function aplicarTema(t){
+    var cfg = TEMAS[t] || TEMAS.dark;
+    // data-theme en <html>
+    if(cfg.attr) document.documentElement.setAttribute('data-theme', cfg.attr);
+    else document.documentElement.removeAttribute('data-theme');
+    // logos
+    var lDef = document.querySelector('.brand-logo-default');
+    var lAcc = document.querySelector('.brand-logo-accanto');
+    var lEP  = document.querySelector('.brand-logo-ep');
+    if(lDef) lDef.style.display = cfg.logoDefault  ? 'block'        : 'none';
+    if(lAcc) lAcc.style.display = cfg.logoAccanto  ? 'block'        : 'none';
+    if(lEP)  lEP.style.display  = cfg.logoEP       ? 'inline-flex'  : 'none';
+    // title
+    document.title = cfg.title;
+    // botones activos
+    document.querySelectorAll('.theme-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.t === t);
+    });
+    // persistir
+    try{ localStorage.setItem('calc_tema', t); }catch(e){}
+  }
+
+  // listeners
+  document.querySelectorAll('.theme-btn').forEach(function(b){
+    b.addEventListener('click', function(){ aplicarTema(this.dataset.t); });
+  });
+
+  // restaurar al cargar
+  var guardado = 'dark';
+  try{ guardado = localStorage.getItem('calc_tema') || 'dark'; }catch(e){}
+  aplicarTema(guardado);
+})();
+</script>
+
+</body>
+</html>
